@@ -31,3 +31,7 @@ C:\repos\bioc_back\Presentation\obj\Debug\net8.0\refint\Presentation.dll
 C:\repos\bioc_back\Presentation\obj\Debug\net8.0\Presentation.pdb
 C:\repos\bioc_back\Presentation\obj\Debug\net8.0\Presentation.genruntimeconfig.cache
 C:\repos\bioc_back\Presentation\obj\Debug\net8.0\ref\Presentation.dll
+C:\repos\bioc_back\Presentation\bin\Debug\net8.0\Presentation.staticwebassets.endpoints.json
+C:\repos\bioc_back\Presentation\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\repos\bioc_back\Presentation\obj\Debug\net8.0\staticwebassets\msbuild.Presentation.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+C:\repos\bioc_back\Presentation\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

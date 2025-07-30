@@ -1,0 +1,11 @@
+﻿Levantar API en R
+> api <- plumber::plumb("/home/rstudio/Desktop/bioinfogp/api.R")  
+> api$run(host = "0.0.0.0", port = 8000)
+
+1. React --> envía una secuencia de ADN al backend --> .NET
+2. .NET --> envia una peticion a Plumber para alinear la secuencia --> R
+3. R --> envía el archivo SAM --> .NET
+4. .NET --> lo devuelve para su visualización --> React
+
+json serializado en string:
+	response	"{\"msj\":[\"El mensaje es: holis\"]}"	string
