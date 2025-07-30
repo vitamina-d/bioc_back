@@ -1,1 +1,44 @@
+# Archivos de Visual Studio
 .vs/
+*.user
+*.suo
+
+# Archivos de compilación
+bin/
+obj/
+
+# Configuraciones temporales
+*.log
+*.tmp
+*.cache
+
+# Archivos de Rider (si usás JetBrains)
+.idea/
+
+# Archivos de paquetes NuGet
+*.nupkg
+*.snupkg
+packages/
+
+# Archivos de configuración locales
+*.dbmdl
+*.dbschema
+*.mdf
+*.ldf
+*.sqlite
+
+# Archivos de test y cobertura
+TestResults/
+*.coverage
+*.coveragexml
+
+# Archivos de publicación
+publish/
+*.Publish.xml
+
+# Sistema operativo
+Thumbs.db
+.DS_Store
+
+# Archivos de configuración personal
+*.env
