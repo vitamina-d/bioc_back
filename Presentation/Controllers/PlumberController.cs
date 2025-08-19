@@ -15,14 +15,14 @@ namespace Presentation.Controllers
             _httpClient = httpClient;
             _plumberBaseUrl = "http://host.docker.internal:8000";
         }
-        //primer endpoint: me trae el mensaje
+
         [HttpGet("msg")]
         public async Task<IActionResult> GetMessage([FromQuery] string msg = "msg")
         {
             var url = $"{_plumberBaseUrl}/echo/?msg={Uri.EscapeDataString(msg)}";
             var response = await _httpClient.GetStringAsync(url); 
             //var json = JsonSerializer.Deserialize<object>(response); //lo agrego en plumber o aca
-            return Ok(response);//{"msg": "The message is: 'msg'"}
+            return Ok(response);
         }
 
         [HttpGet("sequence_by_symbol")]
@@ -59,7 +59,7 @@ namespace Presentation.Controllers
         }
 
         [HttpGet("sequence_by_range")]
-        public async Task<IActionResult> GetSequenceByRange([FromQuery] string chrom = "chr11", [FromQuery] int start = 100000, [FromQuery] int end = 100100)
+        public async Task<IActionResult> GetSequenceByRange([FromQuery] string chrom = "chr11", [FromQuery] int start = 71428193, [FromQuery] int end = 71452868)
         {
             //seq_by_range devuelve la secuencia dado el cromosoma y el rango
             //'http://localhost:8787/p/df91a627/seq_by_range/?chrom=chr11&start=71428193&end=71452868'
