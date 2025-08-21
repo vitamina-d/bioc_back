@@ -31,6 +31,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IServicePublicApi, ServicePublicApi>();
 builder.Services.AddScoped<IPublicApiClient, PublicApiClient>();
 
+builder.Services.AddScoped<IServicePlumberApi, ServicePlumberApi>();
+builder.Services.AddScoped<IPlumberApiClient, PlumberApiClient>();
 
 var app = builder.Build();
 

@@ -1,7 +1,10 @@
-﻿namespace Application.DTO
+﻿using System.Text.Json.Serialization;
+
+namespace Application.DTO
 {
     public class EchoResponseDto
     {
+        [JsonPropertyName("msg")]
         public string Msg { get; set; }
     }
 }

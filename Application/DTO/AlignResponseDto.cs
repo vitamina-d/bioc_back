@@ -1,20 +1,35 @@
-﻿namespace Application.DTO
+﻿using System.Text.Json.Serialization;
+
+namespace Application.DTO
 {
     public class AlignResponseDto
     {
+        [JsonPropertyName("status")]
+
         public string Status { get; set; }
+        [JsonPropertyName("time_secs")]
+
         public double Time_Secs { get; set; }
+        [JsonPropertyName("data")]
+
         public AlignDataDto Data { get; set; }
 
     }
 
     public class AlignDataDto
     {
+        [JsonPropertyName("score")]
+
         public double Score { get; set; }
+        [JsonPropertyName("type")]
         public string Type { get; set; }
+        [JsonPropertyName("pattern")]
         public string Pattern { get; set; }
+        [JsonPropertyName("subject")]
         public string Subject { get; set; }
+        [JsonPropertyName("pattern_align")]
         public string Pattern_Align { get; set; }
+        [JsonPropertyName("subject_align")]
         public string Subject_Align { get; set; }
     }
 }

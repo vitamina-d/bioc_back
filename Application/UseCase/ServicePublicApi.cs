@@ -7,7 +7,7 @@ namespace Application
     {
         private readonly IPublicApiClient _publicApiClient;
 
-        public ServicePublicApi(HttpClient httpClient, IPublicApiClient publicApiClient)
+        public ServicePublicApi(IPublicApiClient publicApiClient)
         {
             _publicApiClient = publicApiClient;
         }
