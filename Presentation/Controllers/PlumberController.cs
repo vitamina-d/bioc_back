@@ -64,7 +64,10 @@ namespace Presentation.Controllers
             //seq_by_range devuelve la secuencia dado el cromosoma y el rango
             //'http://localhost:8787/p/df91a627/seq_by_range/?chrom=chr11&start=71428193&end=71452868'
             var url = $"{_plumberBaseUrl}/seq_by_range/?chrom={chrom}&start={start}&end={end}";
-            var response = await _httpClient.GetStringAsync(url);
+
+            //            var response = await _httpClient.GetStringAsync(url);
+            // Trae la respuesta ya deserializada a un objeto
+            var response = await _httpClient.GetFromJsonAsync<object>(url);
 
             return Ok(response);
         }
