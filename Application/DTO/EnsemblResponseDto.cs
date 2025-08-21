@@ -1,10 +1,16 @@
-﻿namespace Application.DTO
+﻿using System.Text.Json.Serialization;
+
+namespace Application.DTO
 {
     public class EnsemblResponseDto
     {
+        [JsonPropertyName("query")]
         public string Query { get; set; }
+        [JsonPropertyName("seq")]
         public string Seq { get; set; }
+        [JsonPropertyName("molecule")]
         public string Molecule { get; set; }
+        [JsonPropertyName("id")]
         public string Id { get; set; }
     }
 }

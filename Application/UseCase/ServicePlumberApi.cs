@@ -40,17 +40,17 @@ namespace Application
             return dto;
         }
 
-        public async Task<SeqBySymbolResponseDto> GetSequence(string chrom, int start, int end)
+        public async Task<SeqByRangeResponseDto> GetSequence(string chrom, int start, int end)
         {
             var res = await _plumberApiClient.GetSequence(chrom, start, end);
-            var json = JsonSerializer.Deserialize<SeqBySymbolResponseDto>(res);
+            var json = JsonSerializer.Deserialize<SeqByRangeResponseDto>(res);
             return json;
         }
 
-        public async Task<SeqByRangeResponseDto> GetSequence(string gene_symbol, bool complete)
+        public async Task<SeqBySymbolResponseDto> GetSequence(string gene_symbol, bool complete)
         {
             var res = await _plumberApiClient.GetSequence(gene_symbol, complete);
-            var json = JsonSerializer.Deserialize<SeqByRangeResponseDto>(res);
+            var json = JsonSerializer.Deserialize<SeqBySymbolResponseDto>(res);
             return json;
         }
     }

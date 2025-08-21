@@ -1,10 +1,16 @@
-﻿namespace Application.DTO
+﻿using System.Numerics;
+using System.Text.Json.Serialization;
+
+namespace Application.DTO
 {
 
     public class SequenceDataDto
     {
-        public int Length { get; set; }
-        public string Sequence { get; set; }
+        [JsonPropertyName("complete")]
         public bool Complete { get; set; } //complete / exons
+        [JsonPropertyName("sequence_length")]
+        public int SequenceLength { get; set; }
+        [JsonPropertyName("sequence")]
+        public string Sequence { get; set; }
     }
 }
