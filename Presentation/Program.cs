@@ -27,7 +27,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//dependencias
+//AddTransient: instancia cada vez que se solicita
+//AddScoped: instancia por request
+//AddSingleton: una sola instancia para toda la aplicación
 builder.Services.AddScoped<IServicePublicApi, ServicePublicApi>();
 builder.Services.AddScoped<IPublicApiClient, PublicApiClient>();
 

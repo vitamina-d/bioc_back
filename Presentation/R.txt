@@ -9,3 +9,5 @@
 
 json serializado en string:
 	response	"{\"msj\":[\"El mensaje es: holis\"]}"	string
+
+que client devuelva desserializado!!!

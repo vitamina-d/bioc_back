@@ -1,6 +1,6 @@
 ﻿using Application;
-using System.Net.Http.Json;
-using System.Text.Json.Serialization;
+using Microsoft.Extensions.Configuration;
+
 
 namespace Infrastructure.Query
 {
@@ -10,10 +10,12 @@ namespace Infrastructure.Query
         private readonly string _plumberURL;
 
 
-        public PlumberApiClient(HttpClient httpClient)
+
+        public PlumberApiClient(HttpClient httpClient, IConfiguration configuration )
         {
             _httpClient = httpClient;
-            _plumberURL = "http://host.docker.internal:8000";
+            _plumberURL = configuration["API_URL:PLUMBER"];
+
         }
 
         public async Task<string> GetAlign(string pattern, string subject, bool global)
@@ -25,11 +27,11 @@ namespace Infrastructure.Query
             return response;
         }
 
-        public async Task<string> GetDetail(string gene_symbol)
+        public async Task<string> GetDetail(string entrez)
         {
             //detail muestra info de un gen, dado su symbol
             //'http://localhost:8787/p/df91a627/detail/?symbol=DHCR7'
-            var url = $"{_plumberURL}/detail/?symbol={gene_symbol.ToUpper()}";
+            var url = $"{_plumberURL}/detail/?symbol={entrez}";
             var response = await _httpClient.GetStringAsync(url);
             return response;
         }
@@ -37,6 +39,13 @@ namespace Infrastructure.Query
         public async Task<string> GetEcho(string msg)
         {
             var url = $"{_plumberURL}/echo/?msg={Uri.EscapeDataString(msg)}";
+            var response = await _httpClient.GetStringAsync(url);
+            return response;
+        }
+
+        public async Task<string> GetEntrez(string symbolOrAlias)
+        {
+            var url = $"{_plumberURL}/entrez/?value={symbolOrAlias}";
             var response = await _httpClient.GetStringAsync(url);
             return response;
         }
@@ -64,6 +73,13 @@ namespace Infrastructure.Query
             //seq_by_range devuelve la secuencia dado el cromosoma y el rango
             //'http://localhost:8787/p/df91a627/seq_by_range/?chrom=chr11&start=71428193&end=71452868'
             var url = $"{_plumberURL}/seq_by_range/?chrom={chrom}&start={start}&end={end}";
+            var response = await _httpClient.GetStringAsync(url);
+            return response;
+        }
+
+        public async Task<string> IsEntrez(string entrez)
+        {
+            var url = $"{_plumberURL}/isentrez/?entrez={entrez}";
             var response = await _httpClient.GetStringAsync(url);
             return response;
         }

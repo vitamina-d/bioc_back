@@ -30,7 +30,7 @@ namespace Application.DTO
         [JsonPropertyName("ensembl_id_gene")]
         public string EnsemblIdGene { get; set; }
         [JsonPropertyName("ensembl_id_protein")]
-        public string EnsemblIdProtein { get; set; }
+        public string[] EnsemblIdProtein { get; set; }
         [JsonPropertyName("uniprot_ids")]
         public string[] Uniprot_Ids { get; set; } 
 

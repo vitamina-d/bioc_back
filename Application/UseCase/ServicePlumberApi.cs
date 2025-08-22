@@ -19,9 +19,23 @@ namespace Application
             return json;
         }
 
-        public async Task<DetailResponseDto> GetDetail(string gene_symbol)
+        public async Task<DetailResponseDto> GetDetail(string value) //value es entrez, alias o symbol
         {
-            var res = await _plumberApiClient.GetDetail(gene_symbol);
+            string entrez;
+            var isEntrezResponse = await _plumberApiClient.IsEntrez(value);
+            var jsonIsEntrez = JsonSerializer.Deserialize<IsEntrezResponseDto>(isEntrezResponse);
+            bool isEntrez = jsonIsEntrez.Data.IsEntrez;
+            if(isEntrez)
+            {
+                entrez = value;
+            } else
+            {
+                var getEntrez = await _plumberApiClient.GetEntrez(value);
+                var jsonEntrez = JsonSerializer.Deserialize<EntrezResponseDto>(getEntrez);
+                entrez = jsonEntrez.Data.Entrez;
+            }
+
+            var res = await _plumberApiClient.GetDetail(entrez);
             var json = JsonSerializer.Deserialize<DetailResponseDto>(res);
             return json;
         }
