@@ -12,9 +12,9 @@ namespace Application
             _plumberApiClient = plumberApiClient;
         }
 
-        public async Task<AlignResponseDto> GetAlignment(string pattern, string subject, bool global)
+        public async Task<AlignResponseDto> GetAlignment(AlignBodyDto bodyDto)
         {
-            var res = await _plumberApiClient.GetAlign(pattern, subject, global);
+            var res = await _plumberApiClient.GetAlign(bodyDto.Pattern, bodyDto.Subject, bodyDto.Global);
             var json = JsonSerializer.Deserialize<AlignResponseDto>(res);
             return json;
         }

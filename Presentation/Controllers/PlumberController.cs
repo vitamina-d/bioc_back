@@ -1,4 +1,5 @@
 ﻿using Application;
+using Application.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers
@@ -22,10 +23,10 @@ namespace Presentation.Controllers
             return Ok(res);
         }*/
 
-        [HttpGet("align")]
-        public async Task<IActionResult> GetAlign([FromQuery] string pattern = "ATCG", [FromQuery] string subject = "ATCG", [FromQuery] bool global = true)
+        [HttpPost("align")]
+        public async Task<IActionResult> GetAlign([FromBody] AlignBodyDto bodyDto)
         {
-            var res = await _servicePlumberApi.GetAlignment(pattern, subject, global);
+            var res = await _servicePlumberApi.GetAlignment(bodyDto);
             return Ok(res);
         }
 

@@ -1,6 +1,5 @@
 ﻿using Application;
 using Microsoft.Extensions.Configuration;
-using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 
@@ -25,9 +24,15 @@ namespace Infrastructure.Query
         {
             //align devuelve el alineamiento global o local de dos secuecias
             //'http://localhost:8787/p/df91a627/align/?pattern=AAACC&subject=ACGTC&global=true'
-            var url = $"{_plumberURL}/align/?pattern={pattern}&subject={subject}&global={global}";
-            var response = await _httpClient.GetStringAsync(url);
-            return response;
+            //var url = $"{_plumberURL}/align/?pattern={pattern}&subject={subject}&global={global}";
+            var url = $"{_plumberURL}/align/";
+            //var response = await _httpClient.GetStringAsync(url);
+            var body = new { pattern = pattern, subject = subject, global = global };
+            var content = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync(url, content);
+            var result = await response.Content.ReadAsStringAsync();
+            return result;
+
         }
 
         public async Task<string> GetDetail(string entrez)
