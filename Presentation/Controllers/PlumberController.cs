@@ -15,12 +15,12 @@ namespace Presentation.Controllers
             _servicePlumberApi = servicePlumberApi;
         }
 
-        [HttpGet("msg")]
+        /*[HttpGet("msg")]
         public async Task<IActionResult> GetMessage([FromQuery] string msg = "msg")
         {
             var res = await _servicePlumberApi.GetMessage(msg);
             return Ok(res);
-        }
+        }*/
 
         [HttpGet("align")]
         public async Task<IActionResult> GetAlign([FromQuery] string pattern = "ATCG", [FromQuery] string subject = "ATCG", [FromQuery] bool global = true)
@@ -35,17 +35,17 @@ namespace Presentation.Controllers
             var res = await _servicePlumberApi.GetDetail(value);
             return Ok(res);
         }
-        [HttpGet("percent")]
-        public async Task<IActionResult> GetPercent([FromQuery] string sequence = "ATCG")
+        [HttpPost("percent")]
+        public async Task<IActionResult> GetPercent([FromBody] string sequence = "ATCG")
         {
             var response = await _servicePlumberApi.GetPercent(sequence); 
             return Ok(response);
         }
 
-        [HttpGet("sequence_by_symbol")]
-        public async Task<IActionResult> GetSequenceBySymbol([FromQuery] string gene_symbol = "DHCR7", [FromQuery] bool complete = true)
+        [HttpGet("sequence")]
+        public async Task<IActionResult> GetSequence([FromQuery] string value = "DHCR7", [FromQuery] bool complete = true)
         {
-            var response = await _servicePlumberApi.GetSequence(gene_symbol, complete);
+            var response = await _servicePlumberApi.GetSequence(value, complete);
             return Ok(response);
         }
 

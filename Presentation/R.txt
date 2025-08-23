@@ -8,6 +8,8 @@
 4. .NET --> lo devuelve para su visualización --> React
 
 json serializado en string:
-	response	"{\"msj\":[\"El mensaje es: holis\"]}"	string
+	response	"{\"msj\":[\"El mensaje es: msg\"]}"	string
 
 que client devuelva desserializado!!!
+
+https://ploomber.io/blog/restapi-plumber/

@@ -39,14 +39,14 @@ namespace Application
             var json = JsonSerializer.Deserialize<DetailResponseDto>(res);
             return json;
         }
-
+        /*
         public async Task<EchoResponseDto> GetMessage(string msg)
         {
             var res = await _plumberApiClient.GetEcho(msg);
             var json = JsonSerializer.Deserialize<EchoResponseDto>(res);
             return json;
         }
-
+        */
         public async Task<PercentResponseDto> GetPercent(string sequence)
         {
             var res = await _plumberApiClient.GetPercent(sequence);
@@ -61,9 +61,25 @@ namespace Application
             return json;
         }
 
-        public async Task<SeqBySymbolResponseDto> GetSequence(string gene_symbol, bool complete)
+        public async Task<SeqBySymbolResponseDto> GetSequence(string value, bool complete) //value es entrez, alias o symbol
         {
-            var res = await _plumberApiClient.GetSequence(gene_symbol, complete);
+            //duplicado de detail
+            string entrez;
+            var isEntrezResponse = await _plumberApiClient.IsEntrez(value);
+            var jsonIsEntrez = JsonSerializer.Deserialize<IsEntrezResponseDto>(isEntrezResponse);
+            bool isEntrez = jsonIsEntrez.Data.IsEntrez;
+            if (isEntrez)
+            {
+                entrez = value;
+            }
+            else
+            {
+                var getEntrez = await _plumberApiClient.GetEntrez(value);
+                var jsonEntrez = JsonSerializer.Deserialize<EntrezResponseDto>(getEntrez);
+                entrez = jsonEntrez.Data.Entrez;
+            }
+            //duplicado de detail
+            var res = await _plumberApiClient.GetSequence(entrez, complete);
             var json = JsonSerializer.Deserialize<SeqBySymbolResponseDto>(res);
             return json;
         }

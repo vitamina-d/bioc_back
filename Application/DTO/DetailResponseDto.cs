@@ -23,10 +23,7 @@ namespace Application.DTO
         public string Type { get; set; }
         [JsonPropertyName("location")]
         public LocationDto Location { get; set; }
-        [JsonPropertyName("length")]
-        public int Length { get; set; }
-        [JsonPropertyName("strand")]
-        public string Strand { get; set; } //+ o -
+
         [JsonPropertyName("ensembl_id_gene")]
         public string EnsemblIdGene { get; set; }
         [JsonPropertyName("ensembl_id_protein")]
@@ -39,12 +36,16 @@ namespace Application.DTO
     {
         [JsonPropertyName("citogenetic")]
         public string Cytogenetic { get; set; } //     "location_chr": "11q13.4",
+        [JsonPropertyName("strand")]
+        public string Strand { get; set; } //+ o -
         [JsonPropertyName("chr")]
         public string Chr { get; set; }         //     "chr": "chr11",
         [JsonPropertyName("start")]
         public int Start { get; set; }
         [JsonPropertyName("end")]
         public int End { get; set; }
+        [JsonPropertyName("length")]
+        public int Length { get; set; }
     }
 }
 

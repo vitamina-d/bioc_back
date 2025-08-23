@@ -1,5 +1,8 @@
 ﻿using Application;
 using Microsoft.Extensions.Configuration;
+using System.Net.Http.Json;
+using System.Text;
+using System.Text.Json;
 
 
 namespace Infrastructure.Query
@@ -54,16 +57,19 @@ namespace Infrastructure.Query
         {
             //percent muestra el porcentaje de bases, A / T y C/ G de una secuencia
             //'http://localhost:8787/p/df91a627/percent/?seq=ACGT'
-            var url = $"{_plumberURL}/percent/?seq={sequence}";
-            var response = await _httpClient.GetStringAsync(url);
-            return response;
+            var url = $"{_plumberURL}/percent/";
+            var body = new { seq = sequence };
+            var content = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync(url, content);
+            var result = await response.Content.ReadAsStringAsync();
+            return result;
         }
 
-        public async Task<string> GetSequence(string gene_symbol, bool complete)
+        public async Task<string> GetSequence(string entrez, bool complete)
         {
             // seq_by_symbol devuelve la secuencia completa o de exones, dado el symbol de un gen
             //'http://localhost:8787/p/df91a627/seq_by_symbol/?gene_symbol=DHCR7&complete=true'
-            var url = $"{_plumberURL}/seq_by_symbol/?gene_symbol={gene_symbol.ToUpper()}&complete={complete}";
+            var url = $"{_plumberURL}/sequence/?entrez={entrez}&complete={complete}";
             var response = await _httpClient.GetStringAsync(url);
             return response;
         }

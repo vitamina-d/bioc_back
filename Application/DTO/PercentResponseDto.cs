@@ -23,24 +23,24 @@ namespace Application.DTO
     }
     public class CompositionDto
     {
+        [JsonPropertyName("length")]
+        public int Length { get; set; }
         [JsonPropertyName("nucleotides")]
-        public NucleotidesDto Nucleotides { get; set; }
-        [JsonPropertyName("total")]
-        public int Total { get; set; }
+        public Dictionary<string, int> Nucleotides { get; set; }
         [JsonPropertyName("at_percent")]
         public double AtPercent { get; set; }
         [JsonPropertyName("cg_percent")]
         public double CgPercent { get; set; }
     }
-
+    /*
     public class NucleotidesDto
     {
         [JsonPropertyName("labels")]
         public string[] Labels {  get; set; }
         [JsonPropertyName("counts")]
         public int[] Counts { get; set; }
-    }
-
+    }*/
+   
     public class CpgIslandsDto
     {
         [JsonPropertyName("length")]
