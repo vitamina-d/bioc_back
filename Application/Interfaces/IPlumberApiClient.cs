@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using Application.DTO;
+using System.Text.Json.Serialization;
 
 namespace Application
 {
@@ -12,5 +13,7 @@ namespace Application
         public Task<string> GetSequence(string entrez, bool complete);
         public Task<string> GetEntrez(string symbolOrAlias);
         public Task<string> IsEntrez(string entrez);
+        public Task<PlumberResponseDto<DataTableDto>> GetTable();
+
     }
 }

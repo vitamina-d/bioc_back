@@ -1,4 +1,5 @@
 ﻿using Application.DTO;
+using Application.Interfaces.DTO;
 using System.Text.Json;
 
 namespace Application
@@ -21,19 +22,9 @@ namespace Application
 
         public async Task<DetailResponseDto> GetDetail(string value) //value es entrez, alias o symbol
         {
-            string entrez;
-            var isEntrezResponse = await _plumberApiClient.IsEntrez(value);
-            var jsonIsEntrez = JsonSerializer.Deserialize<IsEntrezResponseDto>(isEntrezResponse);
-            bool isEntrez = jsonIsEntrez.Data.IsEntrez;
-            if(isEntrez)
-            {
-                entrez = value;
-            } else
-            {
-                var getEntrez = await _plumberApiClient.GetEntrez(value);
-                var jsonEntrez = JsonSerializer.Deserialize<EntrezResponseDto>(getEntrez);
-                entrez = jsonEntrez.Data.Entrez;
-            }
+            //duplicado
+            string entrez = await GetEntrezByValue(value);
+            //duplicado
 
             var res = await _plumberApiClient.GetDetail(entrez);
             var json = JsonSerializer.Deserialize<DetailResponseDto>(res);
@@ -63,7 +54,17 @@ namespace Application
 
         public async Task<SeqBySymbolResponseDto> GetSequence(string value, bool complete) //value es entrez, alias o symbol
         {
-            //duplicado de detail
+            //duplicado
+            string entrez = await GetEntrezByValue(value);
+            //duplicado
+            var res = await _plumberApiClient.GetSequence(entrez, complete);
+            var json = JsonSerializer.Deserialize<SeqBySymbolResponseDto>(res);
+            return json;
+        }
+
+        //metodo para service
+        public async Task<string> GetEntrezByValue(string value) //value es entrez, alias o symbol
+        {
             string entrez;
             var isEntrezResponse = await _plumberApiClient.IsEntrez(value);
             var jsonIsEntrez = JsonSerializer.Deserialize<IsEntrezResponseDto>(isEntrezResponse);
@@ -78,10 +79,11 @@ namespace Application
                 var jsonEntrez = JsonSerializer.Deserialize<EntrezResponseDto>(getEntrez);
                 entrez = jsonEntrez.Data.Entrez;
             }
-            //duplicado de detail
-            var res = await _plumberApiClient.GetSequence(entrez, complete);
-            var json = JsonSerializer.Deserialize<SeqBySymbolResponseDto>(res);
-            return json;
+            return entrez;
+        }
+        public async Task<PlumberResponseDto<DataTableDto>> GetTable()
+        {
+            return await _plumberApiClient.GetTable();
         }
     }
 }

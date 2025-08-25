@@ -27,9 +27,7 @@ namespace Application
             //llegan en minuscula
             return (new NcbiResponseDto
             {
-                EntrezId = entrez,
                 Name = nodo.GetProperty("name").GetString(),
-                MapLocation = nodo.GetProperty("maplocation").GetString(),
                 Description = nodo.GetProperty("description").GetString(),
                 Summary = nodo.GetProperty("summary").GetString(),
                 Scientificname = nodo.GetProperty("organism").GetProperty("scientificname").GetString(),

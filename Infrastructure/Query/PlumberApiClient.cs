@@ -1,4 +1,6 @@
 ﻿using Application;
+using Application.DTO;
+using Application.Interfaces.DTO;
 using Microsoft.Extensions.Configuration;
 using System.Text;
 using System.Text.Json;
@@ -93,6 +95,15 @@ namespace Infrastructure.Query
             var url = $"{_plumberURL}/isentrez/?entrez={entrez}";
             var response = await _httpClient.GetStringAsync(url);
             return response;
+        }
+
+        public async Task<PlumberResponseDto<DataTableDto>> GetTable()
+        {
+            var url = $"{_plumberURL}/table/";
+            var response = await _httpClient.GetStringAsync(url);
+            var json = JsonSerializer.Deserialize<PlumberResponseDto<DataTableDto>>(response);
+            Console.WriteLine(json);
+            return json;
         }
     }
 }

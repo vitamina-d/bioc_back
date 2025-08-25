@@ -49,12 +49,19 @@ namespace Presentation.Controllers
             var response = await _servicePlumberApi.GetSequence(value, complete);
             return Ok(response);
         }
-
+        
         [HttpGet("sequence_by_range")]
         public async Task<IActionResult> GetSequenceByRange([FromQuery] string chrom = "chr11", [FromQuery] int start = 71428193, [FromQuery] int end = 71452868)
         {
             var res = await _servicePlumberApi.GetSequence(chrom, start, end);
             return Ok(res);
         }
+        [HttpGet("table")]
+        public async Task<IActionResult> GetTable()
+        {
+            var res = await _servicePlumberApi.GetTable();
+            return Ok(res);
+        }
+
     }
 }

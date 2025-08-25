@@ -10,6 +10,8 @@ namespace Application
         public Task<PercentResponseDto> GetPercent(string sequence);
         public Task<SeqByRangeResponseDto> GetSequence(string chrom, int start, int end);
         public Task<SeqBySymbolResponseDto> GetSequence(string value, bool complete);
+        public Task<PlumberResponseDto<DataTableDto>> GetTable();
+
 
     }
 }

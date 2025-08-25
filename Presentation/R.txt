@@ -12,4 +12,18 @@ json serializado en string:
 
 que client devuelva desserializado!!!
 
-https://ploomber.io/blog/restapi-plumber/
+BD
+| datetime | endpoint | input | time_secs |  status  |
+| now      | detail   | name  | 2.5       |  success |
+
+BD searcher
+| entrez | symbol | genename |
+
+private static int _counter = 0;
+
+* promedio por endpoint
+* consultas frecuentes
+* success/fail
+
+ENVIAR MAYUSCULAS!!
+https://www.youtube.com/watch?v=oP2yBGG2yE4&ab_channel=return%28GiS%29%3B

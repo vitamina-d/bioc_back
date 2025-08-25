@@ -2,9 +2,7 @@
 {
     public class NcbiResponseDto
     {
-        public string EntrezId { get; set; }
         public string Name { get; set; }
-        public string MapLocation { get; set; }
         public string Description { get; set; }
         public string Summary { get; set; }
         public string Scientificname { get; set; }
