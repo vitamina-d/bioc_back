@@ -36,16 +36,17 @@ namespace Application.DTO
 }
 
 /*
-    {
-      "status": "success",
-      "time_secs": 0.3463,
-      "data": {
-        "score": -1.9358,
-        "type": "global",
-        "pattern": "ACT",
-        "subject": "ACC",
-        "pattern_align": "ACT",
-        "subject_align": "ACC"
-      }
-    }
+
+{
+  "status": "success",
+  "time_secs": 3.2282,
+  "data": {
+    "score": -4.0365,
+    "gapOpening": -2,
+    "gapExtension": -1,
+    "type": "global",
+    "pattern_align": "A--C",
+    "subject_align": "AGGC"
+  }
+}
                  */

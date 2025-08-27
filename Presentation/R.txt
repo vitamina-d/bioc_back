@@ -13,3 +13,5 @@ json serializado en string:
 que client devuelva desserializado!!!
 
 https://ploomber.io/blog/restapi-plumber/
+
+https://github.com/ncbi/sra-tools/wiki  SRA DATABASE READ
