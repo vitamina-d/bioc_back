@@ -12,7 +12,7 @@ namespace Application
             _publicApiClient = publicApiClient;
         }
 
-        public async Task<EnsemblResponseDto> GetSequenceFromEnsembl(string chrom, int start, int end)
+        public async Task<ResponseEnsemblDto> GetSequenceFromEnsembl(string chrom, int start, int end)
         {
             var response = await _publicApiClient.GetEnsemblResponse(chrom, start, end);
             return response;

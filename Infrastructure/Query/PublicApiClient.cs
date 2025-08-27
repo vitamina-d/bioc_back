@@ -17,13 +17,13 @@ namespace Infrastructure.Query
             _configuration = configuration;
         }
 
-        public async Task<EnsemblResponseDto> GetEnsemblResponse(string chrom, int start, int end)
+        public async Task<ResponseEnsemblDto> GetEnsemblResponse(string chrom, int start, int end)
         {
             //fasta o json
             //https://rest.ensembl.org/sequence/region/human/11:100000..100100?content-type=application/json";
             var _ensemblURL = _configuration["API_URL:ENSEMBL"];//"https://rest.ensembl.org/";
             string url = $"{_ensemblURL}sequence/region/human/{chrom}:{start}..{end}?content-type=application/json"; 
-            var response = await _httpClient.GetFromJsonAsync<EnsemblResponseDto>(url);
+            var response = await _httpClient.GetFromJsonAsync<ResponseEnsemblDto>(url);
             return response;
         }
 

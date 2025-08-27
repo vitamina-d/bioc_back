@@ -4,13 +4,13 @@ namespace Application
 {
     public interface IServicePlumberApi
     {
-        public Task<AlignResponseDto> GetAlignment(AlignBodyDto bodyDto);
-        public Task<DetailResponseDto> GetDetail(string value);
+        public Task<ResponsePlumberDto<DataAlignDto>> GetAlignment(BodyAlignDto bodyDto);
+        public Task<ResponsePlumberDto<DataDetailDto>> GetDetail(string value);
         //public Task<EchoResponseDto> GetMessage(string msg);
-        public Task<PercentResponseDto> GetPercent(string sequence);
-        public Task<SeqByRangeResponseDto> GetSequence(string chrom, int start, int end);
-        public Task<SeqBySymbolResponseDto> GetSequence(string value, bool complete);
-        public Task<PlumberResponseDto<DataTableDto>> GetTable();
+        public Task<ResponsePlumberDto<DataPercentDto>> GetPercent(string sequence);
+        public Task<ResponsePlumberDto<DataSequenceDto>> GetSequence(string chrom, int start, int end);
+        public Task<ResponsePlumberDto<DataSequenceDto>> GetSequence(string value, bool complete);
+        public Task<ResponsePlumberDto<DataTableDto>> GetTable();
 
 
     }

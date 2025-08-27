@@ -13,21 +13,21 @@ namespace Application
             _plumberApiClient = plumberApiClient;
         }
 
-        public async Task<AlignResponseDto> GetAlignment(AlignBodyDto bodyDto)
+        public async Task<ResponsePlumberDto<DataAlignDto>> GetAlignment(BodyAlignDto bodyDto)
         {
             var res = await _plumberApiClient.GetAlign(bodyDto.Pattern, bodyDto.Subject, bodyDto.Global);
-            var json = JsonSerializer.Deserialize<AlignResponseDto>(res);
+            var json = JsonSerializer.Deserialize<ResponsePlumberDto<DataAlignDto>> (res);
             return json;
         }
 
-        public async Task<DetailResponseDto> GetDetail(string value) //value es entrez, alias o symbol
+        public async Task<ResponsePlumberDto<DataDetailDto>> GetDetail(string value) //value es entrez, alias o symbol
         {
             //duplicado
             string entrez = await GetEntrezByValue(value);
             //duplicado
 
             var res = await _plumberApiClient.GetDetail(entrez);
-            var json = JsonSerializer.Deserialize<DetailResponseDto>(res);
+            var json = JsonSerializer.Deserialize<ResponsePlumberDto<DataDetailDto>>(res);
             return json;
         }
         /*
@@ -38,27 +38,27 @@ namespace Application
             return json;
         }
         */
-        public async Task<PercentResponseDto> GetPercent(string sequence)
+        public async Task<ResponsePlumberDto<DataPercentDto>> GetPercent(string sequence)
         {
             var res = await _plumberApiClient.GetPercent(sequence);
-            var dto = JsonSerializer.Deserialize<PercentResponseDto>(res);
+            var dto = JsonSerializer.Deserialize<ResponsePlumberDto<DataPercentDto>>(res);
             return dto;
         }
 
-        public async Task<SeqByRangeResponseDto> GetSequence(string chrom, int start, int end)
+        public async Task<ResponsePlumberDto<DataSequenceDto>> GetSequence(string chrom, int start, int end)
         {
             var res = await _plumberApiClient.GetSequence(chrom, start, end);
-            var json = JsonSerializer.Deserialize<SeqByRangeResponseDto>(res);
+            var json = JsonSerializer.Deserialize<ResponsePlumberDto<DataSequenceDto>>(res);
             return json;
         }
 
-        public async Task<SeqBySymbolResponseDto> GetSequence(string value, bool complete) //value es entrez, alias o symbol
+        public async Task<ResponsePlumberDto<DataSequenceDto>> GetSequence(string value, bool complete) //value es entrez, alias o symbol
         {
             //duplicado
             string entrez = await GetEntrezByValue(value);
             //duplicado
             var res = await _plumberApiClient.GetSequence(entrez, complete);
-            var json = JsonSerializer.Deserialize<SeqBySymbolResponseDto>(res);
+            var json = JsonSerializer.Deserialize<ResponsePlumberDto<DataSequenceDto>>(res);
             return json;
         }
 
@@ -67,7 +67,7 @@ namespace Application
         {
             string entrez;
             var isEntrezResponse = await _plumberApiClient.IsEntrez(value);
-            var jsonIsEntrez = JsonSerializer.Deserialize<IsEntrezResponseDto>(isEntrezResponse);
+            var jsonIsEntrez = JsonSerializer.Deserialize<ResponsePlumberDto<DataIsEntrezDto>>(isEntrezResponse);
             bool isEntrez = jsonIsEntrez.Data.IsEntrez;
             if (isEntrez)
             {
@@ -76,12 +76,12 @@ namespace Application
             else
             {
                 var getEntrez = await _plumberApiClient.GetEntrez(value);
-                var jsonEntrez = JsonSerializer.Deserialize<EntrezResponseDto>(getEntrez);
+                var jsonEntrez = JsonSerializer.Deserialize<ResponsePlumberDto<DataEntrezDto>>(getEntrez);
                 entrez = jsonEntrez.Data.Entrez;
             }
             return entrez;
         }
-        public async Task<PlumberResponseDto<DataTableDto>> GetTable()
+        public async Task<ResponsePlumberDto<DataTableDto>> GetTable()
         {
             return await _plumberApiClient.GetTable();
         }

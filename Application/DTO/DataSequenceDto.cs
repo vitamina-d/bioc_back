@@ -1,10 +1,9 @@
-﻿using System.Numerics;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace Application.DTO
 {
 
-    public class SequenceDataDto
+    public class DataSequenceDto
     {
         [JsonPropertyName("complete")]
         public bool Complete { get; set; } //complete / exons

@@ -13,8 +13,6 @@ namespace Infrastructure.Query
         private readonly HttpClient _httpClient;
         private readonly string _plumberURL;
 
-
-
         public PlumberApiClient(HttpClient httpClient, IConfiguration configuration )
         {
             _httpClient = httpClient;
@@ -97,11 +95,11 @@ namespace Infrastructure.Query
             return response;
         }
 
-        public async Task<PlumberResponseDto<DataTableDto>> GetTable()
+        public async Task<ResponsePlumberDto<DataTableDto>> GetTable()
         {
             var url = $"{_plumberURL}/table/";
             var response = await _httpClient.GetStringAsync(url);
-            var json = JsonSerializer.Deserialize<PlumberResponseDto<DataTableDto>>(response);
+            var json = JsonSerializer.Deserialize<ResponsePlumberDto<DataTableDto>>(response);
             Console.WriteLine(json);
             return json;
         }

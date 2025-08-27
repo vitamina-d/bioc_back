@@ -24,7 +24,7 @@ namespace Presentation.Controllers
         }*/
 
         [HttpPost("align")]
-        public async Task<IActionResult> GetAlign([FromBody] AlignBodyDto bodyDto)
+        public async Task<IActionResult> GetAlign([FromBody] BodyAlignDto bodyDto)
         {
             var res = await _servicePlumberApi.GetAlignment(bodyDto);
             return Ok(res);

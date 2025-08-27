@@ -2,18 +2,7 @@
 
 namespace Application.DTO
 {
-    public class DetailResponseDto
-    {
-        [JsonPropertyName("status")]
-        public string Status { get; set; }
-        [JsonPropertyName("time_secs")]
-        public double Time_Secs { get; set; }
-        [JsonPropertyName("data")]
-        public DetailDataDto Data { get; set; }
-
-    }
-
-    public class DetailDataDto
+    public class DataDetailDto
     {
         [JsonPropertyName("entrezID")]
         public string EntrezID { get; set; }

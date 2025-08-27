@@ -2,7 +2,7 @@
 
 namespace Application.DTO
 {
-    public class AlignBodyDto
+    public class BodyAlignDto
     {
         [JsonPropertyName("pattern")]
         public string Pattern { get; set; }

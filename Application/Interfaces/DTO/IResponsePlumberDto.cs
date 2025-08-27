@@ -1,9 +1,8 @@
-﻿using Application.Interfaces.DTO;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
-namespace Application.DTO
+namespace Application.Interfaces.DTO
 {
-    public class PlumberResponseDto<T> : IPlumberResponseDto
+    public interface IResponsePlumberDto
     {
         [JsonPropertyName("code")]
         public int Code { get; set; }
@@ -11,7 +10,5 @@ namespace Application.DTO
         public string DateTime { get; set; }
         [JsonPropertyName("time_secs")]
         public double Time { get; set; }
-        [JsonPropertyName("data")]
-        public T Data { get; set; }
     }
 }

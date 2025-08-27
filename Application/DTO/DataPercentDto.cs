@@ -2,18 +2,7 @@
 
 namespace Application.DTO
 {
-    public class PercentResponseDto
-    {
-        [JsonPropertyName("status")]
-        public string Status { get; set; }
-        [JsonPropertyName("time_secs")]
-        public double Time_Secs { get; set; }
-        [JsonPropertyName("data")]
-        public PercentDataDto Data { get; set; }
-
-    }
-
-    public class PercentDataDto
+    public class DataPercentDto
     {
         [JsonPropertyName("composition")]
         public CompositionDto Composition { get; set; }
