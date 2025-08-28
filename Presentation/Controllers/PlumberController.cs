@@ -29,11 +29,16 @@ namespace Presentation.Controllers
             var res = await _servicePlumberApi.GetAlignment(bodyDto);
             return Ok(res);
         }
-
-        [HttpGet("detail")]
-        public async Task<IActionResult> GetDetail([FromQuery] string value = "DHCR7") //entrez, alias o symbol
+        [HttpPost("complement")]
+        public async Task<IActionResult> GetComplement([FromBody] BodyComplementDto bodyDto)
         {
-            var res = await _servicePlumberApi.GetDetail(value);
+            var res = await _servicePlumberApi.GetComplement(bodyDto);
+            return Ok(res);
+        }
+        [HttpGet("detail")]
+        public async Task<IActionResult> GetDetail([FromQuery] string value, [FromQuery] bool full) //entrez, alias o symbol
+        {
+            var res = await _servicePlumberApi.GetDetail(value, full);
             return Ok(res);
         }
         [HttpPost("percent")]
@@ -62,6 +67,11 @@ namespace Presentation.Controllers
             var res = await _servicePlumberApi.GetTable();
             return Ok(res);
         }
-
+        [HttpGet("genename")]
+        public async Task<IActionResult> GetGenename()
+        {
+            var res = await _servicePlumberApi.GetGenenames();
+            return Ok(res);
+        }
     }
 }

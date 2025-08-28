@@ -4,15 +4,10 @@ namespace Application.DTO
 {
     public class DataAlignDto
     {
+        [JsonPropertyName("message")]
+        public string Message { get; set; }
         [JsonPropertyName("score")]
         public double Score { get; set; }
-        [JsonPropertyName("type")]
-        public string Type { get; set; }
-        [JsonPropertyName("gapOpening")]
-        public int GapOpening { get; set; }
-        [JsonPropertyName("gapExtension")]
-        public int GapExtension { get; set; }
-
         [JsonPropertyName("pattern_align")]
         public string Pattern_Align { get; set; }
         [JsonPropertyName("subject_align")]

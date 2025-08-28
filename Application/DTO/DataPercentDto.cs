@@ -4,10 +4,12 @@ namespace Application.DTO
 {
     public class DataPercentDto
     {
+        [JsonPropertyName("message")]
+        public string Message { get; set; }
         [JsonPropertyName("composition")]
-        public CompositionDto Composition { get; set; }
+        public CompositionDto? Composition { get; set; }
         [JsonPropertyName("cpg_islands")]
-        public CpgIslandsDto CpgIslands { get; set; }
+        public CpgIslandsDto? CpgIslands { get; set; }
 
     }
     public class CompositionDto
@@ -15,64 +17,53 @@ namespace Application.DTO
         [JsonPropertyName("length")]
         public int Length { get; set; }
         [JsonPropertyName("nucleotides")]
-        public Dictionary<string, int> Nucleotides { get; set; }
-        [JsonPropertyName("at_percent")]
-        public double AtPercent { get; set; }
-        [JsonPropertyName("cg_percent")]
-        public double CgPercent { get; set; }
+        public Nucleotides Nucleotides { get; set; }
     }
-    /*
-    public class NucleotidesDto
+    public class Nucleotides
     {
-        [JsonPropertyName("labels")]
-        public string[] Labels {  get; set; }
-        [JsonPropertyName("counts")]
-        public int[] Counts { get; set; }
-    }*/
-   
+        [JsonPropertyName("A")]
+        public int A { get; set; }
+        [JsonPropertyName("C")]
+        public int C { get; set; }
+        [JsonPropertyName("G")]
+        public int G { get; set; }
+        [JsonPropertyName("T")]
+        public int T { get; set; }
+        [JsonPropertyName("other")]
+        public int Other { get; set; }
+    }
     public class CpgIslandsDto
     {
-        [JsonPropertyName("length")]
-        public int Length { get; set; }
-        [JsonPropertyName("ranges")]
-        public RangesDto[] Ranges { get; set; }
-    }
-
-    public class RangesDto
-    {
+        [JsonPropertyName("count")]
+        public int Count { get; set; }
         [JsonPropertyName("start")]
-        public int Start { get; set; }
-        [JsonPropertyName("end")]
-        public int End { get; set; }
-        [JsonPropertyName("width")]
-        public int Width { get; set; }
+        public int[] Start { get; set; }
     }
 }
+    /*
 
-//[JsonPropertyName("at_percent")]
-/*
-  result <- list(
-    status = "success", 
-    time_secs = time,
-    data = list(
-      composition = list(
-        nucleotides = list(
-          labels = c("A", "T", "C", "G"),
-          counts = c(
-            as.integer(counter_base["A"]),
-            as.integer(counter_base["T"]),
-            as.integer(counter_base["C"]),
-            as.integer(counter_base["G"])
-          )
-        ),
-        total = total,
-        at_percent = at_percent,
-        cg_percent = cg_percent,
-      ),
-      cpg_islands = list(
-        length = counter_CpG,
-        ranges = cpg_info
-      )
-    )
-  )
-*/
+{
+  "code": 200,
+  "datetime": "2025-08-28 15:18:00",
+  "time_secs": 0.1,
+  "data": {
+    "message": "Ok.",
+    "composition": {
+      "length": 4,
+      "nucleotides": {
+        "A": 1,
+        "C": 1,
+        "G": 1,
+        "T": 1,
+        "other": 0
+      }
+    },
+    "cpg_islands": {
+      "count": 1,
+      "start": [
+        2
+      ]
+    }
+  }
+}
+    }*/

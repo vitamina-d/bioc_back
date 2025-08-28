@@ -1,6 +1,6 @@
 ﻿namespace Application.DTO
 {
-    public class NcbiResponseDto
+    public class ResponseNcbiDto
     {
         public string Name { get; set; }
         public string Description { get; set; }

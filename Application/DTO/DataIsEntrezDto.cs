@@ -4,6 +4,8 @@ namespace Application.DTO
 {
     public class DataIsEntrezDto
     {
+        [JsonPropertyName("message")]
+        public string Message { get; set; }
         [JsonPropertyName("is_entrez")]
         public bool IsEntrez { get; set; }
     }

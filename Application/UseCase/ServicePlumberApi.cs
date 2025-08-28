@@ -15,29 +15,34 @@ namespace Application
 
         public async Task<ResponsePlumberDto<DataAlignDto>> GetAlignment(BodyAlignDto bodyDto)
         {
-            var res = await _plumberApiClient.GetAlign(bodyDto.Pattern, bodyDto.Subject, bodyDto.Global);
+            //pattern, subject, type, match, mismatch, gapOpening, gapExtension)
+            var res = await _plumberApiClient.GetAlign(bodyDto);
             var json = JsonSerializer.Deserialize<ResponsePlumberDto<DataAlignDto>> (res);
             return json;
         }
-
-        public async Task<ResponsePlumberDto<DataDetailDto>> GetDetail(string value) //value es entrez, alias o symbol
+        public async Task<ResponsePlumberDto<DataComplementDto>> GetComplement(BodyComplementDto bodyDto)
         {
-            //duplicado
-            string entrez = await GetEntrezByValue(value);
-            //duplicado
+            var data = await _plumberApiClient.GetComplement(bodyDto);
+            return data;
+                       
+        }
 
-            var res = await _plumberApiClient.GetDetail(entrez);
-            var json = JsonSerializer.Deserialize<ResponsePlumberDto<DataDetailDto>>(res);
+        public async Task<ResponsePlumberDto<DataDetailDto>> GetDetail(string value, bool full) //value es entrez, alias o symbol
+        {
+            string entrez = await GetEntrezByValue(value);
+            var response = await _plumberApiClient.GetDetail(entrez, full);
+            var json = JsonSerializer.Deserialize<ResponsePlumberDto<DataDetailDto>>(response);
             return json;
         }
-        /*
+
+
         public async Task<EchoResponseDto> GetMessage(string msg)
         {
             var res = await _plumberApiClient.GetEcho(msg);
             var json = JsonSerializer.Deserialize<EchoResponseDto>(res);
             return json;
         }
-        */
+
         public async Task<ResponsePlumberDto<DataPercentDto>> GetPercent(string sequence)
         {
             var res = await _plumberApiClient.GetPercent(sequence);
@@ -84,6 +89,11 @@ namespace Application
         public async Task<ResponsePlumberDto<DataTableDto>> GetTable()
         {
             return await _plumberApiClient.GetTable();
+        }
+
+        public async Task<ResponsePlumberDto<DataTableDto>> GetGenenames()
+        {
+            return await _plumberApiClient.GetGenenames();
         }
     }
 }

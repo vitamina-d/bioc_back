@@ -18,14 +18,14 @@ namespace Application
             return response;
         }
 
-        public async Task<NcbiResponseDto> GetSummaryFromNcbi(string entrez, string type)
+        public async Task<ResponseNcbiDto> GetSummaryFromNcbi(string entrez, string type)
         {
             var response = await _publicApiClient.GetNcbiResponse(entrez, type);
             var json = JsonDocument.Parse(response);
             var nodo = json.RootElement.GetProperty("result").GetProperty(entrez);
 
             //llegan en minuscula
-            return (new NcbiResponseDto
+            return (new ResponseNcbiDto
             {
                 Name = nodo.GetProperty("name").GetString(),
                 Description = nodo.GetProperty("description").GetString(),

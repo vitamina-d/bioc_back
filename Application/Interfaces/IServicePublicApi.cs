@@ -6,6 +6,6 @@ namespace Application
     {
         public Task<ResponseEnsemblDto> GetSequenceFromEnsembl(string chrom, int start, int end);
 
-        public Task<NcbiResponseDto> GetSummaryFromNcbi(string entrez, string type);
+        public Task<ResponseNcbiDto> GetSummaryFromNcbi(string entrez, string type);
     }
 }

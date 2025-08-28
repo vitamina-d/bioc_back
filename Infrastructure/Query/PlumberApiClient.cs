@@ -1,6 +1,5 @@
 ﻿using Application;
 using Application.DTO;
-using Application.Interfaces.DTO;
 using Microsoft.Extensions.Configuration;
 using System.Text;
 using System.Text.Json;
@@ -20,26 +19,55 @@ namespace Infrastructure.Query
 
         }
 
-        public async Task<string> GetAlign(string pattern, string subject, bool global)
+        public async Task<string> GetAlign(BodyAlignDto bodyDto)
         {
             //align devuelve el alineamiento global o local de dos secuecias
             //'http://localhost:8787/p/df91a627/align/?pattern=AAACC&subject=ACGTC&global=true'
             //var url = $"{_plumberURL}/align/?pattern={pattern}&subject={subject}&global={global}";
             var url = $"{_plumberURL}/align/";
             //var response = await _httpClient.GetStringAsync(url);
-            var body = new { pattern = pattern, subject = subject, global = global };
+            var body = new { 
+                pattern = bodyDto.Pattern,
+                subject = bodyDto.Subject,
+                type = bodyDto.Type,
+                gapOpening = bodyDto.GapOpening,
+                gapExtension = bodyDto.GapExtension
+            };
             var content = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync(url, content);
             var result = await response.Content.ReadAsStringAsync();
             return result;
 
         }
+        public async Task<ResponsePlumberDto<DataComplementDto>> GetComplement(BodyComplementDto bodyDto)
+        {
+            //http://localhost:8787/p/782c59fc/complement/?seq=ACGT&is_reverse=true&is_complement=true
+            var url = $"{_plumberURL}/complement/";
+            var body = new
+            {
+                seq = bodyDto.Sequence,
+                to_reverse = bodyDto.ToReverse,
+                to_complement = bodyDto.ToComplement,
+            };
+            var content = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync(url, content);
+            var result = await response.Content.ReadAsStringAsync();
+            var json = JsonSerializer.Deserialize<ResponsePlumberDto<DataComplementDto>>(result);
+            Console.WriteLine(json);
+            return json;
+        }
 
-        public async Task<string> GetDetail(string entrez)
+        public async Task<string> GetDetail(string entrez, bool full)
         {
             //detail muestra info de un gen, dado su symbol
-            //'http://localhost:8787/p/df91a627/detail/?symbol=DHCR7'
-            var url = $"{_plumberURL}/detail/?symbol={entrez}";
+            var url = "";
+            if (full)
+            {
+                url = $"{_plumberURL}/detail/?symbol={entrez}";
+            } else 
+            {
+                url = $"{_plumberURL}/detailfull/?symbol={entrez}";
+            }
             var response = await _httpClient.GetStringAsync(url);
             return response;
         }
@@ -94,10 +122,18 @@ namespace Infrastructure.Query
             var response = await _httpClient.GetStringAsync(url);
             return response;
         }
-
         public async Task<ResponsePlumberDto<DataTableDto>> GetTable()
         {
             var url = $"{_plumberURL}/table/";
+            var response = await _httpClient.GetStringAsync(url);
+            var json = JsonSerializer.Deserialize<ResponsePlumberDto<DataTableDto>>(response);
+            Console.WriteLine(json);
+            return json;
+        }
+
+        public async Task<ResponsePlumberDto<DataTableDto>> GetGenenames()
+        {
+            var url = $"{_plumberURL}/genename/";
             var response = await _httpClient.GetStringAsync(url);
             var json = JsonSerializer.Deserialize<ResponsePlumberDto<DataTableDto>>(response);
             Console.WriteLine(json);

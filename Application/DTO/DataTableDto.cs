@@ -2,8 +2,10 @@
 
 namespace Application.DTO
 {
-    public class DataTableDto { 
-
+    public class DataTableDto 
+    {
+        [JsonPropertyName("message")]
+        public string Message { get; set; }
         [JsonPropertyName("count")]
         public int Count { get; set; }
         [JsonPropertyName("table")]
