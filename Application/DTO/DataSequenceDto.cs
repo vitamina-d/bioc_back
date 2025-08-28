@@ -5,6 +5,8 @@ namespace Application.DTO
 
     public class DataSequenceDto
     {
+        [JsonPropertyName("entrez")]
+        public string? Entrez { get; set; } 
         [JsonPropertyName("complete")]
         public bool Complete { get; set; } //complete / exons
         [JsonPropertyName("sequence_length")]

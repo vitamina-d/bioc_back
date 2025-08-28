@@ -103,11 +103,11 @@ namespace Infrastructure.Query
             return response;
         }
 
-        public async Task<string> GetSequence(string chrom, int start, int end)
+        public async Task<string> GetSequence(string chrom, int start, int end) //chrom= 11, 12, X, Y
         {
             //seq_by_range devuelve la secuencia dado el cromosoma y el rango
             //'http://localhost:8787/p/df91a627/seq_by_range/?chrom=chr11&start=71428193&end=71452868'
-            var url = $"{_plumberURL}/seq_by_range/?chrom={chrom}&start={start}&end={end}";
+            var url = $"{_plumberURL}/seq_by_range/?chrom=chr{chrom}&start={start}&end={end}";
             var response = await _httpClient.GetStringAsync(url);
             return response;
         }

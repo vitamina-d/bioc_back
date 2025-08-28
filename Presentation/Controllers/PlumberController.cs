@@ -17,13 +17,15 @@ namespace Presentation.Controllers
         }
 
         [HttpGet("msg")]
-        public async Task<IActionResult> GetMessage([FromQuery] string msg = "msg")
+        [ProducesResponseType(typeof(EchoResponseDto), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetMessage([FromQuery] string msg)
         {
             var res = await _servicePlumberApi.GetMessage(msg);
             return Ok(res);
         }
 
         [HttpPost("align")]
+        [ProducesResponseType(typeof(ResponsePlumberDto<DataAlignDto>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAlign([FromBody] BodyAlignDto bodyDto)
         {
             var res = await _servicePlumberApi.GetAlignment(bodyDto);
@@ -40,30 +42,30 @@ namespace Presentation.Controllers
         {
             if (full)
             {
-                var fullDetail = await _servicePlumberApi.GetDetail<DataFullDetailDto>(value, full);
+                var fullDetail = await _servicePlumberApi.GetDetail<DataFullDetailDto>(value.ToUpper(), full);
                 return Ok(fullDetail);
             } else
             {
-                var detail = await _servicePlumberApi.GetDetail<DataDetailDto>(value, false);
+                var detail = await _servicePlumberApi.GetDetail<DataDetailDto>(value.ToUpper(), full);
                 return Ok(detail);
             }
         }
         [HttpPost("percent")]
-        public async Task<IActionResult> GetPercent([FromBody] string sequence = "ATCG")
+        public async Task<IActionResult> GetPercent([FromBody] string sequence)
         {
             var response = await _servicePlumberApi.GetPercent(sequence); 
             return Ok(response);
         }
 
         [HttpGet("sequence")]
-        public async Task<IActionResult> GetSequence([FromQuery] string value = "DHCR7", [FromQuery] bool complete = true)
+        public async Task<IActionResult> GetSequence([FromQuery] string value, [FromQuery] bool complete)
         {
-            var response = await _servicePlumberApi.GetSequence(value, complete);
+            var response = await _servicePlumberApi.GetSequence(value.ToUpper(), complete);
             return Ok(response);
         }
         
         [HttpGet("sequence_by_range")]
-        public async Task<IActionResult> GetSequenceByRange([FromQuery] string chrom = "chr11", [FromQuery] int start = 71428193, [FromQuery] int end = 71452868)
+        public async Task<IActionResult> GetSequenceByRange([FromQuery] string chrom, [FromQuery] int start, [FromQuery] int end)
         {
             var res = await _servicePlumberApi.GetSequence(chrom, start, end);
             return Ok(res);

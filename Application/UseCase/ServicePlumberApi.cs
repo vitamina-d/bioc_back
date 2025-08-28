@@ -60,11 +60,11 @@ namespace Application
 
         public async Task<ResponsePlumberDto<DataSequenceDto?>> GetSequence(string value, bool complete) //value es entrez, alias o symbol
         {
-            //duplicado
             string entrez = await GetEntrezByValue(value);
-            //duplicado
+
             var res = await _plumberApiClient.GetSequence(entrez, complete);
             var json = JsonSerializer.Deserialize<ResponsePlumberDto<DataSequenceDto?>>(res);
+            json.Data.Entrez = entrez;
             return json;
         }
 
