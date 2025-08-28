@@ -4,8 +4,6 @@ namespace Application.DTO
 {
     public class DataPercentDto
     {
-        [JsonPropertyName("message")]
-        public string Message { get; set; }
         [JsonPropertyName("composition")]
         public CompositionDto? Composition { get; set; }
         [JsonPropertyName("cpg_islands")]

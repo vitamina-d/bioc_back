@@ -16,12 +16,12 @@ namespace Presentation.Controllers
             _servicePlumberApi = servicePlumberApi;
         }
 
-        /*[HttpGet("msg")]
+        [HttpGet("msg")]
         public async Task<IActionResult> GetMessage([FromQuery] string msg = "msg")
         {
             var res = await _servicePlumberApi.GetMessage(msg);
             return Ok(res);
-        }*/
+        }
 
         [HttpPost("align")]
         public async Task<IActionResult> GetAlign([FromBody] BodyAlignDto bodyDto)
@@ -38,8 +38,15 @@ namespace Presentation.Controllers
         [HttpGet("detail")]
         public async Task<IActionResult> GetDetail([FromQuery] string value, [FromQuery] bool full) //entrez, alias o symbol
         {
-            var res = await _servicePlumberApi.GetDetail(value, full);
-            return Ok(res);
+            if (full)
+            {
+                var fullDetail = await _servicePlumberApi.GetDetail<DataFullDetailDto>(value, full);
+                return Ok(fullDetail);
+            } else
+            {
+                var detail = await _servicePlumberApi.GetDetail<DataDetailDto>(value, false);
+                return Ok(detail);
+            }
         }
         [HttpPost("percent")]
         public async Task<IActionResult> GetPercent([FromBody] string sequence = "ATCG")

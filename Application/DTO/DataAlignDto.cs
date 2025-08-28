@@ -4,8 +4,6 @@ namespace Application.DTO
 {
     public class DataAlignDto
     {
-        [JsonPropertyName("message")]
-        public string Message { get; set; }
         [JsonPropertyName("score")]
         public double Score { get; set; }
         [JsonPropertyName("pattern_align")]

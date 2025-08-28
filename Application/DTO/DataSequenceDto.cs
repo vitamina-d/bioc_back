@@ -5,8 +5,6 @@ namespace Application.DTO
 
     public class DataSequenceDto
     {
-        [JsonPropertyName("message")]
-        public string Message { get; set; }
         [JsonPropertyName("complete")]
         public bool Complete { get; set; } //complete / exons
         [JsonPropertyName("sequence_length")]

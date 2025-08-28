@@ -21,11 +21,9 @@ namespace Infrastructure.Query
 
         public async Task<string> GetAlign(BodyAlignDto bodyDto)
         {
-            //align devuelve el alineamiento global o local de dos secuecias
             //'http://localhost:8787/p/df91a627/align/?pattern=AAACC&subject=ACGTC&global=true'
-            //var url = $"{_plumberURL}/align/?pattern={pattern}&subject={subject}&global={global}";
+            //validar ACGT de entrada o devuelve error
             var url = $"{_plumberURL}/align/";
-            //var response = await _httpClient.GetStringAsync(url);
             var body = new { 
                 pattern = bodyDto.Pattern,
                 subject = bodyDto.Subject,
@@ -34,6 +32,7 @@ namespace Infrastructure.Query
                 gapExtension = bodyDto.GapExtension
             };
             var content = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json");
+            //var response = await _httpClient.GetStringAsync(url);
             var response = await _httpClient.PostAsync(url, content);
             var result = await response.Content.ReadAsStringAsync();
             return result;
@@ -59,15 +58,12 @@ namespace Infrastructure.Query
 
         public async Task<string> GetDetail(string entrez, bool full)
         {
-            //detail muestra info de un gen, dado su symbol
-            var url = "";
+            string type = "detail";
             if (full)
             {
-                url = $"{_plumberURL}/detail/?symbol={entrez}";
-            } else 
-            {
-                url = $"{_plumberURL}/detailfull/?symbol={entrez}";
-            }
+                type = "detailfull";
+            } 
+            var url = $"{_plumberURL}/{type}/?entrez={entrez}";
             var response = await _httpClient.GetStringAsync(url);
             return response;
         }

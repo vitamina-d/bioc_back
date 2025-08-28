@@ -4,8 +4,6 @@ namespace Application.DTO
 {
     public class DataComplementDto
     {
-        [JsonPropertyName("message")]
-        public string Message { get; set; }
         [JsonPropertyName("sequence")]
         public string Sequence { get; set; }
     }

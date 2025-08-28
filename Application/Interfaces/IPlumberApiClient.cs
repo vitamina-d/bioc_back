@@ -12,9 +12,9 @@ namespace Application
         public Task<string> GetSequence(string entrez, bool complete);
         public Task<string> GetEntrez(string symbolOrAlias);
         public Task<string> IsEntrez(string entrez);
-        public Task<ResponsePlumberDto<DataTableDto>> GetTable();
-        public Task<ResponsePlumberDto<DataTableDto>> GetGenenames();
-        public Task<ResponsePlumberDto<DataComplementDto>> GetComplement(BodyComplementDto bodyDto);
+        public Task<ResponsePlumberDto<DataTableDto?>> GetTable();
+        public Task<ResponsePlumberDto<DataTableDto?>> GetGenenames();
+        public Task<ResponsePlumberDto<DataComplementDto?>> GetComplement(BodyComplementDto bodyDto);
 
 
     }

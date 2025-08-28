@@ -6,6 +6,8 @@ namespace Application.Interfaces.DTO
     {
         [JsonPropertyName("code")]
         public int Code { get; set; }
+        [JsonPropertyName("message")]
+        public string Message { get; set; }
         [JsonPropertyName("datetime")]
         public string DateTime { get; set; }
         [JsonPropertyName("time_secs")]
