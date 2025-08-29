@@ -2,32 +2,10 @@
 
 namespace Application.DTO
 {
-    public class AlignResponseDto
-    {
-        [JsonPropertyName("status")]
-
-        public string Status { get; set; }
-        [JsonPropertyName("time_secs")]
-
-        public double Time_Secs { get; set; }
-        [JsonPropertyName("data")]
-
-        public AlignDataDto Data { get; set; }
-
-    }
-
-    public class AlignDataDto
+    public class DataAlignDto
     {
         [JsonPropertyName("score")]
-
         public double Score { get; set; }
-        [JsonPropertyName("type")]
-        public string Type { get; set; }
-        [JsonPropertyName("gapOpening")]
-        public int GapOpening { get; set; }
-        [JsonPropertyName("gapExtension")]
-        public int GapExtension { get; set; }
-
         [JsonPropertyName("pattern_align")]
         public string Pattern_Align { get; set; }
         [JsonPropertyName("subject_align")]

@@ -16,44 +16,77 @@ namespace Presentation.Controllers
             _servicePlumberApi = servicePlumberApi;
         }
 
-        /*[HttpGet("msg")]
-        public async Task<IActionResult> GetMessage([FromQuery] string msg = "msg")
+        [HttpGet("msg")]
+        [ProducesResponseType(typeof(EchoResponseDto), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetMessage([FromQuery] string msg)
         {
             var res = await _servicePlumberApi.GetMessage(msg);
             return Ok(res);
-        }*/
+        }
 
         [HttpPost("align")]
-        public async Task<IActionResult> GetAlign([FromBody] AlignBodyDto bodyDto)
+        [ProducesResponseType(typeof(ResponsePlumberDto<DataAlignDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAlign([FromBody] BodyAlignDto bodyDto)
         {
             var res = await _servicePlumberApi.GetAlignment(bodyDto);
             return Ok(res);
         }
-
-        [HttpGet("detail")]
-        public async Task<IActionResult> GetDetail([FromQuery] string value = "DHCR7") //entrez, alias o symbol
+        [HttpPost("complement")]
+        [ProducesResponseType(typeof(ResponsePlumberDto<DataComplementDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetComplement([FromBody] BodyComplementDto bodyDto)
         {
-            var res = await _servicePlumberApi.GetDetail(value);
+            var res = await _servicePlumberApi.GetComplement(bodyDto);
             return Ok(res);
         }
+        [HttpGet("detail")]
+        [ProducesResponseType(typeof(ResponsePlumberDto<DataFullDetailDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetDetail([FromQuery] string value, [FromQuery] bool full) //entrez, alias o symbol
+        {
+            if (full)
+            {
+                var fullDetail = await _servicePlumberApi.GetDetail<DataFullDetailDto>(value.ToUpper(), full);
+                return Ok(fullDetail);
+            } else
+            {
+                var detail = await _servicePlumberApi.GetDetail<DataDetailDto>(value.ToUpper(), full);
+                return Ok(detail);
+            }
+        }
         [HttpPost("percent")]
-        public async Task<IActionResult> GetPercent([FromBody] string sequence = "ATCG")
+        [ProducesResponseType(typeof(ResponsePlumberDto<DataPercentDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetPercent([FromBody] string sequence)
         {
             var response = await _servicePlumberApi.GetPercent(sequence); 
             return Ok(response);
         }
 
         [HttpGet("sequence")]
-        public async Task<IActionResult> GetSequence([FromQuery] string value = "DHCR7", [FromQuery] bool complete = true)
+        [ProducesResponseType(typeof(ResponsePlumberDto<DataSequenceDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetSequence([FromQuery] string value, [FromQuery] bool complete)
         {
-            var response = await _servicePlumberApi.GetSequence(value, complete);
+            var response = await _servicePlumberApi.GetSequence(value.ToUpper(), complete);
             return Ok(response);
         }
-
+        
         [HttpGet("sequence_by_range")]
-        public async Task<IActionResult> GetSequenceByRange([FromQuery] string chrom = "chr11", [FromQuery] int start = 71428193, [FromQuery] int end = 71452868)
+        [ProducesResponseType(typeof(ResponsePlumberDto<DataSequenceDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetSequenceByRange([FromQuery] string chrom, [FromQuery] int start, [FromQuery] int end)
         {
             var res = await _servicePlumberApi.GetSequence(chrom, start, end);
+            return Ok(res);
+        }
+        [HttpGet("table")]
+        [ProducesResponseType(typeof(ResponsePlumberDto<DataTableDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetTable()
+        {
+            var res = await _servicePlumberApi.GetTable();
+            return Ok(res);
+        }
+        [HttpGet("genename")]
+        [ProducesResponseType(typeof(ResponsePlumberDto<DataTableDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetGenename()
+        {
+            var res = await _servicePlumberApi.GetGenenames();
             return Ok(res);
         }
     }

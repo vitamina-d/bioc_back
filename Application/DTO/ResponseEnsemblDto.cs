@@ -2,7 +2,7 @@
 
 namespace Application.DTO
 {
-    public class EnsemblResponseDto
+    public class ResponseEnsemblDto
     {
         [JsonPropertyName("query")]
         public string Query { get; set; }

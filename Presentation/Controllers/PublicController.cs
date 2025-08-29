@@ -24,9 +24,9 @@ namespace Presentation.Controllers
         }
 
         [HttpGet("summary")]
-        public async Task<IActionResult> GetSummary([FromQuery] string entrez = "1717", string type = "gene")
+        public async Task<IActionResult> GetSummary([FromQuery] string entrez = "1717")
         {
-
+            string type = "gene";
             var summary = await _servicePublicApi.GetSummaryFromNcbi(entrez, type);
             return Ok(summary);
         

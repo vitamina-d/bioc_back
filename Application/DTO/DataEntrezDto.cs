@@ -2,17 +2,7 @@
 
 namespace Application.DTO
 {
-    public class EntrezResponseDto
-    {
-        [JsonPropertyName("status")]
-        public string Status { get; set; }
-        [JsonPropertyName("time_secs")]
-        public double Time_Secs { get; set; }
-        [JsonPropertyName("data")]
-        public EntrezDataDto Data { get; set; }
-
-    }
-    public class EntrezDataDto
+    public class DataEntrezDto
     {
         [JsonPropertyName("value")]
         public string Value { get; set; }
