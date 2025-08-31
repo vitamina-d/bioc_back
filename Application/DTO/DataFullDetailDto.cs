@@ -4,12 +4,12 @@ namespace Application.DTO
 {
     public class DataFullDetailDto : DataDetailDto
     {
-        
+        [JsonPropertyName("citogenetic")]
+        public string Cytogenetic { get; set; } //     "location_chr": "11q13.4",
         [JsonPropertyName("location")]
-        public LocationDto Location { get; set; }
-
+        public LocationDto[] Location { get; set; }
         [JsonPropertyName("ensembl_id_gene")]
-        public string EnsemblIdGene { get; set; }
+        public string[] EnsemblIdGene { get; set; }
         [JsonPropertyName("ensembl_id_protein")]
         public string[] EnsemblIdProtein { get; set; }
         [JsonPropertyName("uniprot_ids")]
@@ -18,12 +18,10 @@ namespace Application.DTO
     }
     public class LocationDto
     {
-        [JsonPropertyName("citogenetic")]
-        public string Cytogenetic { get; set; } //     "location_chr": "11q13.4",
         [JsonPropertyName("strand")]
         public string Strand { get; set; } //+ o -
-        [JsonPropertyName("chr")]
-        public string Chr { get; set; }         //     "chr": "chr11",
+        [JsonPropertyName("seqnames")]
+        public string Seqnames { get; set; }         //     "chr": "chr11",
         [JsonPropertyName("start")]
         public int Start { get; set; }
         [JsonPropertyName("end")]

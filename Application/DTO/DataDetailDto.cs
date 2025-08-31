@@ -8,6 +8,8 @@ namespace Application.DTO
         public string Entrez { get; set; }
         [JsonPropertyName("symbol")]
         public string Symbol { get; set; }
+        [JsonPropertyName("genename")]
+        public string Genename { get; set; }
         [JsonPropertyName("genetype")]
         public string Genetype { get; set; }
         [JsonPropertyName("alias")]
