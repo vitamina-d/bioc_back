@@ -1,5 +1,4 @@
 ﻿using Application.DTO;
-using Application.Interfaces.DTO;
 using System.Text.Json;
 
 namespace Application
@@ -36,7 +35,6 @@ namespace Application
 
         }
 
-
         public async Task<EchoResponseDto> GetMessage(string msg)
         {
             var res = await _plumberApiClient.GetEcho(msg);
@@ -58,21 +56,26 @@ namespace Application
             return json;
         }
 
-        public async Task<ResponsePlumberDto<DataSequenceDto?>> GetSequence(string value, bool complete) //value es entrez, alias o symbol
+        public async Task<ResponsePlumberDto<DataSequenceDto?>> GetSequence(string entrez, bool complete) //value es entrez, alias o symbol
         {
-            string entrez = await GetEntrezByValue(value);
+            //string entrez = await GetEntrezByValue(value);
 
             var res = await _plumberApiClient.GetSequence(entrez, complete);
             var json = JsonSerializer.Deserialize<ResponsePlumberDto<DataSequenceDto?>>(res);
             json.Data.Entrez = entrez;
             return json;
         }
-
+        public async Task<ResponsePlumberDto<DataStatsDto?>> GetStats(string entrez, bool complete)
+        {
+            var res = await _plumberApiClient.GetStats(entrez, complete);
+            var json = JsonSerializer.Deserialize<ResponsePlumberDto<DataStatsDto?>>(res);
+            return json;
+        }
         //metodo para service
         public async Task<string?> GetEntrezByValue(string value) //value es entrez, alias o symbol
         {
             string entrez;
-            var isEntrezResponse = await _plumberApiClient.IsEntrez(value);
+            var isEntrezResponse = await _plumberApiClient.IsEntrez(value.ToUpper());
             var jsonIsEntrez = JsonSerializer.Deserialize<ResponsePlumberDto<DataIsEntrezDto>>(isEntrezResponse);
             if (jsonIsEntrez.Data != null && jsonIsEntrez.Data.IsEntrez)
             {
@@ -89,8 +92,12 @@ namespace Application
                 return null;
             }
         }
-
-
+        public async Task<ResponsePlumberDto<List<string>>> GetAutoComplete(string input)
+        {
+            var res = await _plumberApiClient.GetAutoComplete(input);
+            var json = JsonSerializer.Deserialize<ResponsePlumberDto<List<string>>>(res);
+            return json;
+        }
         public async Task<ResponsePlumberDto<DataTableDto>> GetTable()
         {
             return await _plumberApiClient.GetTable();
@@ -100,5 +107,7 @@ namespace Application
         {
             return await _plumberApiClient.GetGenenames();
         }
+
+       
     }
 }

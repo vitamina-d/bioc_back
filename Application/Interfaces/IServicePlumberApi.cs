@@ -11,8 +11,11 @@ namespace Application
 
         public Task<ResponsePlumberDto<T?>> GetDetail<T>(string value, bool full);
         public Task<ResponsePlumberDto<DataSequenceDto?>> GetSequence(string chrom, int start, int end);
-        public Task<ResponsePlumberDto<DataSequenceDto?>> GetSequence(string value, bool complete);
-        
+        public Task<ResponsePlumberDto<DataSequenceDto?>> GetSequence(string entrez, bool complete);
+        public Task<ResponsePlumberDto<DataStatsDto?>> GetStats(string entrez, bool complete);
+
+        public Task<ResponsePlumberDto<List<string>>> GetAutoComplete(string input);
+
         public Task<ResponsePlumberDto<DataTableDto?>> GetTable();
         public Task<ResponsePlumberDto<DataTableDto?>> GetGenenames();
 

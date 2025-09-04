@@ -60,14 +60,6 @@ namespace Presentation.Controllers
             return Ok(response);
         }
 
-        [HttpGet("sequence")]
-        [ProducesResponseType(typeof(ResponsePlumberDto<DataSequenceDto>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetSequence([FromQuery] string value, [FromQuery] bool complete)
-        {
-            var response = await _servicePlumberApi.GetSequence(value.ToUpper(), complete);
-            return Ok(response);
-        }
-        
         [HttpGet("sequence_by_range")]
         [ProducesResponseType(typeof(ResponsePlumberDto<DataSequenceDto>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetSequenceByRange([FromQuery] string chrom, [FromQuery] int start, [FromQuery] int end)
@@ -75,6 +67,30 @@ namespace Presentation.Controllers
             var res = await _servicePlumberApi.GetSequence(chrom, start, end);
             return Ok(res);
         }
+
+        [HttpGet("sequence")]
+        [ProducesResponseType(typeof(ResponsePlumberDto<DataSequenceDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetSequence([FromQuery] string entrez, [FromQuery] bool complete)
+        {
+            var response = await _servicePlumberApi.GetSequence(entrez, complete);
+            return Ok(response);
+        }
+        [HttpGet("stats")]
+        [ProducesResponseType(typeof(ResponsePlumberDto<DataStatsDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetStats([FromQuery] string entrez, [FromQuery] bool complete)
+        {
+            var response = await _servicePlumberApi.GetStats(entrez, complete);
+            return Ok(response);
+        }
+
+        [HttpGet("autocomplete")]
+        [ProducesResponseType(typeof(ResponsePlumberDto<List<string>>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAutoComplete([FromQuery] string input)
+        {
+            var autocomplete = await _servicePlumberApi.GetAutoComplete(input.ToUpper());
+            return Ok(autocomplete);
+        }
+
         [HttpGet("table")]
         [ProducesResponseType(typeof(ResponsePlumberDto<DataTableDto>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetTable()

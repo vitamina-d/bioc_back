@@ -1,6 +1,7 @@
 ﻿using Application;
 using Application.DTO;
 using Microsoft.Extensions.Configuration;
+using System.Numerics;
 using System.Text;
 using System.Text.Json;
 
@@ -22,7 +23,6 @@ namespace Infrastructure.Query
         public async Task<string> GetAlign(BodyAlignDto bodyDto)
         {
             //'http://localhost:8787/p/df91a627/align/?pattern=AAACC&subject=ACGTC&global=true'
-            //validar ACGT de entrada o devuelve error
             var url = $"{_plumberURL}/align/";
             var body = new { 
                 pattern = bodyDto.Pattern,
@@ -112,6 +112,20 @@ namespace Infrastructure.Query
             return response;
         }
 
+        public async Task<string> GetStats(string entrez, bool complete)
+        {
+            var url = $"{_plumberURL}/stats/?entrez={entrez}&complete={complete}";
+            var response = await _httpClient.GetStringAsync(url);
+            return response;
+        }
+
+        public async Task<string> GetAutoComplete(string input)
+        {
+            var url = $"{_plumberURL}/autocomplete/?input={input}";
+            var response = await _httpClient.GetStringAsync(url);
+            return response;
+        }
+
         public async Task<string> IsEntrez(string entrez)
         {
             var url = $"{_plumberURL}/isentrez/?entrez={entrez}";
@@ -135,5 +149,6 @@ namespace Infrastructure.Query
             Console.WriteLine(json);
             return json;
         }
+
     }
 }
