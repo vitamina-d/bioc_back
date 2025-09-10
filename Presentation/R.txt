@@ -12,11 +12,9 @@ json serializado en string:
 
 que client devuelva desserializado!!!
 
-<<<<<<< HEAD
 https://ploomber.io/blog/restapi-plumber/
 
 https://github.com/ncbi/sra-tools/wiki  SRA DATABASE READ
-=======
 BD
 | datetime | endpoint | input | time_secs |  status  |
 | now      | detail   | name  | 2.5       |  success |
@@ -32,4 +30,3 @@ private static int _counter = 0;
 
 ENVIAR MAYUSCULAS!!
 https://www.youtube.com/watch?v=oP2yBGG2yE4&ab_channel=return%28GiS%29%3B
->>>>>>> table

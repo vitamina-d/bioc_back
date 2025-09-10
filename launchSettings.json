@@ -1,0 +1,24 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "presentation": "StartDebugging",
+        "bioc": "StartWithoutDebugging",
+        "blast": "StartWithoutDebugging",
+        "web": "StartWithoutDebugging"
+      }
+    },
+    "debugP": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "bioc": "StartWithoutDebugging",
+        "blast": "StartWithoutDebugging",
+        "presentation": "StartDebugging",
+        "web": "StartWithoutDebugging"
+      }
+    }
+  }
+}

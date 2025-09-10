@@ -1,0 +1,50 @@
+#http://localhost:8181/swagger/index.html
+#https://learn.microsoft.com/es-es/visualstudio/debugger/attach-to-process-running-in-docker-container?view=vs-2022
+#https://learn.microsoft.com/es-es/visualstudio/containers/tutorial-multicontainer?view=vs-2022
+
+services:
+  presentation:
+    image: ${DOCKER_REGISTRY-}presentation
+    build:
+      context: .
+      dockerfile: Presentation/Dockerfile
+    ports:
+      - "8081:8081"
+    depends_on:
+      - bioc
+      - blast
+
+  web:
+    build:
+      context: ../bioc_front
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - ../bioc_front:/frontend
+      - /frontend/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - presentation
+
+  bioc:
+    build:
+      context: ../bioc_R
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+      - "8787:8787"
+    volumes:
+      - ../bioc_R:/rservice
+    environment:
+      PASSWORD: bioc
+      USER: rstudio
+  
+  blast:
+    image: ncbi/blast
+    volumes:
+      - ../blast/queries:/blast/queries:ro
+      - ../blast/blastdb:/blast/blastdb:ro
+      - ../blast/results:/blast/results:rw
+    working_dir: /blast
