@@ -1,4 +1,7 @@
-﻿namespace Application
+﻿using Application.DTO;
+using System.Text.Json;
+
+namespace Application
 {
     public class ServiceBlast : IServiceBlast
     {
@@ -15,5 +18,11 @@
             return res;
         }
 
+        public async Task<EchoResponseDto> GetMessage(string msg)
+        {
+            var res = await _blastClient.GetEcho(msg);
+            var json = JsonSerializer.Deserialize<EchoResponseDto>(res);
+            return json;
+        }
     }
 }

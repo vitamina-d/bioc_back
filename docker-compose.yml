@@ -43,10 +43,9 @@ services:
 
   blast:
     build:
-      context: ../blast_api
+      context: ../bioc_blast
       dockerfile: Dockerfile
     volumes:
-      - ../blast/blastdb:/blast/blastdb:ro
-      - ../blast-blast:/bservice
+      - ../bioc_blast:/bservice
     ports:
       - "8001:8001"
