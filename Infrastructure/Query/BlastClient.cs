@@ -30,8 +30,15 @@ namespace Application
 
         public async Task<string> BlastX(string sequence)
         {
-            var url = $"{_blastURL}/blastx/?sequence={sequence}";
-            var result = await _httpClient.GetStringAsync(url);
+            var url = $"{_blastURL}/blastx/";
+            //var result = await _httpClient.GetStringAsync(url);
+            var body = new
+            {
+                sequence = sequence
+            };
+            var content = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync(url, content);
+            var result = await response.Content.ReadAsStringAsync();
             return result;
         }
 

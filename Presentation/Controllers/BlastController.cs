@@ -9,7 +9,6 @@ namespace Presentation.Controllers
     public class BlastController : ControllerBase
     {
         private readonly IServiceBlast _blastService;
-        //https://github.com/testcontainers/Docker.DotNet/
 
         public BlastController(IServiceBlast blastService)
         {
@@ -22,9 +21,9 @@ namespace Presentation.Controllers
             var res = await _blastService.GetMessage(msg);
             return Ok(res);
         }
-        [HttpGet("blastx")]
+        [HttpPost("blastx")]
         [ProducesResponseType(typeof(ResponsePlumberDto<DataBlastxDto?>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> BlastX(string sequence)
+        public async Task<IActionResult> BlastX([FromBody] string sequence)
         {
             var res = await _blastService.Connect(sequence);
             return Ok(res);
