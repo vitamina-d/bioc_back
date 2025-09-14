@@ -79,7 +79,7 @@ namespace Application.DTO
         [JsonPropertyName("query_len")]
         public int QueryLen { get; set; }
 
-        [JsonPropertyName("query_masking")]
+        [JsonPropertyName("query_masking")] //cuando hay hits
         public List<QueryMasking>? QueryMasking { get; set; }
 
         [JsonPropertyName("hits")]
@@ -88,7 +88,7 @@ namespace Application.DTO
         [JsonPropertyName("stat")]
         public Stat Stat { get; set; }
 
-        [JsonPropertyName("message")]
+        [JsonPropertyName("message")] // cuando no hay hits
         public string? Message { get; set; }
     }
 
