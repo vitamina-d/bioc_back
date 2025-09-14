@@ -7,17 +7,23 @@ namespace Presentation.Controllers
     [ApiController]
     public class BlastController : ControllerBase
     {
-        private readonly IDockerService _dockerService;
+        private readonly IServiceBlast _blastService;
         //https://github.com/testcontainers/Docker.DotNet/
 
-        public BlastController(IDockerService dockerService)
+        public BlastController(IServiceBlast blastService)
         {
-            _dockerService = dockerService;
+            _blastService = blastService;
         }
-        [HttpGet("blastx")]
-        public IActionResult BlastX()
+        [HttpPost("blastx")]
+        public IActionResult BlastX([FromBody] string sequence)
         {
-            var res = _dockerService.Connect();
+            var res = _blastService.Connect(sequence);
+            return Ok(res);
+        }
+        [HttpPost("blastp")]
+        public IActionResult BlastP([FromBody] string sequence)
+        {
+            var res = _blastService.Connect(sequence);
             return Ok(res);
         }
     }

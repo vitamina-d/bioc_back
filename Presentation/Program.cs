@@ -37,7 +37,7 @@ builder.Services.AddScoped<IServicePlumberApi, ServicePlumberApi>();
 builder.Services.AddScoped<IPlumberApiClient, PlumberApiClient>();
 
 builder.Services.AddScoped<IBlastClient, BlastClient>();
-builder.Services.AddScoped<IDockerService, DockerService>();
+builder.Services.AddScoped<IServiceBlast, ServiceBlast>();
 
 var app = builder.Build();
 

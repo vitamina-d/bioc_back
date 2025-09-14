@@ -1,37 +1,39 @@
-﻿using Docker.DotNet;
-using Docker.DotNet.Models;
+﻿using Microsoft.Extensions.Configuration;
+using System.Text;
+using System.Text.Json;
 
 namespace Application
 {
     public class BlastClient : IBlastClient
     {
-        private readonly DockerClient _client;
+        private readonly HttpClient _httpClient;
+        private readonly string _blastURL;
 
-        public BlastClient()
+        public BlastClient(HttpClient httpClient, IConfiguration configuration)
         {
-            _client = new DockerClientConfiguration().CreateClient();
-
+            _httpClient = httpClient;
+            _blastURL = configuration["API_URL:BLAST"];
         }
 
-        public async Task<string> Connect()
+        public async Task<string> BlastP(string sequence)
         {
-            var res = "";
-            try
-            {
-                IList<ContainerListResponse> containers = await _client.Containers.ListContainersAsync(
-                    new ContainersListParameters
-                    {
-                        Limit = 10,
-                    });
-            } 
-            catch (Exception e)
-            {
-                res = $"catch: {e}";
-                
-            }
-                        
-            return res;
+            //var url = $"{_blastURL}/echo/?msg=HELLO";
+            var url = $"{_blastURL}/blastp/";
+            var body = new { sequence = sequence };
+            var content = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync(url, content);
+            var result = await response.Content.ReadAsStringAsync();
+            return result;
+        }
 
+        public async Task<string> BlastX(string sequence)
+        {
+            var url = $"{_blastURL}/blastp/";
+            var body = new { sequence = sequence };
+            var content = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync(url, content);
+            var result = await response.Content.ReadAsStringAsync();
+            return result;
         }
 
     }

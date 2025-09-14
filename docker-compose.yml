@@ -40,11 +40,13 @@ services:
     environment:
       PASSWORD: bioc
       USER: rstudio
-  
+
   blast:
-    image: ncbi/blast
+    build:
+      context: ../blast_api
+      dockerfile: Dockerfile
     volumes:
-      - ../blast/queries:/blast/queries:ro
       - ../blast/blastdb:/blast/blastdb:ro
-      - ../blast/results:/blast/results:rw
-    working_dir: /blast
+      - ../blast-blast:/bservice
+    ports:
+      - "8001:8001"

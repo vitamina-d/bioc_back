@@ -2,7 +2,8 @@
 {
     public interface IBlastClient
     {
-        public Task<string> Connect();
+        public Task<string> BlastX(string sequence);
+        public Task<string> BlastP(string sequence);
 
     }
 }
