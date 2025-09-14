@@ -12,10 +12,11 @@ namespace Application
 
         }
 
-        public Task<string> Connect(string sequence)
+        public async Task<ResponsePlumberDto<DataBlastxDto?>> Connect(string sequence)
         {
-            var res = _blastClient.BlastX(sequence);
-            return res;
+            var res = await _blastClient.BlastX(sequence);
+            var json = JsonSerializer.Deserialize<ResponsePlumberDto<DataBlastxDto?>>(res);
+            return json;
         }
 
         public async Task<EchoResponseDto> GetMessage(string msg)

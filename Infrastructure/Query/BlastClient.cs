@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using static System.Net.WebRequestMethods;
@@ -29,11 +30,9 @@ namespace Application
 
         public async Task<string> BlastX(string sequence)
         {
-            //http://127.0.0.1:8001/blastx/?sequence=ACGT;
             var url = $"{_blastURL}/blastx/?sequence={sequence}";
-            //url = "http://0.0.0.0:8001/blastx/?sequence=ACCCGTGT";
-            var response = await _httpClient.GetStringAsync(url);
-            return response;
+            var result = await _httpClient.GetStringAsync(url);
+            return result;
         }
 
         public async Task<string> GetEcho(string msg)

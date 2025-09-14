@@ -6,7 +6,7 @@ namespace Application
     {
         public Task<EchoResponseDto> GetMessage(string msg);
 
-        public Task<string> Connect(string sequence);
+        public Task<ResponsePlumberDto<DataBlastxDto?>> Connect(string sequence);
 
     }
 }

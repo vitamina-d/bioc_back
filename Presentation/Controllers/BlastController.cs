@@ -23,15 +23,16 @@ namespace Presentation.Controllers
             return Ok(res);
         }
         [HttpGet("blastx")]
-        public IActionResult BlastX(string sequence)
+        [ProducesResponseType(typeof(ResponsePlumberDto<DataBlastxDto?>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> BlastX(string sequence)
         {
-            var res = _blastService.Connect(sequence);
+            var res = await _blastService.Connect(sequence);
             return Ok(res);
         }
         [HttpPost("blastp")]
-        public IActionResult BlastP([FromBody] string sequence)
+        public async Task<IActionResult> BlastP([FromBody] string sequence)
         {
-            var res = _blastService.Connect(sequence);
+            var res = await _blastService.Connect(sequence);
             return Ok(res);
         }
     }
