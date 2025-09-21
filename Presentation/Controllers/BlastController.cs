@@ -22,11 +22,18 @@ namespace Presentation.Controllers
             return Ok(res);
         }
         [HttpPost("blastx")]
-        [ProducesResponseType(typeof(ResponsePlumberDto<DataBlastxDto?>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> BlastX([FromBody] string sequence)
+        [ProducesResponseType(typeof(ResponsePlumberDto<Report?>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> BlastX([FromBody] BodyBlastxDto body)
         {
-            var res = await _blastService.Connect(sequence);
-            return Ok(res);
+            var res = await _blastService.Connect(body.Sequence);
+            return Ok(new ResponsePlumberDto<Report?>
+            {
+                Code = res.Code,
+                Message = res.Message,
+                DateTime = res.DateTime,
+                Time = res.Time,
+                Data = res.Data?.BlastOutput2[0].Report
+            });
         }
         [HttpPost("blastp")]
         public async Task<IActionResult> BlastP([FromBody] string sequence)

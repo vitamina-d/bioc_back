@@ -9,9 +9,9 @@ namespace Application.DTO
         public string? Entrez { get; set; } 
         [JsonPropertyName("complete")]
         public bool Complete { get; set; } //complete / exons
-        [JsonPropertyName("sequence_length")]
-        public int SequenceLength { get; set; }
-        [JsonPropertyName("sequence")]
-        public string Sequence { get; set; }
+        [JsonPropertyName("sequences_count")]
+        public int SequencesCount { get; set; }
+        [JsonPropertyName("sequences")]
+        public string[] Sequences { get; set; }
     }
 }

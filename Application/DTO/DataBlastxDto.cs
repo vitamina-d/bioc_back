@@ -112,7 +112,7 @@ namespace Application.DTO
         [JsonPropertyName("len")]
         public int Len { get; set; }
 
-        [JsonPropertyName("hsps")]
+        [JsonPropertyName("hsps")] //high-scoring pair
         public List<Hsp> Hsps { get; set; }
     }
 
@@ -136,13 +136,13 @@ namespace Application.DTO
         [JsonPropertyName("num")]
         public int Num { get; set; }
 
-        [JsonPropertyName("bit_score")]
+        [JsonPropertyName("bit_score")] //muy bajo → fiable
         public double BitScore { get; set; }
 
         [JsonPropertyName("score")]
         public int Score { get; set; }
 
-        [JsonPropertyName("evalue")]
+        [JsonPropertyName("evalue")] //alto → fiable
         public double Evalue { get; set; }
 
         [JsonPropertyName("identity")]
@@ -152,12 +152,12 @@ namespace Application.DTO
         public int Positive { get; set; }
 
         [JsonPropertyName("query_from")]
-        public int QueryFrom { get; set; }
+        public int QueryFrom { get; set; } //coordenadas en la query que se corresponden con la región traducida o alineada.
 
         [JsonPropertyName("query_to")]
         public int QueryTo { get; set; }
 
-        [JsonPropertyName("query_frame")]
+        [JsonPropertyName("query_frame")] //marco +forward -revers c123
         public int QueryFrame { get; set; }
 
         [JsonPropertyName("hit_from")]
@@ -172,10 +172,10 @@ namespace Application.DTO
         [JsonPropertyName("gaps")]
         public int Gaps { get; set; }
 
-        [JsonPropertyName("qseq")]
+        [JsonPropertyName("qseq")] //mi secuencia traducida
         public string Qseq { get; set; }
 
-        [JsonPropertyName("hseq")]
+        [JsonPropertyName("hseq")] // porción de secuencia de proteína de la BD alineada con qseq
         public string Hseq { get; set; }
 
         [JsonPropertyName("midline")]

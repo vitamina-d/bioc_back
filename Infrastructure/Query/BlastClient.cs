@@ -1,8 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
-using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
-using static System.Net.WebRequestMethods;
 
 namespace Application
 {
@@ -31,7 +29,6 @@ namespace Application
         public async Task<string> BlastX(string sequence)
         {
             var url = $"{_blastURL}/blastx/";
-            //var result = await _httpClient.GetStringAsync(url);
             var body = new
             {
                 sequence = sequence
