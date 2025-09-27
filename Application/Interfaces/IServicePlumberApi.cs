@@ -1,4 +1,5 @@
 ﻿using Application.DTO;
+using Application.Interfaces.DTO;
 
 namespace Application
 {
@@ -15,6 +16,8 @@ namespace Application
         public Task<ResponsePlumberDto<DataStatsDto?>> GetStats(string entrez, bool complete);
 
         public Task<ResponsePlumberDto<List<string>>> GetAutoComplete(string input);
+        public Task<ResponsePlumberDto<DataEntrezDto>> GetEntrezByValue(string value);
+
 
         public Task<ResponsePlumberDto<DataTableDto?>> GetTable();
         public Task<ResponsePlumberDto<DataTableDto?>> GetGenenames();

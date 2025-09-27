@@ -19,7 +19,6 @@ namespace Infrastructure.Query
 
         public async Task<ResponseEnsemblDto> GetEnsemblResponse(string chrom, int start, int end)
         {
-            //fasta o json
             //https://rest.ensembl.org/sequence/region/human/11:100000..100100?content-type=application/json";
             var _ensemblURL = _configuration["API_URL:ENSEMBL"];//"https://rest.ensembl.org/";
             string url = $"{_ensemblURL}sequence/region/human/{chrom}:{start}..{end}?content-type=application/json"; 
@@ -29,10 +28,17 @@ namespace Infrastructure.Query
 
         public async Task<string> GetNcbiResponse(string entrez, string type)
         {
-            // xml o json
             //https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gene&id=1717&retmode=json
             var _ncbiURL = _configuration["API_URL:NCBI"]; // "https://eutils.ncbi.nlm.nih.gov/";
             string url = $"{_ncbiURL}entrez/eutils/esummary.fcgi?db={type}&id={entrez}&retmode=json";
+            var response = await _httpClient.GetStringAsync(url);
+            return response;
+        }
+        public async Task<string> GetPdb(string pdbid)
+        {
+            //https://data.rcsb.org/
+            var _pdbURL = _configuration["API_URL:PDB"]; 
+            string url = $"{_pdbURL}rest/v1/core/entry/{pdbid}";
             var response = await _httpClient.GetStringAsync(url);
             return response;
         }

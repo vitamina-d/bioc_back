@@ -105,5 +105,12 @@ namespace Presentation.Controllers
             var res = await _servicePlumberApi.GetGenenames();
             return Ok(res);
         }
+        [HttpGet("entrez/{id}")]
+        [ProducesResponseType(typeof(ResponsePlumberDto<DataEntrezDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetEntrez(string id)
+        {
+            var res = await _servicePlumberApi.GetEntrezByValue(id.ToUpper());
+            return Ok(res);
+        }
     }
 }
