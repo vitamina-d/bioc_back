@@ -4,10 +4,6 @@ namespace Application.DTO
 {
     public class DataEntrezDto
     {
-        [JsonPropertyName("value")]
-        public string Value { get; set; }
-        [JsonPropertyName("label")]
-        public string Label { get; set; }
         [JsonPropertyName("entrez")]
         public string Entrez { get; set; }
     }
