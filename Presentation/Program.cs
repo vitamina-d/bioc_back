@@ -3,6 +3,10 @@ using Infrastructure.Query;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//secret
+var config = builder.Configuration;
+var NS_API_KEY = config["NeuroSnap:API_KEY"];
+
 // Add services to the container.
 
 //CORS
