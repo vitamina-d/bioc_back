@@ -2,7 +2,7 @@
 
 namespace Application.DTO
 {
-    public class DataPdbDto
+    public class DataAminoAcidDto
     {
         [JsonPropertyName("sequence")]
         public string Sequence { get; set; }

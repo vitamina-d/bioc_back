@@ -1,24 +1,29 @@
 ﻿using Application.DTO;
+using Microsoft.Extensions.Configuration;
 
 namespace Application
 {
     public class PyClient : IPyClient
     {
         private readonly HttpClient _httpClient;
-
-        public PyClient(HttpClient httpClient)
+        private readonly string _biopURL;
+        public PyClient(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
+            _biopURL = configuration["API_URL:BIOPY"];
+        }
+        public async Task<string> GetAminoAcidSeq(string sequence, string frame)
+        {
+            var url = $"{_biopURL}/aminoacid";
+            var response = await _httpClient.GetStringAsync(url);
+            return response;
         }
 
-        public DataAADto GetAASeq(string sequence, string frame)
+        public async Task<string> GetAlignProtein(string prediction, string reference)
         {
-            throw new NotImplementedException();
-        }
-
-        public DataPdbDto[] GetPdbs(DataPdbDto prediction, string pbdId)
-        {
-            throw new NotImplementedException();
+            var url = $"{_biopURL}/align";
+            var response = await _httpClient.GetStringAsync(url);
+            return response;
         }
     }
 }

@@ -16,12 +16,18 @@ namespace Infrastructure.Query
             _httpClient = httpClient;
             _configuration = configuration;
         }
+        public async Task<string> DownloadPdb(string pdbId)
+        {
+            var _rcsbURL = _configuration["API_URL:RCSB"];
+            var url = $"{_rcsbURL}/download/{pdbId}.pdb"; ///https://files.rcsb.org/download/1gav.pdb
+            var pdb = await _httpClient.GetStringAsync(url);
+            return pdb;
+        }
 
         public async Task<ResponseEnsemblDto> GetEnsemblResponse(string chrom, int start, int end)
         {
-            //fasta o json
             //https://rest.ensembl.org/sequence/region/human/11:100000..100100?content-type=application/json";
-            var _ensemblURL = _configuration["API_URL:ENSEMBL"];//"https://rest.ensembl.org/";
+            var _ensemblURL = _configuration["API_URL:ENSEMBL"];
             string url = $"{_ensemblURL}sequence/region/human/{chrom}:{start}..{end}?content-type=application/json"; 
             var response = await _httpClient.GetFromJsonAsync<ResponseEnsemblDto>(url);
             return response;

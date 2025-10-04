@@ -4,7 +4,8 @@ using Infrastructure.Query;
 var builder = WebApplication.CreateBuilder(args);
 
 //secret
-var NS_API_KEY = builder.Configuration["NeuroSnap:API_KEY"];
+builder.Configuration.AddUserSecrets<Program>();
+
 // Add services to the container.
 
 //CORS
@@ -41,9 +42,20 @@ builder.Services.AddScoped<IPlumberApiClient, PlumberApiClient>();
 builder.Services.AddScoped<IBlastClient, BlastClient>();
 builder.Services.AddScoped<IServiceBlast, ServiceBlast>();
 
-builder.Services.AddScoped<IServiceFold, ServiceFold>();
-builder.Services.AddScoped<IFoldClient, FoldClient>();
+builder.Services.AddScoped<IServiceFolding, ServiceFolding>();
 builder.Services.AddScoped<IPyClient, PyClient>();
+builder.Services.AddScoped<INeurosnapClient, NeurosnapClient>();
+
+var NS_API_KEY = builder.Configuration["NeuroSnap:API_KEY"];
+var NS_BASE_URL = builder.Configuration["API_URL:NEUROSNAP"];
+//Console.WriteLine(NS_API_KEY);
+
+builder.Services.AddHttpClient<NeurosnapClient>(client =>
+{
+    client.BaseAddress = new Uri(NS_BASE_URL);
+    client.DefaultRequestHeaders.Add("X-API-KEY", NS_API_KEY);
+});
+
 
 var app = builder.Build();
 

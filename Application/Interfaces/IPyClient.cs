@@ -4,7 +4,8 @@ namespace Application
 {
     public interface IPyClient
     {
-        public DataAADto GetAASeq(string sequence, string frame);
-        public DataPdbDto[] GetPdbs(DataPdbDto prediction, string pbdId);
+        
+        public Task<string> GetAminoAcidSeq(string sequence, string frame);
+        public Task<string> GetAlignProtein(string prediction, string reference);
     }
 }
