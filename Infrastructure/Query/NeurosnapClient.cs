@@ -7,20 +7,20 @@ namespace Application
     public class NeurosnapClient : INeurosnapClient
     {
         private readonly HttpClient _httpClient;
-        private readonly string _neurosnapURL;
+        //private readonly string _neurosnapURL;
 
         public NeurosnapClient(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
-            _neurosnapURL = configuration["API_URL:NEUROSNAP"];
-            _httpClient.DefaultRequestHeaders.Clear();
-            _httpClient.DefaultRequestHeaders.Add("X-API-KEY", configuration["NeuroSnap:API_KEY"]);
+            //_neurosnapURL = configuration["API_URL:NEUROSNAP"];
+            //_httpClient.DefaultRequestHeaders.Clear();
+            //_httpClient.DefaultRequestHeaders.Add("X-API-KEY", configuration["NeuroSnap:API_KEY"]);
         }
 
         public async Task<string> InitJob(string aminoAcidSequence)
         {
             ///api/job/submit/SERVICE_NAME?note=NOTE multipart/form-data
-            var url = $"{_neurosnapURL}/api/job/submit/AlphaFold2?note=vitamina";
+            var url = "api/job/submit/AlphaFold2?note=vitamina";
 
             // multipart
             var content = new MultipartFormDataContent
@@ -58,24 +58,26 @@ namespace Application
         public async Task<string> GetJobStatus(string jobId)
         {
             ///api/job/status/JOB_ID; pending, running, failed, and completed
-            var url = $"{_neurosnapURL}/api/job/status/{jobId}";
+            var url = $"api/job/status/{jobId}";
             return await _httpClient.GetStringAsync(url);
         }
 
         public async Task<string> GetPrediction(string jobId)
         {
             ///api/job/file/JOB_ID/[in/out]/FILE_NAME?share=SHARE_ID;
-            var pdbUrl = $"{_neurosnapURL}/api/job/file/{jobId}/out/prot1_rank_1.pdb";
+            
+            //uncertainty.json : {"prot1": {"1": 7.8, "2": 4.97, "3": 4.71, "4": 5.85, "5": 6.44}} rank_1 al 5
+            var pdbUrl = $"api/job/file/{jobId}/out/prot1_rank_1.pdb";
             var pdbResponse = await _httpClient.GetStringAsync(pdbUrl);
             
-            var jsonUrl = $"{_neurosnapURL}/api/job/file/{jobId}/out/prot1_rank_1.json";
+            var jsonUrl = $"api/job/file/{jobId}/out/prot1_rank_1.json";
             var jsonResponse = await _httpClient.GetStringAsync(jsonUrl);
             
             return pdbResponse;
         }
         public async Task<string> GetJobs()
         {
-            var url = $"{_neurosnapURL}/api/jobs";
+            var url = "api/jobs";
             return await _httpClient.GetStringAsync(url);
         }
     }

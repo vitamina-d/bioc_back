@@ -10,19 +10,19 @@ namespace Infrastructure.Query
     public class PlumberApiClient : IPlumberApiClient
     {
         private readonly HttpClient _httpClient;
-        private readonly string _plumberURL;
+        //private readonly string _plumberURL;
 
         public PlumberApiClient(HttpClient httpClient, IConfiguration configuration )
         {
             _httpClient = httpClient;
-            _plumberURL = configuration["API_URL:PLUMBER"];
+            //_plumberURL = configuration["API_URL:PLUMBER"];
 
         }
 
         public async Task<string> GetAlign(BodyAlignDto bodyDto)
         {
             //'http://localhost:8787/p/df91a627/align/?pattern=AAACC&subject=ACGTC&global=true'
-            var url = $"{_plumberURL}/align/";
+            var url = "align/";
             var body = new { 
                 pattern = bodyDto.Pattern,
                 subject = bodyDto.Subject,
@@ -40,7 +40,7 @@ namespace Infrastructure.Query
         public async Task<ResponsePlumberDto<DataComplementDto>> GetComplement(BodyComplementDto bodyDto)
         {
             //http://localhost:8787/p/782c59fc/complement/?seq=ACGT&is_reverse=true&is_complement=true
-            var url = $"{_plumberURL}/complement/";
+            var url = "complement/";
             var body = new
             {
                 seq = bodyDto.Sequence,
@@ -62,21 +62,21 @@ namespace Infrastructure.Query
             {
                 type = "detailfull";
             } 
-            var url = $"{_plumberURL}/{type}/?entrez={entrez}";
+            var url = $"{type}/?entrez={entrez}";
             var response = await _httpClient.GetStringAsync(url);
             return response;
         }
 
         public async Task<string> GetEcho(string msg)
         {
-            var url = $"{_plumberURL}/echo/?msg={Uri.EscapeDataString(msg)}";
+            var url = $"echo/?msg={Uri.EscapeDataString(msg)}";
             var response = await _httpClient.GetStringAsync(url);
             return response;
         }
 
         public async Task<string> GetEntrez(string symbolOrAlias)
         {
-            var url = $"{_plumberURL}/entrez/?value={symbolOrAlias}";
+            var url = $"entrez/?value={symbolOrAlias}";
             var response = await _httpClient.GetStringAsync(url);
             return response;
         }
@@ -85,7 +85,7 @@ namespace Infrastructure.Query
         {
             //percent muestra el porcentaje de bases, A / T y C/ G de una secuencia
             //'http://localhost:8787/p/df91a627/percent/?seq=ACGT'
-            var url = $"{_plumberURL}/percent/";
+            var url = "percent/";
             var body = new { seq = sequence };
             var content = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync(url, content);
@@ -97,7 +97,7 @@ namespace Infrastructure.Query
         {
             // seq_by_symbol devuelve la secuencia completa o de exones, dado el symbol de un gen
             //'http://localhost:8787/p/df91a627/seq_by_symbol/?gene_symbol=DHCR7&complete=true'
-            var url = $"{_plumberURL}/sequence/?entrez={entrez}&complete={complete}";
+            var url = $"sequence/?entrez={entrez}&complete={complete}";
             var response = await _httpClient.GetStringAsync(url);
             return response;
         }
@@ -106,34 +106,34 @@ namespace Infrastructure.Query
         {
             //seq_by_range devuelve la secuencia dado el cromosoma y el rango
             //'http://localhost:8787/p/df91a627/seq_by_range/?chrom=chr11&start=71428193&end=71452868'
-            var url = $"{_plumberURL}/seq_by_range/?chrom=chr{chrom}&start={start}&end={end}";
+            var url = $"seq_by_range/?chrom=chr{chrom}&start={start}&end={end}";
             var response = await _httpClient.GetStringAsync(url);
             return response;
         }
 
         public async Task<string> GetStats(string entrez, bool complete)
         {
-            var url = $"{_plumberURL}/stats/?entrez={entrez}&complete={complete}";
+            var url = $"stats/?entrez={entrez}&complete={complete}";
             var response = await _httpClient.GetStringAsync(url);
             return response;
         }
 
         public async Task<string> GetAutoComplete(string input)
         {
-            var url = $"{_plumberURL}/autocomplete/?input={input}";
+            var url = $"autocomplete/?input={input}";
             var response = await _httpClient.GetStringAsync(url);
             return response;
         }
 
         public async Task<string> IsEntrez(string entrez)
         {
-            var url = $"{_plumberURL}/isentrez/?entrez={entrez}";
+            var url = $"isentrez/?entrez={entrez}";
             var response = await _httpClient.GetStringAsync(url);
             return response;
         }
         public async Task<ResponsePlumberDto<DataTableDto>> GetTable()
         {
-            var url = $"{_plumberURL}/table/";
+            var url = "table/";
             var response = await _httpClient.GetStringAsync(url);
             var json = JsonSerializer.Deserialize<ResponsePlumberDto<DataTableDto>>(response);
             Console.WriteLine(json);
@@ -142,12 +142,11 @@ namespace Infrastructure.Query
 
         public async Task<ResponsePlumberDto<DataTableDto>> GetGenenames()
         {
-            var url = $"{_plumberURL}/genename/";
+            var url = "genename/";
             var response = await _httpClient.GetStringAsync(url);
             var json = JsonSerializer.Deserialize<ResponsePlumberDto<DataTableDto>>(response);
             Console.WriteLine(json);
             return json;
         }
-
     }
 }

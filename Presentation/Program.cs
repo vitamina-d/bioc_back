@@ -34,23 +34,30 @@ builder.Services.AddSwaggerGen();
 //AddScoped: instancia por request
 //AddSingleton: una sola instancia para toda la aplicación
 builder.Services.AddScoped<IServicePublicApi, ServicePublicApi>();
-builder.Services.AddScoped<IPublicApiClient, PublicApiClient>();
-
 builder.Services.AddScoped<IServicePlumberApi, ServicePlumberApi>();
-builder.Services.AddScoped<IPlumberApiClient, PlumberApiClient>();
-
-builder.Services.AddScoped<IBlastClient, BlastClient>();
 builder.Services.AddScoped<IServiceBlast, ServiceBlast>();
-
 builder.Services.AddScoped<IServiceFolding, ServiceFolding>();
-builder.Services.AddScoped<IPyClient, PyClient>();
-builder.Services.AddScoped<INeurosnapClient, NeurosnapClient>();
+
+builder.Services.AddHttpClient<IPublicApiClient, PublicApiClient>();
+builder.Services.AddHttpClient<IPlumberApiClient, PlumberApiClient>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["API_URL:PLUMBER"]);
+});
+builder.Services.AddHttpClient<IBlastClient, BlastClient>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["API_URL:BLAST"]);
+});
+builder.Services.AddHttpClient<IPyClient, PyClient>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["API_URL:BIOPY"]);
+});
+//builder.Services.AddScoped<INeurosnapClient, NeurosnapClient>();
 
 var NS_API_KEY = builder.Configuration["NeuroSnap:API_KEY"];
 var NS_BASE_URL = builder.Configuration["API_URL:NEUROSNAP"];
 //Console.WriteLine(NS_API_KEY);
 
-builder.Services.AddHttpClient<NeurosnapClient>(client =>
+builder.Services.AddHttpClient<INeurosnapClient, NeurosnapClient>(client =>
 {
     client.BaseAddress = new Uri(NS_BASE_URL);
     client.DefaultRequestHeaders.Add("X-API-KEY", NS_API_KEY);
