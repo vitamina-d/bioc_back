@@ -16,6 +16,7 @@ services:
     depends_on:
       - bioc
       - blast
+      - biopython 
 
   web:
     build:
@@ -52,3 +53,12 @@ services:
       - ../bioc_blast:/bservice
     ports:
       - "8001:8001"
+
+  biopython:
+    build:
+      context: ../biopython
+      dockerfile: Dockerfile
+    volumes:
+    - ../biopython:/biopython
+    ports:
+    - "8002:8002"  

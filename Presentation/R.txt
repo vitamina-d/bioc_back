@@ -1,16 +1,5 @@
-﻿Levantar API en R
-> api <- plumber::plumb("/home/rstudio/Desktop/bioinfogp/api.R")  
-> api$run(host = "0.0.0.0", port = 8000)
-
-1. React --> envía una secuencia de ADN al backend --> .NET
-2. .NET --> envia una peticion a Plumber para alinear la secuencia --> R
-3. R --> envía el archivo SAM --> .NET
-4. .NET --> lo devuelve para su visualización --> React
-
-json serializado en string:
+﻿json serializado en string:
 	response	"{\"msj\":[\"El mensaje es: msg\"]}"	string
-
-que client devuelva desserializado!!!
 
 https://ploomber.io/blog/restapi-plumber/
 
@@ -22,11 +11,8 @@ BD
 BD searcher
 | entrez | symbol | genename |
 
-private static int _counter = 0;
-
 * promedio por endpoint
 * consultas frecuentes
 * success/fail
 
-ENVIAR MAYUSCULAS!!
 https://www.youtube.com/watch?v=oP2yBGG2yE4&ab_channel=return%28GiS%29%3B
