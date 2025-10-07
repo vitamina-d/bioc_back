@@ -1,5 +1,5 @@
 ﻿using Application;
-using Application.DTO;
+using Application.DTO.Folding;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers
@@ -15,24 +15,23 @@ namespace Presentation.Controllers
             _serviceFolding = serviceFolding;
         }
         
-        [HttpGet("estructures")]
-        public async Task<IActionResult> GetEstructures(string jobId, string pdbId)
-        {
-            var res = await _serviceFolding.GetEstructures(jobId, pdbId);
-            return Ok(res);
-        }
         [HttpPost("initJob")]
         public async Task<IActionResult> PostJob([FromBody] BodyInitFoldDto body)
         {
             var result = await _serviceFolding.InitFoldingJob(body.Sequence, body.Frame);
-            return Ok(result); // { refPdb, predAlignedPdb, rmsd }
+            return Ok(result); 
         }
-
         [HttpGet("status/{jobId}")]
         public async Task<IActionResult> GetFoldingStatus(string jobId)
         {
             var status = await _serviceFolding.GetFoldingStatus(jobId);
             return Ok(new { JobId = jobId, Status = status });
+        }
+        [HttpGet("estructures")]
+        public async Task<IActionResult> GetEstructures(string jobId, string pdbId)
+        {
+            var res = await _serviceFolding.GetEstructures(jobId, pdbId);
+            return Ok(res);
         }
     }
 }

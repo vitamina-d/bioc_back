@@ -1,5 +1,6 @@
 ﻿using Application;
 using Application.DTO;
+using Application.DTO.Blast;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers
@@ -15,11 +16,11 @@ namespace Presentation.Controllers
             _blastService = blastService;
         }
         [HttpPost("blastx")]
-        [ProducesResponseType(typeof(ResponsePlumberDto<Report?>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseDto<Report?>), StatusCodes.Status200OK)]
         public async Task<IActionResult> BlastX([FromBody] BodyBlastxDto body)
         {
             var res = await _blastService.Connect(body.Sequence);
-            return Ok(new ResponsePlumberDto<Report?>
+            return Ok(new ResponseDto<Report?>
             {
                 Code = res.Code,
                 Message = res.Message,

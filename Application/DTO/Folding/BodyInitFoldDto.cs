@@ -1,12 +1,12 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Application.DTO
+namespace Application.DTO.Folding
 {
     public class BodyInitFoldDto
     {
         [JsonPropertyName("sequence")]
         public string Sequence { get; set; }
         [JsonPropertyName("frame")]
-        public string Frame { get; set; }
+        public int Frame { get; set; }
     }
 }

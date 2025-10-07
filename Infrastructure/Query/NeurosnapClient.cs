@@ -7,14 +7,10 @@ namespace Application
     public class NeurosnapClient : INeurosnapClient
     {
         private readonly HttpClient _httpClient;
-        //private readonly string _neurosnapURL;
-
-        public NeurosnapClient(HttpClient httpClient, IConfiguration configuration)
+        
+        public NeurosnapClient(HttpClient httpClient)
         {
             _httpClient = httpClient;
-            //_neurosnapURL = configuration["API_URL:NEUROSNAP"];
-            //_httpClient.DefaultRequestHeaders.Clear();
-            //_httpClient.DefaultRequestHeaders.Add("X-API-KEY", configuration["NeuroSnap:API_KEY"]);
         }
 
         public async Task<string> InitJob(string aminoAcidSequence)

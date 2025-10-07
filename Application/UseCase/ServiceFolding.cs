@@ -1,13 +1,11 @@
-﻿using Application.DTO;
-
-namespace Application
+﻿namespace Application
 {
     public class ServiceFolding : IServiceFolding
     {
         private readonly INeurosnapClient _neurosnapClient; //neurosnap
-        private readonly IPyClient _pyClient; //
-        private readonly IPublicApiClient _publicClient; //
-        public ServiceFolding(INeurosnapClient neurosnapClient, IPyClient pyClient, IPublicApiClient publicClient)
+        private readonly IPythonClient _pyClient; //biopython
+        private readonly IPublicApiClient _publicClient; //page
+        public ServiceFolding(INeurosnapClient neurosnapClient, IPythonClient pyClient, IPublicApiClient publicClient)
         {
             _neurosnapClient = neurosnapClient;
             _pyClient = pyClient;
@@ -15,20 +13,22 @@ namespace Application
         }
         public async Task<string> GetEstructures(string jobId, string pdbId)
         {
-            //neurosnap: AA -> prediccion
+            //get prediction_pdb from neurosnap
             var predictionPdb = await _neurosnapClient.GetPrediction(jobId);
-            //protein data bank
+            
+            //download reference_pdb from protein data bank
             var referencePdb = await _publicClient.DownloadPdb(pdbId);
+
             //py: (prediccion, pdbid) -> align
-            //var alignPdbs = await _pyClient.GetAlignProtein(predictionPdb, referencePdb);
+            var alignPdbs = await _pyClient.GetAlignProtein(predictionPdb, referencePdb);
             return predictionPdb;
         }
-        public async Task<string> InitFoldingJob(string nucleotides, string frame)
+        public async Task<string> InitFoldingJob(string nucleotides, int frame)
         {
             //py: (seq, frame) -> AA
-            //var aminoacidSequence = await _pyClient.GetAminoAcidSeq(nucleotides, frame);
-            var aminoacidSequence = "MASKSQHNAPKVKSPNGKAGSQGQWGRAWEVDWFSLASIIFLLLFAPFIVYYFIMACDQYSCSLTAPALDIATGHASLADIWAKTPPVTAKAAQLYALWVSFQVLLYSWLPDFCHRFLPGYVGGVQEGAITPAGVVNKYAVNGLQAWLITHILWFVNAYLLSWFSPTIIF";
-            var jobId = await _neurosnapClient.InitJob(aminoacidSequence);
+            var aminoacidSequence = await _pyClient.GetAminoAcidSeq(nucleotides, frame);
+            var jobId = "123456789";
+            //var jobId = await _neurosnapClient.InitJob(aminoacidSequence);
             return jobId;
         }
         public async Task<string> GetFoldingStatus(string jobId)

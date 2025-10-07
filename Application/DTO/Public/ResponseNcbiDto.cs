@@ -1,4 +1,4 @@
-﻿namespace Application.DTO
+﻿namespace Application.DTO.Public
 {
     public class ResponseNcbiDto
     {

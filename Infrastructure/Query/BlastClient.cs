@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using System.Text;
+﻿using System.Text;
 using System.Text.Json;
 
 namespace Application
@@ -7,11 +6,9 @@ namespace Application
     public class BlastClient : IBlastClient
     {
         private readonly HttpClient _httpClient;
-        //private readonly string _blastURL;
-        public BlastClient(HttpClient httpClient, IConfiguration configuration)
+        public BlastClient(HttpClient httpClient)
         {
             _httpClient = httpClient;
-            //_blastURL = configuration["API_URL:BLAST"];
         }
         public async Task<string> BlastX(string sequence)
         {

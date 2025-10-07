@@ -1,6 +1,4 @@
 ﻿using Application;
-using Application.DTO;
-using System.Net.Http.Json;
 using Microsoft.Extensions.Configuration;
 
 namespace Infrastructure.Query
@@ -24,16 +22,7 @@ namespace Infrastructure.Query
             return pdb;
         }
 
-        public async Task<ResponseEnsemblDto> GetEnsemblResponse(string chrom, int start, int end)
-        {
-            //https://rest.ensembl.org/sequence/region/human/11:100000..100100?content-type=application/json";
-            var _ensemblURL = _configuration["API_URL:ENSEMBL"];
-            string url = $"{_ensemblURL}sequence/region/human/{chrom}:{start}..{end}?content-type=application/json"; 
-            var response = await _httpClient.GetFromJsonAsync<ResponseEnsemblDto>(url);
-            return response;
-        }
-
-        public async Task<string> GetNcbiResponse(string entrez, string type)
+       public async Task<string> GetNcbiResponse(string entrez, string type)
         {
             // xml o json
             //https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gene&id=1717&retmode=json

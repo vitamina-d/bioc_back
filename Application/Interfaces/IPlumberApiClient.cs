@@ -4,7 +4,7 @@ namespace Application
 {
     public interface IPlumberApiClient
     {
-        public Task<string> GetAlign(BodyAlignDto bodyDto);
+        public Task<string> GetAlign(string pattern, string subject, string type, int gapOpening, int gapExtension);
         public Task<string> GetEcho(string msg);
         public Task<string> GetDetail(string entrez, bool full);
         public Task<string> GetPercent(string sequence);
@@ -14,11 +14,5 @@ namespace Application
         public Task<string> GetEntrez(string symbolOrAlias);
         public Task<string> IsEntrez(string entrez);
         public Task<string> GetAutoComplete(string input);
-
-        public Task<ResponsePlumberDto<DataTableDto?>> GetTable();
-        public Task<ResponsePlumberDto<DataTableDto?>> GetGenenames();
-        public Task<ResponsePlumberDto<DataComplementDto?>> GetComplement(BodyComplementDto bodyDto);
-
-
     }
 }

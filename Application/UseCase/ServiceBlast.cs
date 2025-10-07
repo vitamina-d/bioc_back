@@ -1,4 +1,5 @@
 ﻿using Application.DTO;
+using Application.DTO.Blast;
 using System.Text.Json;
 
 namespace Application
@@ -10,10 +11,10 @@ namespace Application
         {
             _blastClient = blastClient;
         }
-        public async Task<ResponsePlumberDto<DataBlastxDto?>> Connect(string sequence)
+        public async Task<ResponseDto<DataBlastxDto?>> Connect(string sequence)
         {
             var res = await _blastClient.BlastX(sequence);
-            var json = JsonSerializer.Deserialize<ResponsePlumberDto<DataBlastxDto?>>(res);
+            var json = JsonSerializer.Deserialize<ResponseDto<DataBlastxDto?>>(res);
             return json;
         }
     }

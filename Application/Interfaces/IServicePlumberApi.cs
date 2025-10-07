@@ -1,24 +1,21 @@
 ﻿using Application.DTO;
+using Application.DTO.Plumber;
 
 namespace Application
 {
     public interface IServicePlumberApi
     {
-        public Task<ResponsePlumberDto<DataAlignDto?>> GetAlignment(BodyAlignDto bodyDto);
-        public Task<ResponsePlumberDto<DataComplementDto?>> GetComplement(BodyComplementDto bodyDto);
-        public Task<ResponsePlumberDto<DataPercentDto?>> GetPercent(string sequence);
+        public Task<ResponseDto<DataAlignDto?>> GetAlignment(string pattern, string subject, string type, int gapOpening, int gapExtension);
+        public Task<ResponseDto<DataPercentDto?>> GetPercent(string sequence);
 
 
-        public Task<ResponsePlumberDto<T?>> GetDetail<T>(string value, bool full);
-        public Task<ResponsePlumberDto<DataSequenceDto?>> GetSequence(string chrom, int start, int end);
-        public Task<ResponsePlumberDto<DataSequenceDto?>> GetSequence(string entrez, bool complete);
-        public Task<ResponsePlumberDto<DataStatsDto?>> GetStats(string entrez, bool complete);
+        public Task<ResponseDto<T?>> GetDetail<T>(string value, bool full);
+        public Task<ResponseDto<DataSequenceDto?>> GetSequence(string chrom, int start, int end);
+        public Task<ResponseDto<DataSequenceDto?>> GetSequence(string entrez, bool complete);
+        public Task<ResponseDto<DataStatsDto?>> GetStats(string entrez, bool complete);
 
-        public Task<ResponsePlumberDto<List<string>>> GetAutoComplete(string input);
-        public Task<ResponsePlumberDto<DataEntrezDto>> GetEntrezByValue(string value);
-
-        public Task<ResponsePlumberDto<DataTableDto?>> GetTable();
-        public Task<ResponsePlumberDto<DataTableDto?>> GetGenenames();
+        public Task<ResponseDto<List<string>>> GetAutoComplete(string input);
+        public Task<ResponseDto<DataEntrezDto>> GetEntrezByValue(string value);
 
         public Task<EchoResponseDto> GetMessage(string msg);
     }

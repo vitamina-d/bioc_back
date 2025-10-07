@@ -1,4 +1,4 @@
-﻿using Application.DTO;
+﻿using Application.DTO.Public;
 using System.Text.Json;
 
 namespace Application
@@ -11,13 +11,6 @@ namespace Application
         {
             _publicApiClient = publicApiClient;
         }
-
-        public async Task<ResponseEnsemblDto> GetSequenceFromEnsembl(string chrom, int start, int end)
-        {
-            var response = await _publicApiClient.GetEnsemblResponse(chrom, start, end);
-            return response;
-        }
-
         public async Task<ResponseNcbiDto> GetSummaryFromNcbi(string entrez, string type)
         {
             var response = await _publicApiClient.GetNcbiResponse(entrez, type);

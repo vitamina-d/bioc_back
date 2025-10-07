@@ -37,6 +37,7 @@ builder.Services.AddScoped<IServicePublicApi, ServicePublicApi>();
 builder.Services.AddScoped<IServicePlumberApi, ServicePlumberApi>();
 builder.Services.AddScoped<IServiceBlast, ServiceBlast>();
 builder.Services.AddScoped<IServiceFolding, ServiceFolding>();
+builder.Services.AddScoped<IServicePython, ServicePython>();
 
 builder.Services.AddHttpClient<IPublicApiClient, PublicApiClient>();
 builder.Services.AddHttpClient<IPlumberApiClient, PlumberApiClient>(client =>
@@ -47,15 +48,13 @@ builder.Services.AddHttpClient<IBlastClient, BlastClient>(client =>
 {
     client.BaseAddress = new Uri(builder.Configuration["API_URL:BLAST"]);
 });
-builder.Services.AddHttpClient<IPyClient, PyClient>(client =>
+builder.Services.AddHttpClient<IPythonClient, PythonClient>(client =>
 {
-    client.BaseAddress = new Uri(builder.Configuration["API_URL:BIOPY"]);
+    client.BaseAddress = new Uri(builder.Configuration["API_URL:BIOPYTHON"]);
 });
-//builder.Services.AddScoped<INeurosnapClient, NeurosnapClient>();
 
 var NS_API_KEY = builder.Configuration["NeuroSnap:API_KEY"];
 var NS_BASE_URL = builder.Configuration["API_URL:NEUROSNAP"];
-//Console.WriteLine(NS_API_KEY);
 
 builder.Services.AddHttpClient<INeurosnapClient, NeurosnapClient>(client =>
 {

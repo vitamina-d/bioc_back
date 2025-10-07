@@ -1,10 +1,11 @@
 ﻿using Application.DTO;
+using Application.DTO.Blast;
 
 namespace Application
 {
     public interface IServiceBlast
     {
-        public Task<ResponsePlumberDto<DataBlastxDto?>> Connect(string sequence);
+        public Task<ResponseDto<DataBlastxDto?>> Connect(string sequence);
 
     }
 }

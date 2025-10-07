@@ -1,6 +1,6 @@
 ﻿using Application;
 using Application.DTO;
-using Microsoft.Extensions.Configuration;
+using Application.DTO.Plumber;
 using System.Text;
 using System.Text.Json;
 
@@ -10,25 +10,22 @@ namespace Infrastructure.Query
     public class PlumberApiClient : IPlumberApiClient
     {
         private readonly HttpClient _httpClient;
-        //private readonly string _plumberURL;
-
-        public PlumberApiClient(HttpClient httpClient, IConfiguration configuration )
+        public PlumberApiClient(HttpClient httpClient)
         {
             _httpClient = httpClient;
-            //_plumberURL = configuration["API_URL:PLUMBER"];
-
         }
 
-        public async Task<string> GetAlign(BodyAlignDto bodyDto)
+        public async Task<string> GetAlign(string pattern, string subject, string type, int gapOpening, int gapExtension)
         {
             //'http://localhost:8787/p/df91a627/align/?pattern=AAACC&subject=ACGTC&global=true'
             var url = "align/";
-            var body = new { 
-                pattern = bodyDto.Pattern,
-                subject = bodyDto.Subject,
-                type = bodyDto.Type,
-                gapOpening = bodyDto.GapOpening,
-                gapExtension = bodyDto.GapExtension
+            var body = new BodyAlignDto
+            {
+                Pattern = pattern,
+                Subject = subject,
+                Type = type,
+                GapOpening = gapOpening,
+                GapExtension = gapExtension
             };
             var content = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json");
             //var response = await _httpClient.GetStringAsync(url);
@@ -36,23 +33,6 @@ namespace Infrastructure.Query
             var result = await response.Content.ReadAsStringAsync();
             return result;
 
-        }
-        public async Task<ResponsePlumberDto<DataComplementDto>> GetComplement(BodyComplementDto bodyDto)
-        {
-            //http://localhost:8787/p/782c59fc/complement/?seq=ACGT&is_reverse=true&is_complement=true
-            var url = "complement/";
-            var body = new
-            {
-                seq = bodyDto.Sequence,
-                to_reverse = bodyDto.ToReverse,
-                to_complement = bodyDto.ToComplement,
-            };
-            var content = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json");
-            var response = await _httpClient.PostAsync(url, content);
-            var result = await response.Content.ReadAsStringAsync();
-            var json = JsonSerializer.Deserialize<ResponsePlumberDto<DataComplementDto>>(result);
-            Console.WriteLine(json);
-            return json;
         }
 
         public async Task<string> GetDetail(string entrez, bool full)
@@ -130,23 +110,6 @@ namespace Infrastructure.Query
             var url = $"isentrez/?entrez={entrez}";
             var response = await _httpClient.GetStringAsync(url);
             return response;
-        }
-        public async Task<ResponsePlumberDto<DataTableDto>> GetTable()
-        {
-            var url = "table/";
-            var response = await _httpClient.GetStringAsync(url);
-            var json = JsonSerializer.Deserialize<ResponsePlumberDto<DataTableDto>>(response);
-            Console.WriteLine(json);
-            return json;
-        }
-
-        public async Task<ResponsePlumberDto<DataTableDto>> GetGenenames()
-        {
-            var url = "genename/";
-            var response = await _httpClient.GetStringAsync(url);
-            var json = JsonSerializer.Deserialize<ResponsePlumberDto<DataTableDto>>(response);
-            Console.WriteLine(json);
-            return json;
         }
     }
 }

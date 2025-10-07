@@ -14,15 +14,6 @@ namespace Presentation.Controllers
             _servicePublicApi = servicePublicApi;
         }
 
-        [HttpGet("ensembl")]
-        public async Task<IActionResult> GetSequenceByRange([FromQuery] string chrom = "11", [FromQuery] int start = 100000, [FromQuery] int end = 100100)
-        {
-
-            var res = await _servicePublicApi.GetSequenceFromEnsembl(chrom, start, end);
-            return Ok(res);
-
-        }
-
         [HttpGet("summary")]
         public async Task<IActionResult> GetSummary([FromQuery] string entrez = "1717")
         {

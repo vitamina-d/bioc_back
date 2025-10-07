@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Application.DTO
+namespace Application.DTO.Blast
 {
     public class DataBlastxDto
     {
