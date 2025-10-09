@@ -4,7 +4,7 @@
     {
         
         public Task<string> GetAminoAcidSeq(string sequence, int frame);
-        public Task<string> GetAlignProtein(string prediction_pdb, string reference_pdb);
+        public Task<byte[]> GetAlignProtein(byte[] prediction_pdb, byte[] reference_pdb);
         public Task<string> GetReverseComplement(string sequence, bool reverse, bool complement);
 
     }

@@ -14,11 +14,11 @@ namespace Infrastructure.Query
             _httpClient = httpClient;
             _configuration = configuration;
         }
-        public async Task<string> DownloadPdb(string pdbId)
+        public async Task<byte[]> DownloadPdb(string pdbId)
         {
             var _rcsbURL = _configuration["API_URL:RCSB"];
             var url = $"{_rcsbURL}download/{pdbId}.pdb"; ///https://files.rcsb.org/download/1gav.pdb
-            var pdb = await _httpClient.GetStringAsync(url);
+            var pdb = await _httpClient.GetByteArrayAsync(url);
             return pdb;
         }
 

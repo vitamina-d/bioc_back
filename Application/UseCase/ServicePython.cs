@@ -12,7 +12,7 @@ namespace Application
             _pythonClient = pythonClient;
         }
 
-        public async Task<ResponseDto<BodyAlignPdbDto?>> AlignPdb(string prediction_pdb, string reference_pdb)
+        public async Task<ResponseDto<BodyAlignPdbDto?>> AlignPdb(byte[] prediction_pdb, byte[] reference_pdb)
         {
             var res = await _pythonClient.GetAlignProtein(prediction_pdb, reference_pdb);
             var json = JsonSerializer.Deserialize<ResponseDto<BodyAlignPdbDto>>(res);

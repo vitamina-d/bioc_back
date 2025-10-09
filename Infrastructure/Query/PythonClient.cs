@@ -30,13 +30,18 @@ namespace Application
             var result = await response.Content.ReadAsStringAsync();
             return result;
         }
-        public async Task<string> GetAlignProtein(string prediction_pdb, string reference_pdb)
+        public async Task<byte[]> GetAlignProtein(byte[] prediction_pdb, byte[] reference_pdb)
         {
             var url = "pdb/align";
-            var body = new BodyAlignPdbDto { PredictionPdb = prediction_pdb, ReferencePdb = reference_pdb };
-            var content = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json");
+            //var body = new BodyAlignPdbDto { PredictionPdb = prediction_pdb, ReferencePdb = reference_pdb }; ///enviar byte[]
+            var body = new
+            {
+                prediction_pdb = Convert.ToBase64String(prediction_pdb),
+                reference_pdb = Convert.ToBase64String(reference_pdb)
+            };
+            var content = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json"); 
             var response = await _httpClient.PostAsync(url, content);
-            var result = await response.Content.ReadAsStringAsync();
+            var result = await response.Content.ReadAsByteArrayAsync();
             return result;
         }
     }

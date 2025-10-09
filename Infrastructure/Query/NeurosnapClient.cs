@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 
@@ -34,12 +34,12 @@ namespace Application
                     ),
                     "Input Sequences"
                 },
-                { new StringContent("auto"), "Model Type" },
-                { new StringContent("none"), "Template Mode" },
+                { new StringContent("auto"), "Model Type" },//
+                { new StringContent("none"), "Template Mode" },//no usar homologos
                 { new StringContent("mmseqs2_uniref_env"), "MSA Mode" },
                 { new StringContent("unpaired_paired"), "Pair Mode" },
-                { new StringContent("5"), "Number Recycles" },
-                { new StringContent("0.75"), "Recycles Early Stop Tolerance" },
+                { new StringContent("5"), "Number Recycles" }, //el modelo refina 5 veces la prediccion
+                { new StringContent("0.75"), "Recycles Early Stop Tolerance" }, //no refinar si no mejora
                 { new StringContent("1"), "Number Ensembles" }
             };
 
@@ -58,23 +58,30 @@ namespace Application
             return await _httpClient.GetStringAsync(url);
         }
 
-        public async Task<string> GetPrediction(string jobId)
+        public async Task<byte[]> GetPrediction(string jobId, string rank)
         {
-            ///api/job/file/JOB_ID/[in/out]/FILE_NAME?share=SHARE_ID;
-            
-            //uncertainty.json : {"prot1": {"1": 7.8, "2": 4.97, "3": 4.71, "4": 5.85, "5": 6.44}} rank_1 al 5
-            var pdbUrl = $"api/job/file/{jobId}/out/prot1_rank_1.pdb";
-            var pdbResponse = await _httpClient.GetStringAsync(pdbUrl);
-            
-            var jsonUrl = $"api/job/file/{jobId}/out/prot1_rank_1.json";
-            var jsonResponse = await _httpClient.GetStringAsync(jsonUrl);
-            
+            //api/job/file/JOB_ID/[in/out]/FILE_NAME?share=SHARE_ID;
+            var pdbUrl = $"api/job/file/{jobId}/out/prot1_rank_{rank}.pdb";
+            var pdbResponse = await _httpClient.GetByteArrayAsync(pdbUrl);
             return pdbResponse;
         }
         public async Task<string> GetJobs()
         {
             var url = "api/jobs";
             return await _httpClient.GetStringAsync(url);
+        }
+
+        public async Task<string> GetRanks(string jobId)
+        {
+            var url = $"api/job/file/{jobId}/out/uncertainty.json";
+            var uncertainty = await _httpClient.GetStringAsync(url); //min = best prediction "3": 4.71
+            return uncertainty; //{"prot1": {"1": 7.8, "2": 4.97, "3": 4.71, "4": 5.85, "5": 6.44}} rank_1 al 5
+            /*rank.json = {
+                plddt:[],
+                max_pae:31.234375,
+                pae:[],
+                ptm:0.67
+            }*/
         }
     }
 }
