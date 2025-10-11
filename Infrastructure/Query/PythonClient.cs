@@ -13,7 +13,7 @@ namespace Application
         }
         public async Task<string> GetAminoAcidSeq(string sequence, int frame)
         {
-            var url = "dna/translate";
+            var url = "dna/translate/";
             var body = new BodyTranslateDto { Sequence = sequence, Frame = frame };
             var content = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync(url, content);
@@ -23,7 +23,7 @@ namespace Application
 
         public async Task<string> GetReverseComplement(string sequence, bool reverse, bool complement)
         {
-            var url = "dna/reverse_complement";
+            var url = "dna/reverse_complement/";
             var body = new BodyReverseComplementDto { Sequence = sequence, Reverse = reverse, Complement = complement };
             var content = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync(url, content);
@@ -32,17 +32,17 @@ namespace Application
         }
         public async Task<byte[]> GetAlignProtein(byte[] prediction_pdb, byte[] reference_pdb)
         {
-            var url = "pdb/align";
-            //var body = new BodyAlignPdbDto { PredictionPdb = prediction_pdb, ReferencePdb = reference_pdb }; ///enviar byte[]
-            var body = new
-            {
-                prediction_pdb = Convert.ToBase64String(prediction_pdb),
-                reference_pdb = Convert.ToBase64String(reference_pdb)
-            };
-            var content = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json"); 
+            var url = "pdb/multipart/";
+
+            var content = new MultipartFormDataContent();
+            content.Add(new ByteArrayContent(prediction_pdb), "prediction_pdb", "prediction.pdb");
+            content.Add(new ByteArrayContent(reference_pdb), "reference_pdb", "reference.pdb");
+
             var response = await _httpClient.PostAsync(url, content);
-            var result = await response.Content.ReadAsByteArrayAsync();
-            return result;
+            var contentType = response.Content.Headers.ContentType;
+            response.EnsureSuccessStatusCode();
+
+            return await response.Content.ReadAsByteArrayAsync();
         }
     }
 }

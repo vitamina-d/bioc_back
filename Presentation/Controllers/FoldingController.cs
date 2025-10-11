@@ -35,11 +35,12 @@ namespace Presentation.Controllers
             return Ok(res);
         }
 
-        [HttpGet("/job/{jobId}/rank_{rank}/structure")] //pdb alineado rank_X
+        [HttpGet("job/{jobId}/rank_{rank}/align/{pdbId}")] //pdb alineado rank_X
         public async Task<IActionResult> GetEstructures(string pdbId = "4quv", string jobId = "68e17d82e986d44f8b7e9e1b", string rank = "3")
         {
-            var alignedFile = await _serviceFolding.GetEstructures(pdbId, jobId, rank);
-            return File(alignedFile, "chemical/x-pdb", $"aligned_{pdbId}_{rank}.pdb");
+            var alignedBytes = await _serviceFolding.GetEstructures(pdbId, jobId, rank);
+            //\nATOM     14  N ??
+            return File(alignedBytes, "chemical/x-pdb", $"{jobId}_rank{rank}.pdb");
         }
     }
 }

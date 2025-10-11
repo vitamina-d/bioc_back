@@ -1,5 +1,4 @@
-﻿using System.Net.Http;
-using System.Text;
+﻿using System.Text;
 using System.Text.Json;
 
 namespace Application
@@ -61,7 +60,7 @@ namespace Application
         public async Task<byte[]> GetPrediction(string jobId, string rank)
         {
             //api/job/file/JOB_ID/[in/out]/FILE_NAME?share=SHARE_ID;
-            var pdbUrl = $"api/job/file/{jobId}/out/prot1_rank_{rank}.pdb";
+            var pdbUrl = $"api/job/file/{jobId}/out/prot1_rank_{rank}.pdb";//ok
             var pdbResponse = await _httpClient.GetByteArrayAsync(pdbUrl);
             return pdbResponse;
         }
