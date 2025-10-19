@@ -4,9 +4,7 @@ namespace Application.DTO.Folding
 {
     public class BodyInitFoldDto
     {
-        [JsonPropertyName("sequence")]
-        public string Sequence { get; set; }
-        [JsonPropertyName("frame")]
-        public int Frame { get; set; }
+        [JsonPropertyName("aminoacid")]
+        public string Aminoacid { get; set; } //aminoacidSequence
     }
 }

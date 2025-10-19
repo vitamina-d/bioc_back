@@ -15,17 +15,19 @@ namespace Presentation.Controllers
             _serviceFolding = serviceFolding;
         }
         
-        [HttpPost("initJob")]
+        [HttpPost("init")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public async Task<IActionResult> InitJob([FromBody] BodyInitFoldDto body)
         {
-            var result = await _serviceFolding.InitFoldingJob(body.Sequence, body.Frame);
+            var result = await _serviceFolding.InitFoldingJob(body.Aminoacid);
             return Ok(result); 
         }
         [HttpGet("status/{jobId}")]
+        [ProducesResponseType(typeof(ResponseStatusDto), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetFoldingStatus(string jobId)
         {
             var status = await _serviceFolding.GetFoldingStatus(jobId);
-            return Ok(new { JobId = jobId, Status = status });
+            return Ok(new ResponseStatusDto { JobId = jobId, Status = status });
         }
         
         [HttpGet("job/{jobId}/ranks")] //lista de ranks, uncertainly.json prot1_rank_x.json del 1 al 5

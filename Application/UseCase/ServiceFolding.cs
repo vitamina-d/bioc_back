@@ -23,10 +23,10 @@
             var alignPdbs = await _pythonClient.GetAlignProtein(predictionFile, referencePdb);
             return alignPdbs;
         }
-        public async Task<string> InitFoldingJob(string nucleotides, int frame)
+        public async Task<string> InitFoldingJob(string aminoacidSequence)
         {
             //py: (seq, frame) -> AA
-            var aminoacidSequence = await _pythonClient.GetAminoAcidSeq(nucleotides, frame);
+            //var aminoacidSequence = await _pythonClient.GetAminoAcidSeq(nucleotides, frame); NO HACE FALTA
             var jobId = "123456789";
             //var jobId = await _neurosnapClient.InitJob(aminoacidSequence);
             return jobId;
