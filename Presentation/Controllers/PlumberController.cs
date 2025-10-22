@@ -83,12 +83,12 @@ namespace Presentation.Controllers
             return Ok(response);
         }
 
-        [HttpGet("entrez/{id}")]
+        [HttpGet("entrez/{value}")]
         [ProducesResponseType(typeof(ResponseDto<DataEntrezDto>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetEntrez(string id)
+        public async Task<IActionResult> GetEntrez(string value)
         {
-            var res = await _servicePlumberApi.GetEntrezByValue(id.ToUpper());
-            return Ok(res);
+            var entrez = await _servicePlumberApi.GetEntrezByValue(value.ToUpper());
+            return Ok(entrez);
         }
     }
 }

@@ -38,7 +38,7 @@ namespace Presentation.Controllers
         }
 
         [HttpGet("job/{jobId}/rank_{rank}/align/{pdbId}")] //pdb alineado rank_X
-        public async Task<IActionResult> GetEstructures(string pdbId = "4quv", string jobId = "68e17d82e986d44f8b7e9e1b", string rank = "3")
+        public async Task<IActionResult> GetEstructures(string pdbId, string jobId, string rank)
         {
             var alignedBytes = await _serviceFolding.GetEstructures(pdbId, jobId, rank);
             //\nATOM     14  N ??

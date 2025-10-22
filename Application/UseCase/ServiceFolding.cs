@@ -27,8 +27,7 @@
         {
             //py: (seq, frame) -> AA
             //var aminoacidSequence = await _pythonClient.GetAminoAcidSeq(nucleotides, frame); NO HACE FALTA
-            var jobId = "123456789";
-            //var jobId = await _neurosnapClient.InitJob(aminoacidSequence);
+            var jobId = await _neurosnapClient.InitJob(aminoacidSequence);
             return jobId;
         }
         public async Task<string> GetFoldingStatus(string jobId)

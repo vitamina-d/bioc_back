@@ -62,7 +62,7 @@ builder.Services.AddHttpClient<INeurosnapClient, NeurosnapClient>(client =>
     client.DefaultRequestHeaders.Add("X-API-KEY", NS_API_KEY);
 });
 
-
+builder.WebHost.UseUrls("http://0.0.0.0:8081"); //a ver si no se cierra
 var app = builder.Build();
 
 app.UseSwagger();

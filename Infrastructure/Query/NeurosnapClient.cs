@@ -24,7 +24,7 @@ namespace Application
                     new StringContent(
                         JsonSerializer.Serialize(new
                         {
-                            aa = new Dictionary<string, string> { { "prot1", aminoAcidSequence } },
+                            aa = new Dictionary<string, string> { { "protein", aminoAcidSequence } },
                             dna = new { },
                             rna = new { }
                         }),
@@ -52,7 +52,6 @@ namespace Application
 
         public async Task<string> GetJobStatus(string jobId)
         {
-            ///api/job/status/JOB_ID; pending, running, failed, and completed
             var url = $"api/job/status/{jobId}";
             return await _httpClient.GetStringAsync(url);
         }
@@ -73,14 +72,8 @@ namespace Application
         public async Task<string> GetRanks(string jobId)
         {
             var url = $"api/job/file/{jobId}/out/uncertainty.json";
-            var uncertainty = await _httpClient.GetStringAsync(url); //min = best prediction "3": 4.71
+            var uncertainty = await _httpClient.GetStringAsync(url); //min = best prediction 
             return uncertainty; //{"prot1": {"1": 7.8, "2": 4.97, "3": 4.71, "4": 5.85, "5": 6.44}} rank_1 al 5
-            /*rank.json = {
-                plddt:[],
-                max_pae:31.234375,
-                pae:[],
-                ptm:0.67
-            }*/
         }
     }
 }

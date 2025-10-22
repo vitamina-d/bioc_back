@@ -16,3 +16,6 @@ BD searcher
 * success/fail
 
 https://www.youtube.com/watch?v=oP2yBGG2yE4&ab_channel=return%28GiS%29%3B
+
+client: exception y devuelve string
+service: validar y deserializar json o devolver objeto si hay exception

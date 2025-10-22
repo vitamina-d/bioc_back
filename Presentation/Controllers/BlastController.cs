@@ -24,8 +24,6 @@ namespace Presentation.Controllers
             {
                 Code = res.Code,
                 Message = res.Message,
-                DateTime = res.DateTime,
-                Time = res.Time,
                 Data = res.Data?.BlastOutput2[0].Report
             });
         }

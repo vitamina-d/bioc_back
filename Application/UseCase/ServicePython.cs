@@ -14,23 +14,171 @@ namespace Application
 
         public async Task<ResponseDto<BodyAlignPdbDto?>> AlignPdb(byte[] prediction_pdb, byte[] reference_pdb)
         {
-            var res = await _pythonClient.GetAlignProtein(prediction_pdb, reference_pdb);
-            var json = JsonSerializer.Deserialize<ResponseDto<BodyAlignPdbDto>>(res);
-            return json;
+            if (prediction_pdb == null || prediction_pdb.Length == 0 )
+            {
+                return new ResponseDto<BodyAlignPdbDto?>
+                {
+                    Code = 400,
+                    Message = "Ingrese prediction PDB."
+                };
+            }
+            if (reference_pdb == null || reference_pdb.Length == 0 )
+            {
+                return new ResponseDto<BodyAlignPdbDto?>
+                {
+                    Code = 400,
+                    Message = "Ingrese reference PDB."
+                };
+            }
+            try
+            {
+                var response = await _pythonClient.GetAlignProtein(prediction_pdb, reference_pdb);
+                var json = JsonSerializer.Deserialize<ResponseDto<BodyAlignPdbDto?>>(response);
+                if (json == null)
+                {
+                    return new ResponseDto<BodyAlignPdbDto?>
+                    {
+                        Code = 500,
+                        Message = $"Error en deserialización."
+                    };
+                }
+                return json;
+            }
+            catch (TaskCanceledException ex)
+            {
+                return new ResponseDto<BodyAlignPdbDto?>
+                {
+                    Code = 504,
+                    Message = $"Timeout: {ex.Message}"
+                };
+            }
+            catch (HttpRequestException ex)
+            {
+                return new ResponseDto<BodyAlignPdbDto?>
+                {
+                    Code = 502,
+                    Message = $"Error HTTP: {ex.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto<BodyAlignPdbDto?>
+                {
+                    Code = 500,
+                    Message = $"Error de servicio: {ex.Message}"
+                };
+            }
         }
 
         public async Task<ResponseDto<SequenceDto?>> ReverseComplement(string sequence, bool reverse, bool complement)
         {
-            var res = await _pythonClient.GetReverseComplement(sequence, reverse, complement);
-            var json = JsonSerializer.Deserialize<ResponseDto<SequenceDto>>(res);
-            return json;
+            if (sequence == null || sequence == "")
+            {
+                return new ResponseDto<SequenceDto?>
+                {
+                    Code = 400,
+                    Message = "Ingrese secuencia."
+                };
+            }
+
+            try
+            {
+                var response = await _pythonClient.GetReverseComplement(sequence, reverse, complement);
+                var json = JsonSerializer.Deserialize<ResponseDto<SequenceDto?>>(response);
+                if (json == null)
+                {
+                    return new ResponseDto<SequenceDto?>
+                    {
+                        Code = 500,
+                        Message = $"Error en deserialización."
+                    };
+                }
+                return json;
+            }
+            catch (TaskCanceledException ex)
+            {
+                return new ResponseDto<SequenceDto?>
+                {
+                    Code = 504,
+                    Message = $"Timeout: {ex.Message}"
+                };
+            }
+            catch (HttpRequestException ex)
+            {
+                return new ResponseDto<SequenceDto?>
+                {
+                    Code = 502,
+                    Message = $"Error HTTP: {ex.Message}"
+                };
+            }
+            
+            catch (Exception ex)
+            {
+                return new ResponseDto<SequenceDto?>
+                {
+                    Code = 500,
+                    Message = $"Error de servicio: {ex.Message}"
+                };
+            }
         }
+
 
         public async Task<ResponseDto<SequenceDto?>> Translate(string sequence, int frame)
         {
-            var res = await _pythonClient.GetAminoAcidSeq(sequence, frame);
-            var json = JsonSerializer.Deserialize<ResponseDto<SequenceDto>>(res);
-            return json;
+            if (sequence == null || sequence == "")
+            {
+                return new ResponseDto<SequenceDto?>
+                {
+                    Code = 400,
+                    Message = "Ingrese secuencia."
+                };
+            }
+            if (Math.Abs(frame) < 1 || Math.Abs(frame) > 3)
+            {
+                return new ResponseDto<SequenceDto?>
+                {
+                    Code = 400,
+                    Message = "Ingrese un frame valido."
+                };
+            }
+            try
+            {
+                var response = await _pythonClient.GetAminoAcidSeq(sequence, frame);
+                var json = JsonSerializer.Deserialize<ResponseDto<SequenceDto?>>(response);
+                if (json == null)
+                {
+                    return new ResponseDto<SequenceDto?>
+                    {
+                        Code = 500,
+                        Message = $"Error en deserialización."
+                    }; 
+                }
+                return json;
+            } 
+            catch (TaskCanceledException ex)
+            {
+                return new ResponseDto<SequenceDto?>
+                {
+                    Code = 504,
+                    Message = $"Timeout: {ex.Message}"
+                };
+            }
+            catch (HttpRequestException ex)
+            {
+                return new ResponseDto<SequenceDto?>
+                {
+                    Code = 502,
+                    Message = $"Error HTTP: {ex.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto<SequenceDto?>
+                {
+                    Code = 500, 
+                    Message = $"Error de servicio: {ex.Message}"
+                };
+            }
         }
     }
 }

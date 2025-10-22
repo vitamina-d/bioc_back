@@ -69,9 +69,7 @@ namespace Application
                 return new ResponseDto<DataEntrezDto>
                 {
                     Code = jsonIsEntrez.Code,
-                    DateTime = jsonIsEntrez.DateTime,
                     Message = jsonIsEntrez.Message,
-                    Time = jsonIsEntrez.Time,
                     Data = new DataEntrezDto { Entrez = value }
                 };
             }
