@@ -5,7 +5,7 @@ namespace Application
 {
     public interface IServiceBlast
     {
-        public Task<ResponseDto<DataBlastxDto?>> Connect(string sequence);
+        public Task<ResponseDto<Report?>> Connect(string sequence);
 
     }
 }

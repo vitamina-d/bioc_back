@@ -11,11 +11,29 @@ namespace Application
         {
             _blastClient = blastClient;
         }
-        public async Task<ResponseDto<DataBlastxDto?>> Connect(string sequence)
+        public async Task<ResponseDto<Report?>> Connect(string sequence)
         {
-            var res = await _blastClient.BlastX(sequence);
-            var json = JsonSerializer.Deserialize<ResponseDto<DataBlastxDto?>>(res);
-            return json;
+            try
+            {
+                var res = await _blastClient.BlastX(sequence);
+                var json = JsonSerializer.Deserialize<ResponseDto<DataBlastxDto?>>(res);
+
+                return new ResponseDto<Report?>
+                {
+                    Code = json.Code,
+                    Message = json.Message,
+                    Data = json.Data?.BlastOutput2[0].Report 
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto<Report?>
+                {
+                    Code = 500,
+                    Message = $"Error: {ex.Message}",
+                    Data = null
+                };
+            }
         }
     }
 }

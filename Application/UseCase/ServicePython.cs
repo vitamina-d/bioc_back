@@ -34,17 +34,9 @@ namespace Application
             {
                 var response = await _pythonClient.GetAlignProtein(prediction_pdb, reference_pdb);
                 var json = JsonSerializer.Deserialize<ResponseDto<BodyAlignPdbDto?>>(response);
-                if (json == null)
-                {
-                    return new ResponseDto<BodyAlignPdbDto?>
-                    {
-                        Code = 500,
-                        Message = $"Error en deserialización."
-                    };
-                }
                 return json;
             }
-            catch (TaskCanceledException ex)
+            catch (TimeoutException ex)
             {
                 return new ResponseDto<BodyAlignPdbDto?>
                 {
@@ -85,17 +77,9 @@ namespace Application
             {
                 var response = await _pythonClient.GetReverseComplement(sequence, reverse, complement);
                 var json = JsonSerializer.Deserialize<ResponseDto<SequenceDto?>>(response);
-                if (json == null)
-                {
-                    return new ResponseDto<SequenceDto?>
-                    {
-                        Code = 500,
-                        Message = $"Error en deserialización."
-                    };
-                }
                 return json;
             }
-            catch (TaskCanceledException ex)
+            catch (TimeoutException ex)
             {
                 return new ResponseDto<SequenceDto?>
                 {
@@ -145,17 +129,9 @@ namespace Application
             {
                 var response = await _pythonClient.GetAminoAcidSeq(sequence, frame);
                 var json = JsonSerializer.Deserialize<ResponseDto<SequenceDto?>>(response);
-                if (json == null)
-                {
-                    return new ResponseDto<SequenceDto?>
-                    {
-                        Code = 500,
-                        Message = $"Error en deserialización."
-                    }; 
-                }
                 return json;
             } 
-            catch (TaskCanceledException ex)
+            catch (TimeoutException ex)
             {
                 return new ResponseDto<SequenceDto?>
                 {

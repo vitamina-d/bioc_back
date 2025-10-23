@@ -27,7 +27,7 @@ namespace Application
             {
                 throw new Exception($"Error HTTP {url}: {ex.Message}", ex);
             }
-            catch (TaskCanceledException ex)
+            catch (TimeoutException ex)
             {
                 throw new Exception($"Timeout: {ex.Message}", ex);
             }
@@ -54,7 +54,7 @@ namespace Application
             {
                 throw new Exception($"Error HTTP {url}: {ex.Message}", ex);
             }
-            catch (TaskCanceledException ex)
+            catch (TimeoutException ex)
             {
                 throw new Exception($"Timeout: {ex.Message}", ex);
             }
@@ -83,7 +83,7 @@ namespace Application
             {
                 throw new Exception($"Error HTTP {url}: {ex.Message}", ex);
             }
-            catch (TaskCanceledException ex)
+            catch (TimeoutException ex)
             {
                 throw new Exception($"Timeout: {ex.Message}", ex);
             }

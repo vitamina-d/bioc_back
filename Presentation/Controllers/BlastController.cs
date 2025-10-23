@@ -20,12 +20,7 @@ namespace Presentation.Controllers
         public async Task<IActionResult> BlastX([FromBody] BodyBlastxDto body)
         {
             var res = await _blastService.Connect(body.Sequence);
-            return Ok(new ResponseDto<Report?>
-            {
-                Code = res.Code,
-                Message = res.Message,
-                Data = res.Data?.BlastOutput2[0].Report
-            });
+            return Ok(res);
         }
     }
 }
