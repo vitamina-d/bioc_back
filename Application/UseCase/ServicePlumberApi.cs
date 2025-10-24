@@ -12,24 +12,31 @@ namespace Application
         {
             _plumberApiClient = plumberApiClient;
         }
-        public async Task<EchoResponseDto> GetMessage(string msg)
+        public async Task<ResponseDto<List<string>>> GetAutoComplete(string input)
         {
-            var res = await _plumberApiClient.GetEcho(msg);
-            var json = JsonSerializer.Deserialize<EchoResponseDto>(res);
+            var res = await _plumberApiClient.GetAutoComplete(input);
+            var json = JsonSerializer.Deserialize<ResponseDto<List<string>>>(res);
             return json;
         }
-
+        public async Task<ResponseDto<DataDetailDto?>> GetDetail(string entrez)
+        {
+            var isFull = false;
+            var response = await _plumberApiClient.GetDetail(entrez, isFull);
+            var json = JsonSerializer.Deserialize<ResponseDto<DataDetailDto?>>(response);
+            return json;
+        }
+        public async Task<ResponseDto<DataFullDetailDto?>> GetFullDetail(string entrez)
+        {
+            var isFull = true;
+            var response = await _plumberApiClient.GetDetail(entrez, isFull);
+            var json = JsonSerializer.Deserialize<ResponseDto<DataFullDetailDto?>>(response);
+            return json;
+        }
         public async Task<ResponseDto<DataAlignDto?>> GetAlignment(string pattern, string subject, string type, int gapOpening, int gapExtension)
         {
             //pattern, subject, type, match, mismatch, gapOpening, gapExtension)
             var res = await _plumberApiClient.GetAlign(pattern, subject, type, gapOpening, gapExtension);
             var json = JsonSerializer.Deserialize<ResponseDto<DataAlignDto?>>(res); 
-            return json;
-        }
-        public async Task<ResponseDto<T?>> GetDetail<T>(string entrez, bool full)
-        {
-            var response = await _plumberApiClient.GetDetail(entrez, full);
-            var json = JsonSerializer.Deserialize<ResponseDto<T?>>(response);
             return json;
         }
 
@@ -83,12 +90,6 @@ namespace Application
                 }
                 return null;
             }
-        }
-        public async Task<ResponseDto<List<string>>> GetAutoComplete(string input)
-        {
-            var res = await _plumberApiClient.GetAutoComplete(input);
-            var json = JsonSerializer.Deserialize<ResponseDto<List<string>>>(res);
-            return json;
         }
     }
 }

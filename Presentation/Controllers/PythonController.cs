@@ -19,7 +19,7 @@ namespace Presentation.Controllers
         [HttpPost("align")]
         [ProducesResponseType(typeof(ResponseDto<BodyAlignPdbDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)] //502 y 504
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> AlignProtein([FromBody] BodyAlignPdbDto body)
         {
             var response = await _pythonService.AlignPdb(body.PredictionPdb, body.ReferencePdb);
@@ -28,7 +28,7 @@ namespace Presentation.Controllers
         [HttpPost("complement")]
         [ProducesResponseType(typeof(ResponseDto<SequenceDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)] //502 y 504
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)] 
         public async Task<IActionResult> GetComplement([FromBody] BodyReverseComplementDto body)
         {
                 var response = await _pythonService.ReverseComplement(body.Sequence, body.Reverse, body.Complement);
@@ -38,7 +38,7 @@ namespace Presentation.Controllers
         [HttpPost("translate")]
         [ProducesResponseType(typeof(ResponseDto<SequenceDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)] 
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)] //502 y 504
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetTranslate([FromBody] BodyTranslateDto body)
         {
             var response = await _pythonService.Translate(body.Sequence, body.Frame);

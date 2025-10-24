@@ -13,7 +13,7 @@ namespace Application.DTO.Plumber
         [JsonPropertyName("genetype")]
         public string Genetype { get; set; }
         [JsonPropertyName("alias")]
-        public string[] Alias { get; set; }
+        public string[]? Alias { get; set; }
     }
 }
 

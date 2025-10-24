@@ -1,5 +1,6 @@
 using Application;
 using Infrastructure.Query;
+using Presentation.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -76,6 +77,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.UseCors(MyAllowSpecificOrigins);
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.MapControllers();
 

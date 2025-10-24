@@ -2,6 +2,7 @@
 using Application.DTO;
 using Application.DTO.Blast;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.Utils;
 
 namespace Presentation.Controllers
 {
@@ -17,10 +18,12 @@ namespace Presentation.Controllers
         }
         [HttpPost("blastx")]
         [ProducesResponseType(typeof(ResponseDto<Report?>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> BlastX([FromBody] BodyBlastxDto body)
         {
-            var res = await _blastService.Connect(body.Sequence);
-            return Ok(res);
+            var response = await _blastService.Connect(body.Sequence);
+            return ResponseSwitch.StatusCodes(response);
         }
     }
 }

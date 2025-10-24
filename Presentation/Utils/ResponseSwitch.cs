@@ -14,7 +14,7 @@ namespace Presentation.Utils
                 case 400:
                     return new BadRequestObjectResult(response);
                 default:
-                    return new OkObjectResult(response) { StatusCode = response.Code };
+                    return new ObjectResult(response) { StatusCode = response.Code };
             }
         }
     }

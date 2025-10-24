@@ -2,7 +2,7 @@
 
 namespace Application.DTO.Folding
 {
-    public class ResponseStatusDto
+    public class DataStatusDto
     {
         [JsonPropertyName("jobId")]
         public string JobId { get; set; }

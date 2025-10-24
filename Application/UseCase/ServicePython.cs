@@ -30,36 +30,9 @@ namespace Application
                     Message = "Ingrese reference PDB."
                 };
             }
-            try
-            {
-                var response = await _pythonClient.GetAlignProtein(prediction_pdb, reference_pdb);
-                var json = JsonSerializer.Deserialize<ResponseDto<BodyAlignPdbDto?>>(response);
-                return json;
-            }
-            catch (TimeoutException ex)
-            {
-                return new ResponseDto<BodyAlignPdbDto?>
-                {
-                    Code = 504,
-                    Message = $"Timeout: {ex.Message}"
-                };
-            }
-            catch (HttpRequestException ex)
-            {
-                return new ResponseDto<BodyAlignPdbDto?>
-                {
-                    Code = 502,
-                    Message = $"Error HTTP: {ex.Message}"
-                };
-            }
-            catch (Exception ex)
-            {
-                return new ResponseDto<BodyAlignPdbDto?>
-                {
-                    Code = 500,
-                    Message = $"Error de servicio: {ex.Message}"
-                };
-            }
+            var response = await _pythonClient.GetAlignProtein(prediction_pdb, reference_pdb);
+            var json = JsonSerializer.Deserialize<ResponseDto<BodyAlignPdbDto?>>(response);
+            return json;
         }
 
         public async Task<ResponseDto<SequenceDto?>> ReverseComplement(string sequence, bool reverse, bool complement)
@@ -73,40 +46,10 @@ namespace Application
                 };
             }
 
-            try
-            {
-                var response = await _pythonClient.GetReverseComplement(sequence, reverse, complement);
-                var json = JsonSerializer.Deserialize<ResponseDto<SequenceDto?>>(response);
-                return json;
-            }
-            catch (TimeoutException ex)
-            {
-                return new ResponseDto<SequenceDto?>
-                {
-                    Code = 504,
-                    Message = $"Timeout: {ex.Message}"
-                };
-            }
-            catch (HttpRequestException ex)
-            {
-                return new ResponseDto<SequenceDto?>
-                {
-                    Code = 502,
-                    Message = $"Error HTTP: {ex.Message}"
-                };
-            }
-            
-            catch (Exception ex)
-            {
-                return new ResponseDto<SequenceDto?>
-                {
-                    Code = 500,
-                    Message = $"Error de servicio: {ex.Message}"
-                };
-            }
+            var response = await _pythonClient.GetReverseComplement(sequence, reverse, complement);
+            var json = JsonSerializer.Deserialize<ResponseDto<SequenceDto?>>(response);
+            return json;
         }
-
-
         public async Task<ResponseDto<SequenceDto?>> Translate(string sequence, int frame)
         {
             if (sequence == null || sequence == "")
@@ -125,36 +68,9 @@ namespace Application
                     Message = "Ingrese un frame valido."
                 };
             }
-            try
-            {
-                var response = await _pythonClient.GetAminoAcidSeq(sequence, frame);
-                var json = JsonSerializer.Deserialize<ResponseDto<SequenceDto?>>(response);
-                return json;
-            } 
-            catch (TimeoutException ex)
-            {
-                return new ResponseDto<SequenceDto?>
-                {
-                    Code = 504,
-                    Message = $"Timeout: {ex.Message}"
-                };
-            }
-            catch (HttpRequestException ex)
-            {
-                return new ResponseDto<SequenceDto?>
-                {
-                    Code = 502,
-                    Message = $"Error HTTP: {ex.Message}"
-                };
-            }
-            catch (Exception ex)
-            {
-                return new ResponseDto<SequenceDto?>
-                {
-                    Code = 500, 
-                    Message = $"Error de servicio: {ex.Message}"
-                };
-            }
+            var response = await _pythonClient.GetAminoAcidSeq(sequence, frame);
+            var json = JsonSerializer.Deserialize<ResponseDto<SequenceDto?>>(response);
+            return json;
         }
     }
 }

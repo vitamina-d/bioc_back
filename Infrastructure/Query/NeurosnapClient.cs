@@ -1,17 +1,15 @@
-﻿using System.Text;
+﻿using Infrastructure.Query;
+using System;
+using System.Text;
 using System.Text.Json;
 
 namespace Application
 {
-    public class NeurosnapClient : INeurosnapClient
-    {
-        private readonly HttpClient _httpClient;
+    public class NeurosnapClient : BaseClient, INeurosnapClient
+    {        
+        public NeurosnapClient(HttpClient httpClient) : base(httpClient) { }
         
-        public NeurosnapClient(HttpClient httpClient)
-        {
-            _httpClient = httpClient;
-        }
-
+        //POST
         public async Task<string> InitJob(string aminoAcidSequence)
         {
             ///api/job/submit/SERVICE_NAME?note=NOTE multipart/form-data
@@ -44,36 +42,41 @@ namespace Application
 
             var request = new HttpRequestMessage(HttpMethod.Post, url);
             request.Content = content;
-
-            var response = await _httpClient.SendAsync(request);
-            var json = await response.Content.ReadAsStringAsync();
-            return json; // "\"68e17d82e986d44f8b7e9e1b\""
+            var response = await HandlerTryCatch(async () =>
+            {
+                var httpResponse = await _httpClient.SendAsync(request);
+                httpResponse.EnsureSuccessStatusCode(); //HttpRequestException
+                return await httpResponse.Content.ReadAsStringAsync();
+            }, url);
+            return response; // "\"68e17d82e986d44f8b7e9e1b\""
         }
 
+        //GET
         public async Task<string> GetJobStatus(string jobId)
         {
             var url = $"api/job/status/{jobId}";
-            return await _httpClient.GetStringAsync(url);
+            return await HandlerTryCatch(() => _httpClient.GetStringAsync(url), url);
         }
 
-        public async Task<byte[]> GetPrediction(string jobId, string rank)
-        {
-            //api/job/file/JOB_ID/[in/out]/FILE_NAME?share=SHARE_ID;
-            var pdbUrl = $"api/job/file/{jobId}/out/prot1_rank_{rank}.pdb";//ok
-            var pdbResponse = await _httpClient.GetByteArrayAsync(pdbUrl);
-            return pdbResponse;
-        }
         public async Task<string> GetJobs()
         {
             var url = "api/jobs";
-            return await _httpClient.GetStringAsync(url);
+            return await HandlerTryCatch(() => _httpClient.GetStringAsync(url), url);
         }
 
         public async Task<string> GetRanks(string jobId)
         {
             var url = $"api/job/file/{jobId}/out/uncertainty.json";
-            var uncertainty = await _httpClient.GetStringAsync(url); //min = best prediction 
-            return uncertainty; //{"prot1": {"1": 7.8, "2": 4.97, "3": 4.71, "4": 5.85, "5": 6.44}} rank_1 al 5
+            return await HandlerTryCatch(() => _httpClient.GetStringAsync(url), url); //min = best prediction 
+            //{"prot1": {"1": 7.8, "2": 4.97, "3": 4.71, "4": 5.85, "5": 6.44}} rank_1 al 5
+        }
+
+        //BYTE
+        public async Task<byte[]> GetPrediction(string jobId, string rank)
+        {
+            //api/job/file/JOB_ID/[in/out]/FILE_NAME?share=SHARE_ID;
+            var url = $"api/job/file/{jobId}/out/prot1_rank_{rank}.pdb";//ok
+            return await HandlerTryCatch(() => _httpClient.GetByteArrayAsync(url), url);
         }
     }
 }

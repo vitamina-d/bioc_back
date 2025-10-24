@@ -1,5 +1,8 @@
 ﻿using Application;
+using Application.DTO;
+using Application.DTO.Public;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.Utils;
 
 namespace Presentation.Controllers
 {
@@ -15,12 +18,15 @@ namespace Presentation.Controllers
         }
 
         [HttpGet("summary")]
-        public async Task<IActionResult> GetSummary([FromQuery] string entrez = "1717")
+        [ProducesResponseType(typeof(ResponseDto<ResponseNcbiDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetSummary([FromQuery] string entrez)
         {
             string type = "gene";
             var summary = await _servicePublicApi.GetSummaryFromNcbi(entrez, type);
-            return Ok(summary);
-        
+            return ResponseSwitch.StatusCodes(summary);
+
         }
     }
 }
