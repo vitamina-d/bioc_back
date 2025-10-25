@@ -15,7 +15,8 @@ namespace Infrastructure.Query
         {
             try
             {
-                return await action();
+                var response = await action();
+                return response;
             }
             catch (TimeoutException ex)
             {

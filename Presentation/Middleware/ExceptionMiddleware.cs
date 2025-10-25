@@ -29,6 +29,22 @@ namespace Presentation.Middleware
             {
                 await _next(context);
             }
+            catch (ArgumentException ex)
+            {
+                _logger.LogError(ex, $"ArgumentException detectada. TraceId={traceId}");
+                context.Response.ContentType = "application/json";
+                context.Response.StatusCode = 400;
+
+                var error = new
+                {
+                    traceId,
+                    code = 400,
+                    message = "Parametros invalidos"
+                };
+
+                await context.Response.WriteAsJsonAsync(error);
+                return;
+            }
             catch (ClientException ex)
             {
                 _logger.LogError(ex, $"ClientException detectada. TraceId={traceId}");

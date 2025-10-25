@@ -5,7 +5,7 @@ namespace Application
 {
     public interface IServicePlumberApi
     {
-        public Task<ResponseDto<List<string>>> GetAutoComplete(string input);
+        public Task<ResponseDto<string[]?>> GetAutoComplete(string input);
         public Task<ResponseDto<DataDetailDto?>> GetDetail(string value);
         public Task<ResponseDto<DataFullDetailDto?>> GetFullDetail(string value);
 
@@ -14,6 +14,6 @@ namespace Application
         public Task<ResponseDto<DataSequenceDto?>> GetSequence(string chrom, int start, int end);
         public Task<ResponseDto<DataSequenceDto?>> GetSequence(string entrez, bool complete);
         public Task<ResponseDto<DataStatsDto?>> GetStats(string entrez, bool complete);
-        public Task<ResponseDto<DataEntrezDto>> GetEntrezByValue(string value);
+        public Task<ResponseDto<DataEntrezDto?>> GetEntrezByValue(string value);
     }
 }

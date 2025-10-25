@@ -12,10 +12,10 @@ namespace Application
         {
             _plumberApiClient = plumberApiClient;
         }
-        public async Task<ResponseDto<List<string>>> GetAutoComplete(string input)
+        public async Task<ResponseDto<string[]>> GetAutoComplete(string input)
         {
             var res = await _plumberApiClient.GetAutoComplete(input);
-            var json = JsonSerializer.Deserialize<ResponseDto<List<string>>>(res);
+            var json = JsonSerializer.Deserialize<ResponseDto<string[]?>> (res);
             return json;
         }
         public async Task<ResponseDto<DataDetailDto?>> GetDetail(string entrez)
