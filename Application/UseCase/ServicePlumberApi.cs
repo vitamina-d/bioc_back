@@ -40,25 +40,24 @@ namespace Application
             return json;
         }
 
-        public async Task<ResponseDto<DataPercentDto?>> GetPercent(string sequence)
+        public async Task<ResponseDto<DataStatsDto?>> GetPercent(string sequence)
         {
             var res = await _plumberApiClient.GetPercent(sequence);
-            var dto = JsonSerializer.Deserialize<ResponseDto<DataPercentDto?>>(res);
+            var dto = JsonSerializer.Deserialize<ResponseDto<DataStatsDto?>>(res);
             return dto;
         }
 
-        public async Task<ResponseDto<DataSequenceDto?>> GetSequence(string chrom, int start, int end)
+        public async Task<ResponseDto<DataSequenceDto[]?>> GetSequence(string chrom, int start, int end)
         {
             var res = await _plumberApiClient.GetSequence(chrom, start, end);
-            var json = JsonSerializer.Deserialize<ResponseDto<DataSequenceDto?>>(res);
+            var json = JsonSerializer.Deserialize<ResponseDto<DataSequenceDto[]?>>(res);
             return json;
         }
 
-        public async Task<ResponseDto<DataSequenceDto?>> GetSequence(string entrez, bool complete)
+        public async Task<ResponseDto<DataSequenceDto[]?>> GetSequence(string entrez, bool complete)
         {
             var res = await _plumberApiClient.GetSequence(entrez, complete);
-            var json = JsonSerializer.Deserialize<ResponseDto<DataSequenceDto?>>(res);
-            json.Data.Entrez = entrez;
+            var json = JsonSerializer.Deserialize<ResponseDto<DataSequenceDto[]?>>(res);
             return json;
         }
         public async Task<ResponseDto<DataStatsDto?>> GetStats(string entrez, bool complete)

@@ -15,12 +15,10 @@ namespace Application
                 sequence = sequence
             };
             var content = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json");
-            
-            var response = await HandlerTryCatch(async () =>
+
+            var response = await HandlerTryCatch<string>(async () =>
             {
-                var response = await _httpClient.PostAsync(url, content);
-                response.EnsureSuccessStatusCode(); //HttpRequestException
-                return await response.Content.ReadAsStringAsync();
+                return await _httpClient.PostAsync(url, content);
             }, url);
             return response;
         }

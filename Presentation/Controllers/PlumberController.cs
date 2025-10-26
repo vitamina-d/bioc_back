@@ -18,7 +18,7 @@ namespace Presentation.Controllers
             _servicePlumberApi = servicePlumberApi;
         }
         [HttpGet("autocomplete")]//ok
-        [ProducesResponseType(typeof(ResponseDto<List<string>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseDto<List<string>?>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)] 
         public async Task<IActionResult> GetAutoComplete([FromQuery] string input)
@@ -27,7 +27,7 @@ namespace Presentation.Controllers
             return ResponseSwitch.StatusCodes(autocomplete);
         }
         [HttpPost("align")]
-        [ProducesResponseType(typeof(ResponseDto<DataAlignDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseDto<DataAlignDto?>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)] 
         public async Task<IActionResult> GetAlign([FromBody] BodyAlignDto body)
@@ -36,7 +36,7 @@ namespace Presentation.Controllers
             return ResponseSwitch.StatusCodes(response);
         }
         [HttpGet("detail")]
-        [ProducesResponseType(typeof(ResponseDto<Object>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseDto<Object?>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)] 
         public async Task<IActionResult> GetDetail([FromQuery] string entrez, [FromQuery] bool isFull)
@@ -51,7 +51,7 @@ namespace Presentation.Controllers
             return ResponseSwitch.StatusCodes(detail);
         }
         [HttpPost("percent")]
-        [ProducesResponseType(typeof(ResponseDto<DataPercentDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseDto<DataStatsDto?>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetPercent([FromBody] string sequence)
@@ -61,7 +61,7 @@ namespace Presentation.Controllers
         }
 
         [HttpGet("sequence_by_range")]
-        [ProducesResponseType(typeof(ResponseDto<DataSequenceDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseDto<DataSequenceDto[]?>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)] 
         public async Task<IActionResult> GetSequenceByRange([FromQuery] string chrom, [FromQuery] int start, [FromQuery] int end)
@@ -71,7 +71,7 @@ namespace Presentation.Controllers
         }
 
         [HttpGet("sequence")]
-        [ProducesResponseType(typeof(ResponseDto<DataSequenceDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseDto<DataSequenceDto[]?>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)] 
         public async Task<IActionResult> GetSequenceByEntrez([FromQuery] string entrez, [FromQuery] bool complete)
@@ -80,7 +80,7 @@ namespace Presentation.Controllers
             return ResponseSwitch.StatusCodes(response);
         }
         [HttpGet("stats")]
-        [ProducesResponseType(typeof(ResponseDto<DataStatsDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseDto<DataSequenceDto[]?>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetStats([FromQuery] string entrez, [FromQuery] bool complete)
@@ -90,10 +90,10 @@ namespace Presentation.Controllers
         }
 
         [HttpGet("entrez/{value}")]
-        [ProducesResponseType(typeof(ResponseDto<DataEntrezDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseDto<DataEntrezDto?>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)] 
-        public async Task<IActionResult> GetEntrez(string value)
+        public async Task<IActionResult> GetEntrez(string value) //"{\"error\":\"Internal error\"}"
         {
             var entrez = await _servicePlumberApi.GetEntrezByValue(value.ToUpper());
             return ResponseSwitch.StatusCodes(entrez);

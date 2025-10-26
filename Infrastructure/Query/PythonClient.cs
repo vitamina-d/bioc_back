@@ -14,11 +14,9 @@ namespace Application
             var body = new BodyTranslateDto { Sequence = sequence, Frame = frame };
             var content = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json");
 
-            var response = await HandlerTryCatch(async () =>
+            var response = await HandlerTryCatch<string>(async () =>
             {
-                var httpResponse = await _httpClient.PostAsync(url, content);
-                httpResponse.EnsureSuccessStatusCode(); //HttpRequestException
-                return await httpResponse.Content.ReadAsStringAsync();
+                return await _httpClient.PostAsync(url, content);
             }, url);
             return response;
         }
@@ -28,12 +26,10 @@ namespace Application
             var url = "dna/reverse_complement/";
             var body = new BodyReverseComplementDto { Sequence = sequence, Reverse = reverse, Complement = complement };
             var content = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json");
-            
-            var response = await HandlerTryCatch(async () =>
+
+            var response = await HandlerTryCatch<string>(async () =>
             {
-                var httpResponse = await _httpClient.PostAsync(url, content);
-                httpResponse.EnsureSuccessStatusCode(); //HttpRequestException
-                return await httpResponse.Content.ReadAsStringAsync();
+                return await _httpClient.PostAsync(url, content);
             }, url);
             return response;
         }
@@ -44,12 +40,10 @@ namespace Application
             var content = new MultipartFormDataContent();
             content.Add(new ByteArrayContent(prediction_pdb), "prediction_pdb", "prediction.pdb");
             content.Add(new ByteArrayContent(reference_pdb), "reference_pdb", "reference.pdb");
-            
-            var response = await HandlerTryCatch(async () =>
+
+            var response = await HandlerTryCatch<byte[]>(async () =>
             {
-                var httpResponse = await _httpClient.PostAsync(url, content);
-                httpResponse.EnsureSuccessStatusCode(); //HttpRequestException
-                return await httpResponse.Content.ReadAsByteArrayAsync();
+                return await _httpClient.PostAsync(url, content);
             }, url);
             return response;
 

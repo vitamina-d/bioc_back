@@ -11,12 +11,32 @@ namespace Infrastructure.Query
             _httpClient = httpClient;
         }
 
-        protected async Task<T> HandlerTryCatch<T>(Func<Task<T>> action, string url)
+        protected async Task<T> HandlerTryCatch<T>(Func<Task<HttpResponseMessage>> action, string url)
         {
+            int code = 0;
             try
             {
-                var response = await action();
-                return response;
+                var httpResponse = await action();
+                if (!httpResponse.IsSuccessStatusCode)
+                {
+                    var content = await httpResponse.Content.ReadAsStringAsync();
+                    code = (int)httpResponse.StatusCode;
+                    throw new ClientException((int)httpResponse.StatusCode, content);
+                }
+
+                // string o byte[]
+                if (typeof(T) == typeof(string))
+                {
+                    return (T)(object)await httpResponse.Content.ReadAsStringAsync();
+                } else if (typeof(T) == typeof(byte[])){
+                    return (T)(object)await httpResponse.Content.ReadAsByteArrayAsync();
+                } else { throw new NotSupportedException($"HandlerTryCatch devuelve -string- o -byte[]-, {typeof(T)} no."); }
+
+            }
+            catch (ClientException)
+            {
+                //throw new ClientException(code, $"Timeout: {ex.Message}", ex);
+                throw;
             }
             catch (TimeoutException ex)
             {

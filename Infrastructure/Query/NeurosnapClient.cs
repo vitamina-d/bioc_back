@@ -42,11 +42,9 @@ namespace Application
 
             var request = new HttpRequestMessage(HttpMethod.Post, url);
             request.Content = content;
-            var response = await HandlerTryCatch(async () =>
+            var response = await HandlerTryCatch<string>(async () =>
             {
-                var httpResponse = await _httpClient.SendAsync(request);
-                httpResponse.EnsureSuccessStatusCode(); //HttpRequestException
-                return await httpResponse.Content.ReadAsStringAsync();
+                return await _httpClient.SendAsync(request);
             }, url);
             return response; // "\"68e17d82e986d44f8b7e9e1b\""
         }
@@ -55,19 +53,32 @@ namespace Application
         public async Task<string> GetJobStatus(string jobId)
         {
             var url = $"api/job/status/{jobId}";
-            return await HandlerTryCatch(() => _httpClient.GetStringAsync(url), url);
+            var response = await HandlerTryCatch<string>(async () =>
+            {
+                return await _httpClient.GetAsync(url);
+            }, url);
+            return response;
         }
 
         public async Task<string> GetJobs()
         {
             var url = "api/jobs";
-            return await HandlerTryCatch(() => _httpClient.GetStringAsync(url), url);
+            var response = await HandlerTryCatch<string>(async () =>
+            {
+                return await _httpClient.GetAsync(url);
+            }, url);
+            return response;
         }
 
         public async Task<string> GetRanks(string jobId)
         {
             var url = $"api/job/file/{jobId}/out/uncertainty.json";
-            return await HandlerTryCatch(() => _httpClient.GetStringAsync(url), url); //min = best prediction 
+            var response = await HandlerTryCatch<string>(async () =>
+            {
+                return await _httpClient.GetAsync(url);
+            }, url);
+            return response;
+            //min = best prediction 
             //{"prot1": {"1": 7.8, "2": 4.97, "3": 4.71, "4": 5.85, "5": 6.44}} rank_1 al 5
         }
 
@@ -76,7 +87,11 @@ namespace Application
         {
             //api/job/file/JOB_ID/[in/out]/FILE_NAME?share=SHARE_ID;
             var url = $"api/job/file/{jobId}/out/prot1_rank_{rank}.pdb";//ok
-            return await HandlerTryCatch(() => _httpClient.GetByteArrayAsync(url), url);
+            var response = await HandlerTryCatch<byte[]>(async () =>
+            {
+                return await _httpClient.GetAsync(url);
+            }, url);
+            return response;
         }
     }
 }

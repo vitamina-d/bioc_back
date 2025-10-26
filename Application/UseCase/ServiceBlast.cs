@@ -20,7 +20,7 @@ namespace Application
             {
                 Code = json.Code,
                 Message = json.Message,
-                Data = json.Data?.BlastOutput2[0].Report 
+                Data = json.Data?.BlastOutput2?.FirstOrDefault()?.Report
             };
         }
     }
