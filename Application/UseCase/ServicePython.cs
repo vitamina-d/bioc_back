@@ -7,9 +7,11 @@ namespace Application
     public class ServicePython : IServicePython
     {
         private readonly IPythonClient _pythonClient;
-        public ServicePython(IPythonClient pythonClient)
+        private readonly IPublicApiClient _publicClient;
+        public ServicePython(IPythonClient pythonClient, IPublicApiClient publicClient)
         {
             _pythonClient = pythonClient;
+            _publicClient = publicClient;
         }
 
         public async Task<ResponseDto<BodyAlignPdbDto?>> AlignPdb(byte[] prediction_pdb, byte[] reference_pdb)
@@ -31,8 +33,42 @@ namespace Application
                 };
             }
             var response = await _pythonClient.GetAlignProtein(prediction_pdb, reference_pdb);
-            var json = JsonSerializer.Deserialize<ResponseDto<BodyAlignPdbDto?>>(response);
-            return json;
+            var data = JsonSerializer.Deserialize<BodyAlignPdbDto?>(response);
+            return new ResponseDto<BodyAlignPdbDto?>
+            {
+                Code = 200,
+                Message = "Ok.",
+                Data = data,
+            }; 
+        }
+
+        public async Task<ResponseDto<byte[]?>> ComparePdb(byte[] pdb_file, string reference_id)
+        {
+            if (pdb_file == null || pdb_file.Length == 0)
+            {
+                return new ResponseDto<byte[]?>
+                {
+                    Code = 400,
+                    Message = "Ingrese prediction PDB_file."
+                };
+            }
+            if (reference_id == null || reference_id.Length == 0)
+            {
+                return new ResponseDto<byte[]?>
+                {
+                    Code = 400,
+                    Message = "Ingrese reference ID."
+                };
+            }
+            //download reference_pdb from protein data bank
+            var referencePdb = await _publicClient.DownloadPdb(reference_id);
+            var response = await _pythonClient.GetAlignProtein(pdb_file, referencePdb);
+            return new ResponseDto<byte[]?>
+            {
+                Code = 200,
+                Message = "Ok.",
+                Data = response,
+            };
         }
 
         public async Task<ResponseDto<SequenceDto?>> ReverseComplement(string sequence, bool reverse, bool complement)

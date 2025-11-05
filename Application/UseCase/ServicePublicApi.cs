@@ -26,7 +26,7 @@ namespace Application
             return new ResponseDto<ResponseNcbiDto?>
             {
                 Code = 200,
-                Message = $"Ok.",
+                Message = "Ok.",
                 Data = new ResponseNcbiDto
                 {
                     Name = nodo.GetProperty("name").GetString(),

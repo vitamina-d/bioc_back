@@ -74,11 +74,11 @@ app.UseSwaggerUI(c =>
 
 app.UseHttpsRedirection();
 
+app.UseMiddleware<ExceptionMiddleware>();
+
 app.UseAuthorization();
 
 app.UseCors(MyAllowSpecificOrigins);
-
-app.UseMiddleware<ExceptionMiddleware>();
 
 app.MapControllers();
 

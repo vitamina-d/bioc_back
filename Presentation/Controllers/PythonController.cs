@@ -25,6 +25,29 @@ namespace Presentation.Controllers
             var response = await _pythonService.AlignPdb(body.PredictionPdb, body.ReferencePdb);
             return ResponseSwitch.StatusCodes(response);
         }
+        [HttpPost("compare/{reference_id}")]
+        [Consumes("multipart/form-data")]
+        //[Consumes("chemical/x-pdb")]
+        [ProducesResponseType(typeof(File), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> CompareProtein([FromRoute] string reference_id, [FromForm] IFormFile pdb_file)
+        {
+            if (pdb_file == null || pdb_file.Length == 0)
+                return BadRequest("Archivo PDB vacío o nulo.");
+
+            using var ms = new MemoryStream();
+            await pdb_file.CopyToAsync(ms);
+            var bytes = ms.ToArray(); 
+
+            var response = await _pythonService.ComparePdb(bytes, reference_id);
+            if (response.Code == 200)
+            {
+                return File(response.Data, "chemical/x-pdb", $"{pdb_file.Name}_align.pdb");
+            }
+            return ResponseSwitch.StatusCodes(response);
+        }
+
         [HttpPost("complement")]
         [ProducesResponseType(typeof(ResponseDto<SequenceDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -44,5 +67,6 @@ namespace Presentation.Controllers
             var response = await _pythonService.Translate(body.Sequence, body.Frame);
             return ResponseSwitch.StatusCodes(response);
         }
+
     }
 }
