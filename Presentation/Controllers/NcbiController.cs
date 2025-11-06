@@ -1,5 +1,6 @@
 ﻿using Application;
 using Application.DTO;
+using Application.DTO.Blast;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Utils;
 
@@ -35,7 +36,7 @@ namespace Presentation.Controllers
         }
 
         [HttpGet("result/{rid}")]
-        [ProducesResponseType(typeof(ResponseDto<string?>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseDto<DataBlastXml?>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetResult([FromRoute] string rid)
