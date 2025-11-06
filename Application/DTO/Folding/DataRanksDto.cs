@@ -4,7 +4,7 @@ namespace Application.DTO.Folding
 {
     public class DataRanksDto
     {
-        [JsonPropertyName("protein")]
-        public Dictionary<string, double> Protein { get; set; }
+        [JsonPropertyName("prot1")]
+        public Dictionary<string, double> Prot1 { get; set; }
     }
 }

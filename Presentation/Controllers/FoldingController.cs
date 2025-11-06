@@ -34,11 +34,10 @@ namespace Presentation.Controllers
         {
             var response = await _serviceFolding.GetFoldingStatus(jobId);
             return ResponseSwitch.StatusCodes(response);
-
         }
 
         [HttpGet("job/{jobId}/ranks")] //lista de ranks, uncertainly.json prot1_rank_x.json del 1 al 5
-        [ProducesResponseType(typeof(ResponseDto<DataRanksDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseDto<DataRanksDto?>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetRanks(string jobId)

@@ -64,7 +64,7 @@ namespace Application
             {
                 Code = 200,
                 Message = $"Ok.",
-                Data = ranks.Protein,
+                Data = ranks.Prot1,
             }; //{"prot1": {"1": 7.8, "2": 4.97, "3": 4.71, "4": 5.85, "5": 6.44}}
 
         }

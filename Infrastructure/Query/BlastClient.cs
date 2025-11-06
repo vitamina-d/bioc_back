@@ -18,7 +18,7 @@ namespace Application
 
             var response = await HandlerTryCatch<string>(async () =>
             {
-                return await _httpClient.PostAsync(url, content);
+               return await _httpClient.PostAsync(url, content);
             }, url);
             return response;
         }

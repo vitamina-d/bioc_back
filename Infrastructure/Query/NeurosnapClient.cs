@@ -22,7 +22,7 @@ namespace Application
                     new StringContent(
                         JsonSerializer.Serialize(new
                         {
-                            aa = new Dictionary<string, string> { { "protein", aminoAcidSequence } },
+                            aa = new Dictionary<string, string> { { "prot1", aminoAcidSequence } },
                             dna = new { },
                             rna = new { }
                         }),

@@ -34,7 +34,7 @@ builder.Services.AddSwaggerGen();
 //AddTransient: instancia cada vez que se solicita
 //AddScoped: instancia por request
 //AddSingleton: una sola instancia para toda la aplicación
-builder.Services.AddScoped<IServicePublicApi, ServicePublicApi>();
+builder.Services.AddScoped<IServiceNcbi, ServiceNcbi>();
 builder.Services.AddScoped<IServicePlumberApi, ServicePlumberApi>();
 builder.Services.AddScoped<IServiceBlast, ServiceBlast>();
 builder.Services.AddScoped<IServiceFolding, ServiceFolding>();
@@ -55,15 +55,19 @@ builder.Services.AddHttpClient<IPythonClient, PythonClient>(client =>
 });
 
 var NS_API_KEY = builder.Configuration["NeuroSnap:API_KEY"];
-var NS_BASE_URL = builder.Configuration["API_URL:NEUROSNAP"];
 
 builder.Services.AddHttpClient<INeurosnapClient, NeurosnapClient>(client =>
 {
-    client.BaseAddress = new Uri(NS_BASE_URL);
+    client.BaseAddress = new Uri(builder.Configuration["API_URL:NEUROSNAP"]);
     client.DefaultRequestHeaders.Add("X-API-KEY", NS_API_KEY);
 });
+builder.Services.AddHttpClient<INcbiClient, NcbiClient>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["API_URL:NCBI_BLAST"]);
+});
 
-builder.WebHost.UseUrls("http://0.0.0.0:8081"); //a ver si no se cierra
+
+builder.WebHost.UseUrls("http://0.0.0.0:8081");
 var app = builder.Build();
 
 app.UseSwagger();
@@ -72,7 +76,7 @@ app.UseSwaggerUI(c =>
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
 });
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseMiddleware<ExceptionMiddleware>();
 

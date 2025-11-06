@@ -10,9 +10,9 @@ namespace Presentation.Controllers
     [ApiController]
     public class PublicController : ControllerBase
     {
-        private readonly IServicePublicApi _servicePublicApi;
+        private readonly IServiceNcbi _servicePublicApi;
 
-        public PublicController(HttpClient httpClient, IServicePublicApi servicePublicApi)
+        public PublicController(HttpClient httpClient, IServiceNcbi servicePublicApi)
         {
             _servicePublicApi = servicePublicApi;
         }
