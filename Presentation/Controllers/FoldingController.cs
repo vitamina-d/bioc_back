@@ -46,20 +46,34 @@ namespace Presentation.Controllers
             return ResponseSwitch.StatusCodes(response);
         }
 
-        [HttpGet("job/{jobId}/rank_{rank}/align/{pdbId}")] //pdb alineado rank_X
+        [HttpGet("job/{jobId}/rank_{rank}/align/{accession}")] //pdb alineado rank_X
         [ProducesResponseType(typeof(File), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetEstructures(string pdbId, string jobId, string rank)
+        public async Task<IActionResult> GetEstructures(string accession, string jobId, string rank)
         {
-            var alignedBytes = await _serviceFolding.GetEstructures(pdbId, jobId, rank);
-            //\nATOM     14  N ??
+            var alignedBytes = await _serviceFolding.GetPrediction(accession, jobId, rank);
             if (alignedBytes.Code == 200)
             {
                 return File(alignedBytes.Data, "chemical/x-pdb", $"{jobId}_rank{rank}.pdb");
             }
             return ResponseSwitch.StatusCodes(alignedBytes);
         }
+
+        [HttpGet("model/{accession}")]
+        [ProducesResponseType(typeof(File), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetModelReference(string accession)
+        {
+            var model = await _serviceFolding.GetModelReference(accession);
+            if (model.Code == 200)
+            {
+                return File(model.Data, "chemical/x-pdb", $"{accession}.pdb");
+            }
+            return ResponseSwitch.StatusCodes(model);
+        }
+
         [HttpGet("job/{jobId}")]
         [ProducesResponseType(typeof(ResponseDto<string?>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

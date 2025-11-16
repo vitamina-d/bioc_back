@@ -44,7 +44,7 @@ namespace Application
             var result = await _ncbiClient.GetResultRid(rid);
             var serializer = new XmlSerializer(typeof(DataBlastXml));
             using var reader = new StringReader(result);
-            var data = (DataBlastXml)serializer.Deserialize(reader);
+            var data = (DataBlastXml?)serializer.Deserialize(reader);
             return new ResponseDto<DataBlastXml?>
             {
                 Code = 200,

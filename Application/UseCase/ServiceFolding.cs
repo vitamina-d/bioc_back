@@ -15,16 +15,30 @@ namespace Application
             _pythonClient = pythonClient;
             _publicClient = publicClient;
         }
-        public async Task<ResponseDto<byte[]?>> GetEstructures(string pdbId, string jobId, string rank)
+        public async Task<ResponseDto<byte[]?>> GetModelReference(string accession)
+        {
+            var model = await _publicClient.DownloadModel(accession);
+            return new ResponseDto<byte[]?>
+            {
+                Code = 200,
+                Message = $"Ok.",
+                Data = model,
+            };
+        }
+        public async Task<ResponseDto<byte[]?>> GetPrediction(string accession, string jobId, string rank)
         {
             //get prediction_pdb from neurosnap
             var predictionFile = await _neurosnapClient.GetPrediction(jobId, rank);
-            
-            //download reference_pdb from protein data bank
-            var referencePdb = await _publicClient.DownloadPdb(pdbId);
 
+            //download reference_pdb from protein data bank
+          
+            //var referencePdb = await _publicClient.DownloadPdb(pdbId); //NO ES PDB
+
+            //var alphaFoldId = await _publicClient.GetAlphaFoldId(accession);
+            var model = await _publicClient.DownloadModel(accession);
+           // var metadata = await _publicClient.DownloadpLDDT(alphaFoldId);
             //py: (prediccion, pdbid) -> align
-            var alignPdbs = await _pythonClient.GetAlignProtein(predictionFile, referencePdb);
+            var alignPdbs = await _pythonClient.GetAlignProtein(predictionFile, model);
             return new ResponseDto<byte[]?>
             {
                 Code = 200,
@@ -65,7 +79,7 @@ namespace Application
             {
                 Code = 200,
                 Message = $"Ok.",
-                Data = ranks.Prot1,
+                Data = ranks?.Prot1,
             }; //{"prot1": {"1": 7.8, "2": 4.97, "3": 4.71, "4": 5.85, "5": 6.44}}
 
         }
@@ -81,5 +95,7 @@ namespace Application
                 Data = job,
             };
         }
+
+       
     }
 }
