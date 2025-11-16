@@ -25,18 +25,22 @@ namespace Application
                 Data = model,
             };
         }
+        public async Task<ResponseDto<string?>> GetModelPLDDT(string accession)
+        {
+            var metadata = await _publicClient.DownloadpLDDT(accession);
+            return new ResponseDto<string?>
+            {
+                Code = 200,
+                Message = $"Ok.",
+                Data = metadata,
+            };
+        }
         public async Task<ResponseDto<byte[]?>> GetPrediction(string accession, string jobId, string rank)
         {
-            //get prediction_pdb from neurosnap
             var predictionFile = await _neurosnapClient.GetPrediction(jobId, rank);
-
-            //download reference_pdb from protein data bank
-          
-            //var referencePdb = await _publicClient.DownloadPdb(pdbId); //NO ES PDB
-
-            //var alphaFoldId = await _publicClient.GetAlphaFoldId(accession);
+            //rcsb con CSM para la estructura de referencia
             var model = await _publicClient.DownloadModel(accession);
-           // var metadata = await _publicClient.DownloadpLDDT(alphaFoldId);
+           // 
             //py: (prediccion, pdbid) -> align
             var alignPdbs = await _pythonClient.GetAlignProtein(predictionFile, model);
             return new ResponseDto<byte[]?>

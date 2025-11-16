@@ -93,6 +93,16 @@ namespace Application
             }, url);
             return response;
         }
+        public async Task<string> DownloadpLDDT(string jobId, string rank)
+        {
+            var url = $"api/job/file/{jobId}/out/prot1_rank_{rank}.json";
+
+            var response = await HandlerTryCatch<string>(async () =>
+            {
+                return await _httpClient.GetAsync(url);
+            }, url);
+            return response;
+        }
 
         public async Task<string> GetJob(string jobId)
         {
