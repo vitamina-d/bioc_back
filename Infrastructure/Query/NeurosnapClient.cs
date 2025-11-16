@@ -1,5 +1,4 @@
 ﻿using Infrastructure.Query;
-using System;
 using System.Text;
 using System.Text.Json;
 
@@ -31,7 +30,7 @@ namespace Application
                     ),
                     "Input Sequences"
                 },
-                { new StringContent("auto"), "Model Type" },//
+                { new StringContent("alphafold"), "Model Type" },
                 { new StringContent("none"), "Template Mode" },//no usar homologos
                 { new StringContent("mmseqs2_uniref_env"), "MSA Mode" },
                 { new StringContent("unpaired_paired"), "Pair Mode" },
@@ -72,6 +71,7 @@ namespace Application
 
         public async Task<string> GetRanks(string jobId)
         {
+            //var url = "api/job/file/690b9c54f040705aaf0dec97";
             var url = $"api/job/file/{jobId}/out/uncertainty.json";
             var response = await HandlerTryCatch<string>(async () =>
             {
@@ -88,6 +88,16 @@ namespace Application
             //api/job/file/JOB_ID/[in/out]/FILE_NAME?share=SHARE_ID;
             var url = $"api/job/file/{jobId}/out/prot1_rank_{rank}.pdb";//ok
             var response = await HandlerTryCatch<byte[]>(async () =>
+            {
+                return await _httpClient.GetAsync(url);
+            }, url);
+            return response;
+        }
+
+        public async Task<string> GetJob(string jobId)
+        {
+            var url = $"job/{jobId}";
+            var response = await HandlerTryCatch<string>(async () =>
             {
                 return await _httpClient.GetAsync(url);
             }, url);

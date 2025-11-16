@@ -60,5 +60,14 @@ namespace Presentation.Controllers
             }
             return ResponseSwitch.StatusCodes(alignedBytes);
         }
+        [HttpGet("job/{jobId}")]
+        [ProducesResponseType(typeof(ResponseDto<string?>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetJob(string jobId)
+        {
+            var response = await _serviceFolding.GetJob(jobId);
+            return ResponseSwitch.StatusCodes(response);
+        }
     }
 }

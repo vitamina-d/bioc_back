@@ -37,6 +37,7 @@ namespace Application
             //py: (seq, frame) -> AA
             //var aminoacidSequence = await _pythonClient.GetAminoAcidSeq(nucleotides, frame); NO HACE FALTA
             var jobId = await _neurosnapClient.InitJob(aminoacidSequence);
+
             return new ResponseDto<string?>
             {
                 Code = 200,
@@ -67,6 +68,18 @@ namespace Application
                 Data = ranks.Prot1,
             }; //{"prot1": {"1": 7.8, "2": 4.97, "3": 4.71, "4": 5.85, "5": 6.44}}
 
+        }
+
+        public async Task<ResponseDto<string?>> GetJob(string jobId)
+        {
+            var job = await _neurosnapClient.GetJob(jobId);
+           
+            return new ResponseDto<string?>
+            {
+                Code = 200,
+                Message = $"Ok.",
+                Data = job,
+            };
         }
     }
 }

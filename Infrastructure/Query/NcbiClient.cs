@@ -16,7 +16,7 @@ namespace Application
             {
                 ["CMD"] = "Put",
                 ["PROGRAM"] = "blastx",
-                ["DATABASE"] = "nr",
+                ["DATABASE"] = "swissprot", //nr no devuelve un id
                 ["QUERY"] = nucleotides,
                 ["FORMAT_TYPE"] = "JSON2"
             };
