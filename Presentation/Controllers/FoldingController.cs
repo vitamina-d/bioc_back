@@ -50,7 +50,7 @@ namespace Presentation.Controllers
         [ProducesResponseType(typeof(File), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetEstructures(string accession, string jobId, string rank)
+        public async Task<IActionResult> GetPrediction(string accession, string jobId, string rank)
         {
             var alignedBytes = await _serviceFolding.GetPrediction(accession, jobId, rank);
             if (alignedBytes.Code == 200)
@@ -58,6 +58,15 @@ namespace Presentation.Controllers
                 return File(alignedBytes.Data, "chemical/x-pdb", $"{jobId}_rank{rank}.pdb");
             }
             return ResponseSwitch.StatusCodes(alignedBytes);
+        }
+        [HttpGet("job/{jobId}/rank_{rank}/pLDDT")] 
+        [ProducesResponseType(typeof(ResponseDto<string?>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetPredictionPLDDT(string jobId, string rank)
+        {
+            var model = await _serviceFolding.GetPredictionPLDDT(jobId, rank);
+            return ResponseSwitch.StatusCodes(model);
         }
 
         [HttpGet("model/{accession}")]
@@ -71,6 +80,15 @@ namespace Presentation.Controllers
             {
                 return File(model.Data, "chemical/x-pdb", $"{accession}.pdb");
             }
+            return ResponseSwitch.StatusCodes(model);
+        }
+        [HttpGet("model/pLDDT/{accession}")]
+        [ProducesResponseType(typeof(ResponseDto<string?>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetModelPLDDT(string accession)
+        {
+            var model = await _serviceFolding.GetModelPLDDT(accession);
             return ResponseSwitch.StatusCodes(model);
         }
 

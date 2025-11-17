@@ -12,7 +12,7 @@ namespace Application
         {
             _plumberApiClient = plumberApiClient;
         }
-        public async Task<ResponseDto<string[]>> GetAutoComplete(string input)
+        public async Task<ResponseDto<string[]?>> GetAutoComplete(string input)
         {
             var res = await _plumberApiClient.GetAutoComplete(input);
             var json = JsonSerializer.Deserialize<ResponseDto<string[]?>> (res);
@@ -66,13 +66,13 @@ namespace Application
             var json = JsonSerializer.Deserialize<ResponseDto<DataStatsDto?>>(res);
             return json;
         }
-        public async Task<ResponseDto<DataEntrezDto>> GetEntrezByValue(string value) //value es entrez, alias o symbol
+        public async Task<ResponseDto<DataEntrezDto?>> GetEntrezByValue(string value) //value es entrez, alias o symbol
         {
             var isEntrezResponse = await _plumberApiClient.IsEntrez(value.ToUpper());
             var jsonIsEntrez = JsonSerializer.Deserialize<ResponseDto<DataIsEntrezDto>>(isEntrezResponse);
-            if (jsonIsEntrez.Data != null && jsonIsEntrez.Data.IsEntrez)
+            if (jsonIsEntrez?.Data != null && jsonIsEntrez.Data.IsEntrez)
             {
-                return new ResponseDto<DataEntrezDto>
+                return new ResponseDto<DataEntrezDto?>
                 {
                     Code = jsonIsEntrez.Code,
                     Message = jsonIsEntrez.Message,

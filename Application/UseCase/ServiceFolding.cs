@@ -50,10 +50,18 @@ namespace Application
                 Data = alignPdbs,
             };
         }
+        public async Task<ResponseDto<string?>> GetPredictionPLDDT(string jobId, string rank)
+        {
+            var metadata = await _neurosnapClient.DownloadpLDDT(jobId, rank);
+            return new ResponseDto<string?>
+            {
+                Code = 200,
+                Message = $"Ok.",
+                Data = metadata,
+            };
+        }
         public async Task<ResponseDto<string?>> InitFoldingJob(string aminoacidSequence)
         {
-            //py: (seq, frame) -> AA
-            //var aminoacidSequence = await _pythonClient.GetAminoAcidSeq(nucleotides, frame); NO HACE FALTA
             var jobId = await _neurosnapClient.InitJob(aminoacidSequence);
 
             return new ResponseDto<string?>
@@ -78,7 +86,6 @@ namespace Application
         {
             var uncertainty = await _neurosnapClient.GetRanks(jobId);
             var ranks = JsonSerializer.Deserialize<DataRanksDto?>(uncertainty);
-            //desserializar
             return new ResponseDto<Dictionary<string, double>?>
             {
                 Code = 200,
