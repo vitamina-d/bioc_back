@@ -60,7 +60,7 @@ namespace Presentation.Controllers
             return ResponseSwitch.StatusCodes(alignedBytes);
         }
         [HttpGet("job/{jobId}/rank_{rank}/pLDDT")] 
-        [ProducesResponseType(typeof(ResponseDto<string?>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseDto<pLDDTNeurosnapDto?>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetPredictionPLDDT(string jobId, string rank)
@@ -83,7 +83,7 @@ namespace Presentation.Controllers
             return ResponseSwitch.StatusCodes(model);
         }
         [HttpGet("model/pLDDT/{accession}")]
-        [ProducesResponseType(typeof(ResponseDto<string?>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseDto<pLDDTRcsbDto?>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetModelPLDDT(string accession)

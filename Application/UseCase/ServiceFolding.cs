@@ -25,14 +25,15 @@ namespace Application
                 Data = model,
             };
         }
-        public async Task<ResponseDto<string?>> GetModelPLDDT(string accession)
+        public async Task<ResponseDto<pLDDTRcsbDto?>> GetModelPLDDT(string accession)
         {
             var metadata = await _publicClient.DownloadpLDDT(accession);
-            return new ResponseDto<string?>
+            var dto = JsonSerializer.Deserialize<pLDDTRcsbDto?>(metadata);
+            return new ResponseDto<pLDDTRcsbDto?>
             {
                 Code = 200,
                 Message = $"Ok.",
-                Data = metadata,
+                Data = dto,
             };
         }
         public async Task<ResponseDto<byte[]?>> GetPrediction(string accession, string jobId, string rank)
@@ -50,14 +51,15 @@ namespace Application
                 Data = alignPdbs,
             };
         }
-        public async Task<ResponseDto<string?>> GetPredictionPLDDT(string jobId, string rank)
+        public async Task<ResponseDto<pLDDTNeurosnapDto?>> GetPredictionPLDDT(string jobId, string rank)
         {
             var metadata = await _neurosnapClient.DownloadpLDDT(jobId, rank);
-            return new ResponseDto<string?>
+            var dto = JsonSerializer.Deserialize<pLDDTNeurosnapDto?>(metadata);
+            return new ResponseDto<pLDDTNeurosnapDto?>
             {
                 Code = 200,
                 Message = $"Ok.",
-                Data = metadata,
+                Data = dto,
             };
         }
         public async Task<ResponseDto<string?>> InitFoldingJob(string aminoacidSequence)
