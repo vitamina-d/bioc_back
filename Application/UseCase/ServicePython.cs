@@ -8,6 +8,7 @@ namespace Application
     {
         private readonly IPythonClient _pythonClient;
         private readonly IPublicApiClient _publicClient;
+
         public ServicePython(IPythonClient pythonClient, IPublicApiClient publicClient)
         {
             _pythonClient = pythonClient;
@@ -61,6 +62,7 @@ namespace Application
                 };
             }
             //download reference_pdb from protein data bank
+            
             var referencePdb = await _publicClient.DownloadPdb(reference_id);
             var response = await _pythonClient.GetAlignProtein(pdb_file, referencePdb);
             return new ResponseDto<byte[]?>

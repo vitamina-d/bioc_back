@@ -1,5 +1,6 @@
 ﻿using Application.DTO;
 using Application.DTO.Folding;
+using System.Security.Policy;
 using System.Text.Json;
 
 namespace Application
@@ -15,9 +16,19 @@ namespace Application
             _pythonClient = pythonClient;
             _publicClient = publicClient;
         }
-        public async Task<ResponseDto<byte[]?>> GetModelReference(string accession)
+        public async Task<ResponseDto<byte[]?>> GetReference(string accession)
         {
-            var model = await _publicClient.DownloadModel(accession);
+            var urlEstructure = await _publicClient.GetUrlEstructure(accession);
+            if (urlEstructure == null)
+            {
+                return new ResponseDto<byte[]?>
+                {
+                    Code = 400,
+                    Message = "The 'accession' value has invalid format. It should be a valid UniProtKB accession",
+                    Data = null
+                };
+            }
+            var model = await _publicClient.DownloadEstructure(urlEstructure);
             return new ResponseDto<byte[]?>
             {
                 Code = 200,
@@ -38,10 +49,23 @@ namespace Application
         }
         public async Task<ResponseDto<byte[]?>> GetPrediction(string accession, string jobId, string rank)
         {
+            //de donde descargo el accession?
+            //pdb experimental (id de 4 caracteres) 
+            //alphafold  AF-P12345-F1 
+            var urlEstructure = await _publicClient.GetUrlEstructure(accession);
+            if (urlEstructure == null)
+            {
+                return new ResponseDto<byte[]?>
+                {
+                    Code = 400,
+                    Message = "The 'accession' value has invalid format. It should be a valid UniProtKB accession",
+                    Data = null
+                };
+            }
+            var model = await _publicClient.DownloadEstructure(urlEstructure);
+
             var predictionFile = await _neurosnapClient.GetPrediction(jobId, rank);
-            //rcsb con CSM para la estructura de referencia
-            var model = await _publicClient.DownloadModel(accession);
-           // 
+            
             //py: (prediccion, pdbid) -> align
             var alignPdbs = await _pythonClient.GetAlignProtein(predictionFile, model);
             return new ResponseDto<byte[]?>

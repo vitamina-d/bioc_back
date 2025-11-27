@@ -75,7 +75,7 @@ namespace Presentation.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetModelReference(string accession)
         {
-            var model = await _serviceFolding.GetModelReference(accession);
+            var model = await _serviceFolding.GetReference(accession);
             if (model.Code == 200)
             {
                 return File(model.Data, "chemical/x-pdb", $"{accession}.pdb");
