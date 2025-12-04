@@ -1,5 +1,4 @@
-﻿using Application.DTO.Folding;
-using Infrastructure.Query;
+﻿using Infrastructure.Query;
 using System.Text;
 using System.Text.Json;
 

@@ -35,6 +35,7 @@ builder.Services.AddSwaggerGen();
 //AddScoped: instancia por request
 //AddSingleton: una sola instancia para toda la aplicación
 builder.Services.AddScoped<IServiceNcbi, ServiceNcbi>();
+builder.Services.AddScoped<IServiceUniprot, ServiceUniprot>();
 builder.Services.AddScoped<IServicePlumberApi, ServicePlumberApi>();
 builder.Services.AddScoped<IServiceBlast, ServiceBlast>();
 builder.Services.AddScoped<IServiceFolding, ServiceFolding>();
@@ -54,7 +55,7 @@ builder.Services.AddHttpClient<IPythonClient, PythonClient>(client =>
     client.BaseAddress = new Uri(builder.Configuration["API_URL:BIOPYTHON"]);
 });
 
-var NS_API_KEY = builder.Configuration["NeuroSnap:API_KEY"];
+//var NS_API_KEY = builder.Configuration["NeuroSnap:API_KEY"];
 
 builder.Services.AddHttpClient<INeurosnapClient, NeurosnapClient>(client =>
 {
