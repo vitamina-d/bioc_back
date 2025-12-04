@@ -39,7 +39,7 @@ namespace Presentation.Middleware
                 {
                     traceId,
                     code = ex.Code,
-                    message = ex.Message
+                    message = ex.Message //"Insufficient compute credits. This tool requires at least 1.969 credits to run. Please upgrade your plan or wait for the next billing cycle."
                 };
 
                 await context.Response.WriteAsJsonAsync(error);

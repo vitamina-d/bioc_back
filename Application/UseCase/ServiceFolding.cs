@@ -1,6 +1,5 @@
 ﻿using Application.DTO;
 using Application.DTO.Folding;
-using System.Security.Policy;
 using System.Text.Json;
 
 namespace Application
@@ -47,7 +46,7 @@ namespace Application
                 Data = dto,
             };
         }
-        public async Task<ResponseDto<byte[]?>> GetPrediction(string accession, string jobId, string rank)
+        public async Task<ResponseDto<byte[]?>> GetPrediction(string accession, string jobId, string rank, string apiKey)
         {
             //de donde descargo el accession?
             //pdb experimental (id de 4 caracteres) 
@@ -64,7 +63,7 @@ namespace Application
             }
             var model = await _publicClient.DownloadEstructure(urlEstructure);
 
-            var predictionFile = await _neurosnapClient.GetPrediction(jobId, rank);
+            var predictionFile = await _neurosnapClient.GetPrediction(jobId, rank, apiKey);
             
             //py: (prediccion, pdbid) -> align
             var alignPdbs = await _pythonClient.GetAlignProtein(predictionFile, model);
@@ -75,9 +74,9 @@ namespace Application
                 Data = alignPdbs,
             };
         }
-        public async Task<ResponseDto<pLDDTNeurosnapDto?>> GetPredictionPLDDT(string jobId, string rank)
+        public async Task<ResponseDto<pLDDTNeurosnapDto?>> GetPredictionPLDDT(string jobId, string rank, string apiKey)
         {
-            var metadata = await _neurosnapClient.DownloadpLDDT(jobId, rank);
+            var metadata = await _neurosnapClient.DownloadpLDDT(jobId, rank, apiKey);
             var dto = JsonSerializer.Deserialize<pLDDTNeurosnapDto?>(metadata);
             return new ResponseDto<pLDDTNeurosnapDto?>
             {
@@ -86,9 +85,9 @@ namespace Application
                 Data = dto,
             };
         }
-        public async Task<ResponseDto<string?>> InitFoldingJob(string aminoacidSequence)
+        public async Task<ResponseDto<string?>> InitFoldingJob(string aminoacid, string apiKey)
         {
-            var jobId = await _neurosnapClient.InitJob(aminoacidSequence);
+            var jobId = await _neurosnapClient.InitJob(aminoacid, apiKey);
 
             return new ResponseDto<string?>
             {
@@ -97,9 +96,9 @@ namespace Application
                 Data = jobId
             };
         }
-        public async Task<ResponseDto<string?>> GetFoldingStatus(string jobId)
+        public async Task<ResponseDto<string?>> GetFoldingStatus (string jobId, string apiKey)
         {
-            var json = await _neurosnapClient.GetJobStatus(jobId); // "\"completed\""
+            var json = await _neurosnapClient.GetJobStatus(jobId, apiKey); // "\"completed\""
             var status = JsonSerializer.Deserialize<string>(json);
             return new ResponseDto<string?>
             {
@@ -108,9 +107,9 @@ namespace Application
                 Data = status,
             };
         }
-        public async Task<ResponseDto<Dictionary<string, double>?>> GetRanks(string jobId)
+        public async Task<ResponseDto<Dictionary<string, double>?>> GetRanks(string jobId, string apiKey)
         {
-            var uncertainty = await _neurosnapClient.GetRanks(jobId);
+            var uncertainty = await _neurosnapClient.GetRanks(jobId, apiKey);
             var ranks = JsonSerializer.Deserialize<DataRanksDto?>(uncertainty);
             return new ResponseDto<Dictionary<string, double>?>
             {
@@ -121,9 +120,9 @@ namespace Application
 
         }
 
-        public async Task<ResponseDto<string?>> GetJob(string jobId)
+        public async Task<ResponseDto<string?>> GetJob(string jobId, string apiKey)
         {
-            var job = await _neurosnapClient.GetJob(jobId);
+            var job = await _neurosnapClient.GetJob(jobId, apiKey);
            
             return new ResponseDto<string?>
             {

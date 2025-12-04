@@ -17,15 +17,18 @@ namespace Infrastructure.Query
             try
             {
                 var httpResponse = await action();
+                if (httpResponse == null)
+                {
+                    throw new ClientException(502, $"Respuesta nula desde: {url}");
+                }
+
+                code = (int)httpResponse.StatusCode;
+
                 if (!httpResponse.IsSuccessStatusCode)
                 {
                     var content = await httpResponse.Content.ReadAsStringAsync();
-                    code = (int)httpResponse.StatusCode;
-                    throw new ClientException((int)httpResponse.StatusCode, content);
-                } else
-                {
-                    code = (int)httpResponse.StatusCode;
-                }
+                    throw new ClientException(code, content);
+                } 
 
                 // string o byte[]
                 if (typeof(T) == typeof(string))
@@ -41,24 +44,23 @@ namespace Infrastructure.Query
             }
             catch (ClientException)
             {
-                //throw new ClientException(code, $"Timeout: {ex.Message}", ex);
                 throw;
             }
             catch (NullReferenceException ex )
             {
-                throw new ClientException(504, $"Timeout: {ex.Message}", ex);
+                throw new ClientException(504, $"NullReferenceException: {ex.Message}", ex);
             }
             catch (TimeoutException ex)
             {
-                throw new ClientException(504, $"Timeout: {ex.Message}", ex);
+                throw new ClientException(504, $"TimeoutException: {ex.Message}", ex);
             }
             catch (HttpRequestException ex)
             {
-                throw new ClientException(502, $"Error HTTP {url}: {ex.Message}", ex);
+                throw new ClientException(502, $"HttpRequestException {url}: {ex.Message}", ex);
             }
             catch (Exception ex)
             {
-                throw new ClientException(500, $"Error inesperado: {ex.Message}", ex);
+                throw new ClientException(500, $"Exception: {ex.Message}", ex);
             }
         }
     }

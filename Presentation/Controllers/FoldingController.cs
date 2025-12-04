@@ -21,28 +21,31 @@ namespace Presentation.Controllers
         [ProducesResponseType(typeof(ResponseDto<string?>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> InitJob([FromBody] BodyInitFoldDto body)
+        public async Task<IActionResult> InitJob([FromQuery] string aminoacid)
         {
-            var response = await _serviceFolding.InitFoldingJob(body.Aminoacid);
+            var apiKey = Request.Headers["X-API-KEY"].ToString();
+            var response = await _serviceFolding.InitFoldingJob(aminoacid, apiKey);
             return ResponseSwitch.StatusCodes(response);
         }
         [HttpGet("status/{jobId}")]
         [ProducesResponseType(typeof(ResponseDto<DataStatusDto?>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)] 
-        public async Task<IActionResult> GetFoldingStatus(string jobId)
+        public async Task<IActionResult> GetFoldingStatus([FromRoute] string jobId)
         {
-            var response = await _serviceFolding.GetFoldingStatus(jobId);
+            var apiKey = Request.Headers["X-API-KEY"].ToString();
+            var response = await _serviceFolding.GetFoldingStatus(jobId, apiKey);
             return ResponseSwitch.StatusCodes(response);
         }
 
-        [HttpGet("job/{jobId}/ranks")] //lista de ranks, uncertainly.json prot1_rank_x.json del 1 al 5
+        [HttpGet("job/{jobId}/ranks")] 
         [ProducesResponseType(typeof(ResponseDto<DataRanksDto?>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetRanks(string jobId)
+        public async Task<IActionResult> GetRanks([FromRoute] string jobId)
         {
-            var response = await _serviceFolding.GetRanks(jobId);
+            var apiKey = Request.Headers["X-API-KEY"].ToString();
+            var response = await _serviceFolding.GetRanks(jobId, apiKey);
             return ResponseSwitch.StatusCodes(response);
         }
 
@@ -50,9 +53,10 @@ namespace Presentation.Controllers
         [ProducesResponseType(typeof(File), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetPrediction(string accession, string jobId, string rank)
+        public async Task<IActionResult> GetPrediction([FromRoute] string accession, [FromRoute] string jobId, [FromRoute] string rank)
         {
-            var alignedBytes = await _serviceFolding.GetPrediction(accession, jobId, rank);
+            var apiKey = Request.Headers["X-API-KEY"].ToString();
+            var alignedBytes = await _serviceFolding.GetPrediction(accession, jobId, rank, apiKey);
             if (alignedBytes.Code == 200)
             {
                 return File(alignedBytes.Data, "chemical/x-pdb", $"{jobId}_rank{rank}.pdb");
@@ -63,9 +67,10 @@ namespace Presentation.Controllers
         [ProducesResponseType(typeof(ResponseDto<pLDDTNeurosnapDto?>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetPredictionPLDDT(string jobId, string rank)
+        public async Task<IActionResult> GetPredictionPLDDT([FromRoute] string jobId, [FromRoute] string rank)
         {
-            var model = await _serviceFolding.GetPredictionPLDDT(jobId, rank);
+            var apiKey = Request.Headers["X-API-KEY"].ToString();
+            var model = await _serviceFolding.GetPredictionPLDDT(jobId, rank, apiKey);
             return ResponseSwitch.StatusCodes(model);
         }
 
@@ -73,7 +78,7 @@ namespace Presentation.Controllers
         [ProducesResponseType(typeof(File), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetModelReference(string accession)
+        public async Task<IActionResult> GetModelReference([FromRoute] string accession)
         {
             var model = await _serviceFolding.GetReference(accession);
             if (model.Code == 200)
@@ -86,7 +91,7 @@ namespace Presentation.Controllers
         [ProducesResponseType(typeof(ResponseDto<pLDDTRcsbDto?>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetModelPLDDT(string accession)
+        public async Task<IActionResult> GetModelPLDDT([FromRoute] string accession)
         {
             var model = await _serviceFolding.GetModelPLDDT(accession);
             return ResponseSwitch.StatusCodes(model);
@@ -96,9 +101,10 @@ namespace Presentation.Controllers
         [ProducesResponseType(typeof(ResponseDto<string?>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetJob(string jobId)
+        public async Task<IActionResult> GetJob([FromRoute] string jobId)
         {
-            var response = await _serviceFolding.GetJob(jobId);
+            var apiKey = Request.Headers["X-API-KEY"].ToString();
+            var response = await _serviceFolding.GetJob(jobId, apiKey);
             return ResponseSwitch.StatusCodes(response);
         }
     }

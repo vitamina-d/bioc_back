@@ -1,4 +1,5 @@
-﻿using Infrastructure.Query;
+﻿using Application.DTO.Folding;
+using Infrastructure.Query;
 using System.Text;
 using System.Text.Json;
 
@@ -6,10 +7,9 @@ namespace Application
 {
     public class NeurosnapClient : BaseClient, INeurosnapClient
     {        
-        public NeurosnapClient(HttpClient httpClient) : base(httpClient) { }
-        
+        public NeurosnapClient(HttpClient httpClient) : base(httpClient) { }  
         //POST
-        public async Task<string> InitJob(string aminoAcidSequence)
+        public async Task<string> InitJob(string aminoacid, string apiKey)
         {
             ///api/job/submit/SERVICE_NAME?note=NOTE multipart/form-data
             var url = "api/job/submit/AlphaFold2?note=vitamina";
@@ -21,7 +21,7 @@ namespace Application
                     new StringContent(
                         JsonSerializer.Serialize(new
                         {
-                            aa = new Dictionary<string, string> { { "prot1", aminoAcidSequence } },
+                            aa = new Dictionary<string, string> { { "prot1", aminoacid } },
                             dna = new { },
                             rna = new { }
                         }),
@@ -41,75 +41,93 @@ namespace Application
 
             var request = new HttpRequestMessage(HttpMethod.Post, url);
             request.Content = content;
+            request.Headers.Add("X-API-KEY", apiKey);
+
             var response = await HandlerTryCatch<string>(async () =>
             {
                 return await _httpClient.SendAsync(request);
             }, url);
             return response; // "\"68e17d82e986d44f8b7e9e1b\""
         }
-
         //GET
-        public async Task<string> GetJobStatus(string jobId)
+        public async Task<string> GetJobStatus(string jobId, string apiKey)
         {
             var url = $"api/job/status/{jobId}";
+            
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
+            request.Headers.Remove("X-API-KEY");
+            request.Headers.Add("X-API-KEY", apiKey);
+
             var response = await HandlerTryCatch<string>(async () =>
             {
-                return await _httpClient.GetAsync(url);
+                return await _httpClient.SendAsync(request);
             }, url);
             return response;
         }
-
-        public async Task<string> GetJobs()
+        public async Task<string> GetJobs(string apiKey)
         {
             var url = "api/jobs";
+
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
+            request.Headers.Add("X-API-KEY", apiKey);
+
             var response = await HandlerTryCatch<string>(async () =>
             {
-                return await _httpClient.GetAsync(url);
+                return await _httpClient.SendAsync(request);
             }, url);
             return response;
         }
-
-        public async Task<string> GetRanks(string jobId)
+        public async Task<string> GetRanks(string jobId, string apiKey)
         {
-            //var url = "api/job/file/690b9c54f040705aaf0dec97";
             var url = $"api/job/file/{jobId}/out/uncertainty.json";
+
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
+            request.Headers.Add("X-API-KEY", apiKey);
+
             var response = await HandlerTryCatch<string>(async () =>
             {
-                return await _httpClient.GetAsync(url);
+                return await _httpClient.SendAsync(request);
             }, url);
             return response;
-            //min = best prediction 
-            //{"prot1": {"1": 7.8, "2": 4.97, "3": 4.71, "4": 5.85, "5": 6.44}} rank_1 al 5
         }
-
         //BYTE
-        public async Task<byte[]> GetPrediction(string jobId, string rank)
+        public async Task<byte[]> GetPrediction(string jobId, string rank, string apiKey)
         {
             //api/job/file/JOB_ID/[in/out]/FILE_NAME?share=SHARE_ID;
             var url = $"api/job/file/{jobId}/out/prot1_rank_{rank}.pdb";//ok
+
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
+            request.Headers.Add("X-API-KEY", apiKey);
+
             var response = await HandlerTryCatch<byte[]>(async () =>
             {
-                return await _httpClient.GetAsync(url);
+                return await _httpClient.SendAsync(request);
             }, url);
             return response;
         }
-        public async Task<string> DownloadpLDDT(string jobId, string rank)
+        public async Task<string> DownloadpLDDT(string jobId, string rank, string apiKey)
         {
             var url = $"api/job/file/{jobId}/out/prot1_rank_{rank}.json";
 
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
+            request.Headers.Add("X-API-KEY", apiKey);
+
             var response = await HandlerTryCatch<string>(async () =>
             {
-                return await _httpClient.GetAsync(url);
+                return await _httpClient.SendAsync(request);
             }, url);
             return response;
         }
-
-        public async Task<string> GetJob(string jobId)
+        public async Task<string> GetJob(string jobId, string apiKey)
         {
             var url = $"job/{jobId}";
+
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
+            request.Headers.Add("X-API-KEY", apiKey);
+
             var response = await HandlerTryCatch<string>(async () =>
             {
-                return await _httpClient.GetAsync(url);
+                return await _httpClient.SendAsync(request);
             }, url);
             return response;
         }

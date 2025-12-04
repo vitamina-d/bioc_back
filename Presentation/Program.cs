@@ -59,7 +59,7 @@ var NS_API_KEY = builder.Configuration["NeuroSnap:API_KEY"];
 builder.Services.AddHttpClient<INeurosnapClient, NeurosnapClient>(client =>
 {
     client.BaseAddress = new Uri(builder.Configuration["API_URL:NEUROSNAP"]);
-    client.DefaultRequestHeaders.Add("X-API-KEY", NS_API_KEY);
+    //client.DefaultRequestHeaders.Add("X-API-KEY", NS_API_KEY);
 });
 builder.Services.AddHttpClient<INcbiClient, NcbiClient>(client =>
 {
@@ -76,7 +76,7 @@ app.UseSwaggerUI(c =>
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
 });
 
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 
 app.UseMiddleware<ExceptionMiddleware>();
 
