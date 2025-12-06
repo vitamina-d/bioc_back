@@ -3,16 +3,12 @@ using Domain.DTO;
 using Domain.DTO.Plumber;
 using System.Text.Json;
 
-namespace Application
+namespace Application.UseCase
 {
-    public class ServicePlumberApi : IServicePlumberApi
+    public class ServicePlumberApi(IPlumberApiClient plumberApiClient) : IServicePlumberApi
     {
-        private readonly IPlumberApiClient _plumberApiClient;
+        private readonly IPlumberApiClient _plumberApiClient = plumberApiClient;
 
-        public ServicePlumberApi(IPlumberApiClient plumberApiClient)
-        {
-            _plumberApiClient = plumberApiClient;
-        }
         public async Task<ResponseDto<string[]?>> GetAutoComplete(string input)
         {
             var res = await _plumberApiClient.GetAutoComplete(input);
@@ -35,26 +31,22 @@ namespace Application
         }
         public async Task<ResponseDto<DataAlignDto?>> GetAlignment(string pattern, string subject, string type, int gapOpening, int gapExtension)
         {
-            //pattern, subject, type, match, mismatch, gapOpening, gapExtension)
             var res = await _plumberApiClient.GetAlign(pattern, subject, type, gapOpening, gapExtension);
             var json = JsonSerializer.Deserialize<ResponseDto<DataAlignDto?>>(res); 
             return json;
         }
-
         public async Task<ResponseDto<DataStatsDto?>> GetPercent(string sequence)
         {
             var res = await _plumberApiClient.GetPercent(sequence);
             var dto = JsonSerializer.Deserialize<ResponseDto<DataStatsDto?>>(res);
             return dto;
         }
-
         public async Task<ResponseDto<DataSequenceDto[]?>> GetSequence(string chrom, int start, int end)
         {
             var res = await _plumberApiClient.GetSequence(chrom, start, end);
             var json = JsonSerializer.Deserialize<ResponseDto<DataSequenceDto[]?>>(res);
             return json;
         }
-
         public async Task<ResponseDto<DataSequenceDto[]?>> GetSequence(string entrez, bool complete)
         {
             var res = await _plumberApiClient.GetSequence(entrez, complete);
@@ -67,7 +59,7 @@ namespace Application
             var json = JsonSerializer.Deserialize<ResponseDto<DataStatsDto?>>(res);
             return json;
         }
-        public async Task<ResponseDto<DataEntrezDto?>> GetEntrezByValue(string value) //value es entrez, alias o symbol
+        public async Task<ResponseDto<DataEntrezDto?>> GetEntrezByValue(string value) 
         {
             var isEntrezResponse = await _plumberApiClient.IsEntrez(value.ToUpper());
             var jsonIsEntrez = JsonSerializer.Deserialize<ResponseDto<DataIsEntrezDto>>(isEntrezResponse);

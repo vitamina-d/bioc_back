@@ -3,19 +3,12 @@ using Domain.DTO;
 using Domain.DTO.Python;
 using System.Text.Json;
 
-namespace Application
+namespace Application.UseCase
 {
-    public class ServicePython : IServicePython
+    public class ServicePython(IPythonClient pythonClient, IPublicApiClient publicClient) : IServicePython
     {
-        private readonly IPythonClient _pythonClient;
-        private readonly IPublicApiClient _publicClient;
-
-        public ServicePython(IPythonClient pythonClient, IPublicApiClient publicClient)
-        {
-            _pythonClient = pythonClient;
-            _publicClient = publicClient;
-        }
-
+        private readonly IPythonClient _pythonClient = pythonClient;
+        private readonly IPublicApiClient _publicClient = publicClient;
         public async Task<ResponseDto<BodyAlignPdbDto?>> AlignPdb(byte[] prediction_pdb, byte[] reference_pdb)
         {
             if (prediction_pdb == null || prediction_pdb.Length == 0 )
@@ -43,7 +36,6 @@ namespace Application
                 Data = data,
             }; 
         }
-
         public async Task<ResponseDto<byte[]?>> ComparePdb(byte[] pdb_file, string reference_id)
         {
             if (pdb_file == null || pdb_file.Length == 0)
@@ -63,7 +55,6 @@ namespace Application
                 };
             }
             //download reference_pdb from protein data bank
-            
             var referencePdb = await _publicClient.DownloadPdb(reference_id);
             var response = await _pythonClient.GetAlignProtein(pdb_file, referencePdb);
             return new ResponseDto<byte[]?>
@@ -73,7 +64,6 @@ namespace Application
                 Data = response,
             };
         }
-
         public async Task<ResponseDto<SequenceDto?>> ReverseComplement(string sequence, bool reverse, bool complement)
         {
             if (sequence == null || sequence == "")
@@ -84,7 +74,6 @@ namespace Application
                     Message = "Ingrese secuencia."
                 };
             }
-
             var response = await _pythonClient.GetReverseComplement(sequence, reverse, complement);
             var json = JsonSerializer.Deserialize<ResponseDto<SequenceDto?>>(response);
             return json;

@@ -1,4 +1,4 @@
-using Application;
+using Application.UseCase;
 using Domain;
 using Infrastructure.Query;
 using Presentation.Middleware;

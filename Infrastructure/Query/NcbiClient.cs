@@ -1,13 +1,10 @@
 ﻿using Domain;
-using Infrastructure.Query;
 using System.Text.RegularExpressions;
 
-namespace Application
+namespace Infrastructure.Query
 {
-    public class NcbiClient : BaseClient, INcbiClient
-    {        
-        public NcbiClient(HttpClient httpClient) : base(httpClient) { }
-        
+    public class NcbiClient(HttpClient httpClient) : BaseClient(httpClient), INcbiClient
+    {
         //PUT
         public async Task<string> InitJob(string nucleotides)
         {

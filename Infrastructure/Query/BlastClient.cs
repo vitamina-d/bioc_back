@@ -1,13 +1,11 @@
 ﻿using Domain;
-using Infrastructure.Query;
 using System.Text;
 using System.Text.Json;
 
-namespace Application
+namespace Infrastructure.Query
 {
-    public class BlastClient : BaseClient, IBlastClient
+    public class BlastClient(HttpClient httpClient) : BaseClient(httpClient), IBlastClient
     {
-        public BlastClient(HttpClient httpClient) : base(httpClient) { }
         public async Task<string> BlastX(string sequence)
         {
             var url = "blastx/";

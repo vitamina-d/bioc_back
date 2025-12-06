@@ -3,13 +3,10 @@ using Domain.DTO.Plumber;
 using System.Text;
 using System.Text.Json;
 
-
 namespace Infrastructure.Query
 {
-    public class PlumberApiClient : BaseClient, IPlumberApiClient
+    public class PlumberApiClient(HttpClient httpClient) : BaseClient(httpClient), IPlumberApiClient
     {
-        public PlumberApiClient(HttpClient httpClient) : base(httpClient) { }
-        
         // GET
         public async Task<string> IsEntrez(string entrez)
         {

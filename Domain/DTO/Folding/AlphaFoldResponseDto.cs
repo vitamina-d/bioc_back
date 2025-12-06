@@ -16,10 +16,3 @@ namespace Domain.DTO.Folding
 
     }
 }
-/*
- { "query_id" : "36b7263a-f074-4b3d-a8ee-19ed75b5f391", 
-"result_type" : "entry", 
-"total_count" : 1, 
-"result_set" : [ 
-{ "identifier" : "AF_AFQ7SXF1F1", "score" : 1.0 } ] }
- */

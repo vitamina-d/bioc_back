@@ -5,18 +5,13 @@ using Domain.DTO.Public;
 using System.Text.Json;
 using System.Xml.Serialization;
 
-namespace Application
+namespace Application.UseCase
 {
-    public class ServiceNcbi : IServiceNcbi
+    public class ServiceNcbi(IPublicApiClient publicApiClient, INcbiClient ncbiClient) : IServiceNcbi
     {
-        private readonly IPublicApiClient _publicApiClient;
-        private readonly INcbiClient _ncbiClient;
+        private readonly IPublicApiClient _publicApiClient = publicApiClient;
+        private readonly INcbiClient _ncbiClient = ncbiClient;
 
-        public ServiceNcbi(IPublicApiClient publicApiClient, INcbiClient ncbiClient)
-        {
-            _publicApiClient = publicApiClient;
-            _ncbiClient = ncbiClient;
-        }
         public async Task<ResponseDto<string?>> InitJob(string nucleotides)
         {
             var rid =  await _ncbiClient.InitJob(nucleotides);
@@ -39,8 +34,6 @@ namespace Application
         }
         public async Task<ResponseDto<DataBlastXml?>> GetResultRid(string rid)
         {
-
-
             var result = await _ncbiClient.GetResultRid(rid);
             var serializer = new XmlSerializer(typeof(DataBlastXml));
             using var reader = new StringReader(result);
@@ -54,13 +47,10 @@ namespace Application
         }
         public async Task<ResponseDto<ResponseNcbiDto?>> GetSummaryFromNcbi(string entrez, string type)
         {
-            var message = string.Empty;
-
             var response = await _publicApiClient.GetNcbiResponse(entrez, type);
             var json = JsonDocument.Parse(response);
             var nodo = json.RootElement.GetProperty("result").GetProperty(entrez);
 
-            //llegan en minuscula
             return new ResponseDto<ResponseNcbiDto?>
             {
                 Code = 200,

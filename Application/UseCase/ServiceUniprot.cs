@@ -1,16 +1,12 @@
 ﻿using Domain;
 using Domain.DTO;
 
-namespace Application
+namespace Application.UseCase
 {
     public class ServiceUniprot : IServiceUniprot
     {
         private readonly IPublicApiClient _publicClient;
-        public ServiceUniprot(IPublicApiClient publicApiClient)
-        {
-            _publicClient = publicApiClient;
-        }
-
+        public ServiceUniprot(IPublicApiClient publicApiClient) => _publicClient = publicApiClient;
         public async Task<ResponseDto<byte[]?>> GetEstructure(string uniprotId)
         {
             var urlEstructure = await _publicClient.GetUrlEstructure(uniprotId);
@@ -24,7 +20,6 @@ namespace Application
                 };
             }
             var model = await _publicClient.DownloadEstructure(urlEstructure);
-
             return new ResponseDto<byte[]?>
             {
                 Code = 200,

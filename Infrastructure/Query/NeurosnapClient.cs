@@ -1,13 +1,11 @@
 ﻿using Domain;
-using Infrastructure.Query;
 using System.Text;
 using System.Text.Json;
 
-namespace Application
+namespace Infrastructure.Query
 {
-    public class NeurosnapClient : BaseClient, INeurosnapClient
-    {        
-        public NeurosnapClient(HttpClient httpClient) : base(httpClient) { }  
+    public class NeurosnapClient(HttpClient httpClient) : BaseClient(httpClient), INeurosnapClient
+    {
         //POST
         public async Task<string> InitJob(string aminoacid, string apiKey)
         {

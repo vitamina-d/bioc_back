@@ -1,23 +1,17 @@
-﻿
-using Domain.DTO;
+﻿using Domain.DTO;
 using Domain;
 using Domain.DTO.Blast;
 using System.Text.Json;
 
-namespace Application
+namespace Application.UseCase
 {
-    public class ServiceBlast : IServiceBlast
+    public class ServiceBlast(IBlastClient blastClient) : IServiceBlast
     {
-        private readonly IBlastClient _blastClient;
-        public ServiceBlast(IBlastClient blastClient)
-        {
-            _blastClient = blastClient;
-        }
+        private readonly IBlastClient _blastClient = blastClient;
         public async Task<ResponseDto<Report?>> Connect(string sequence)
         {
             var res = await _blastClient.BlastX(sequence);
             var json = JsonSerializer.Deserialize<ResponseDto<DataBlastxDto?>>(res);
-
             return new ResponseDto<Report?>
             {
                 Code = json.Code,

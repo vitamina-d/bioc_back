@@ -5,14 +5,10 @@ using System.Text.Json;
 
 namespace Infrastructure.Query
 {
-    public class PublicApiClient : BaseClient, IPublicApiClient
+    public class PublicApiClient(HttpClient httpClient, IConfiguration configuration) : BaseClient(httpClient), IPublicApiClient
     {
-        private readonly IConfiguration _configuration;
+        private readonly IConfiguration _configuration = configuration;
 
-        public PublicApiClient(HttpClient httpClient, IConfiguration configuration) : base(httpClient)
-        {
-            _configuration = configuration;
-        }
         //GET
         public async Task<string> GetNcbiResponse(string entrez, string type)
         {

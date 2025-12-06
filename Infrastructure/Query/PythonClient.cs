@@ -1,14 +1,12 @@
 ﻿using Domain;
 using Domain.DTO.Python;
-using Infrastructure.Query;
 using System.Text;
 using System.Text.Json;
 
-namespace Application
+namespace Infrastructure.Query
 {
-    public class PythonClient : BaseClient, IPythonClient
+    public class PythonClient(HttpClient httpClient) : BaseClient(httpClient), IPythonClient
     {
-        public PythonClient(HttpClient httpClient) : base(httpClient) { }
         public async Task<string> GetAminoAcidSeq(string sequence, int frame)
         {
             var url = "dna/translate/";
