@@ -1,5 +1,5 @@
-﻿using Infrastructure.Query;
-using System.IO.Compression;
+﻿using Domain;
+using Infrastructure.Query;
 using System.Text.RegularExpressions;
 
 namespace Application

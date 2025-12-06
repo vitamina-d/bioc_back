@@ -1,7 +1,7 @@
-﻿using Application.DTO;
-using Application.DTO.Blast;
-using Application.DTO.Public;
-using System.Data.SqlTypes;
+﻿using Domain;
+using Domain.DTO;
+using Domain.DTO.Blast;
+using Domain.DTO.Public;
 using System.Text.Json;
 using System.Xml.Serialization;
 

@@ -1,5 +1,6 @@
-﻿using Application.DTO;
-using Application.DTO.Folding;
+﻿using Domain;
+using Domain.DTO;
+using Domain.DTO.Folding;
 using System.Text.Json;
 
 namespace Application

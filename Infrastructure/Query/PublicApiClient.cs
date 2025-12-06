@@ -1,5 +1,5 @@
-﻿using Application;
-using Application.DTO.Folding;
+﻿using Domain;
+using Domain.DTO.Folding;
 using Microsoft.Extensions.Configuration;
 using System.Text.Json;
 
@@ -37,21 +37,6 @@ namespace Infrastructure.Query
             }, url);
             return response;
         }
-
-        /*
-        public async Task<byte[]> DownloadModel(string accession)
-        {
-            //var url = $"https://www.rcsb.org/3d-view/{alphafoldId}/deposited";
-            // model server api https://models.rcsb.org/
-            var _AFURL = _configuration["API_URL:ALPHAFOLD"];
-            var url = $"{_AFURL}files/AF-{accession}-F1-model_v6.pdb";
-
-            var response = await HandlerTryCatch<byte[]>(async () =>
-            {
-                return await _httpClient.GetAsync(url);
-            }, url);
-            return response;
-        }*/
         public async Task<byte[]> DownloadEstructure(string url)
         {
             var response = await HandlerTryCatch<byte[]>(async () =>

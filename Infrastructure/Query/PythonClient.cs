@@ -1,4 +1,5 @@
-﻿using Application.DTO.Python;
+﻿using Domain;
+using Domain.DTO.Python;
 using Infrastructure.Query;
 using System.Text;
 using System.Text.Json;

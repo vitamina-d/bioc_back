@@ -1,13 +1,9 @@
 using Application;
+using Domain;
 using Infrastructure.Query;
 using Presentation.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
-
-//secret
-builder.Configuration.AddUserSecrets<Program>();
-
-// Add services to the container.
 
 //CORS
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -17,23 +13,16 @@ builder.Services.AddCors(options => {
                           policy
                           .WithOrigins("http://host.docker.internal:5173")
                           .WithOrigins("http://localhost:5173")
-                          //.AllowAnyOrigin()
                           .AllowAnyHeader()
                           .AllowAnyMethod();
                       });
 });
 
-//Agrego HTTP
 builder.Services.AddHttpClient();
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//AddTransient: instancia cada vez que se solicita
-//AddScoped: instancia por request
-//AddSingleton: una sola instancia para toda la aplicación
 builder.Services.AddScoped<IServiceNcbi, ServiceNcbi>();
 builder.Services.AddScoped<IServiceUniprot, ServiceUniprot>();
 builder.Services.AddScoped<IServicePlumberApi, ServicePlumberApi>();
@@ -55,12 +44,9 @@ builder.Services.AddHttpClient<IPythonClient, PythonClient>(client =>
     client.BaseAddress = new Uri(builder.Configuration["API_URL:BIOPYTHON"]);
 });
 
-//var NS_API_KEY = builder.Configuration["NeuroSnap:API_KEY"];
-
 builder.Services.AddHttpClient<INeurosnapClient, NeurosnapClient>(client =>
 {
     client.BaseAddress = new Uri(builder.Configuration["API_URL:NEUROSNAP"]);
-    //client.DefaultRequestHeaders.Add("X-API-KEY", NS_API_KEY);
 });
 builder.Services.AddHttpClient<INcbiClient, NcbiClient>(client =>
 {

@@ -1,6 +1,6 @@
-﻿using Application;
-using Application.DTO;
-using Application.DTO.Public;
+﻿using Domain;
+using Domain.DTO;
+using Domain.DTO.Public;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Utils;
 

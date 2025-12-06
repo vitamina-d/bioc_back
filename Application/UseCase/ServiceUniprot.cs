@@ -1,4 +1,5 @@
-﻿using Application.DTO;
+﻿using Domain;
+using Domain.DTO;
 
 namespace Application
 {

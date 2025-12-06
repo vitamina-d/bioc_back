@@ -1,4 +1,5 @@
-﻿using Infrastructure.Query;
+﻿using Domain;
+using Infrastructure.Query;
 using System.Text;
 using System.Text.Json;
 

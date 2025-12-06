@@ -1,5 +1,6 @@
-﻿using Application.DTO;
-using Application.DTO.Python;
+﻿using Domain;
+using Domain.DTO;
+using Domain.DTO.Python;
 using System.Text.Json;
 
 namespace Application

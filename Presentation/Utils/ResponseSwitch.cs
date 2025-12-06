@@ -1,4 +1,4 @@
-﻿using Application.DTO;
+﻿using Domain.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Utils

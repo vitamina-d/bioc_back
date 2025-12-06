@@ -1,6 +1,6 @@
-﻿using Application;
-using Application.DTO;
-using Application.DTO.Blast;
+﻿using Domain;
+using Domain.DTO;
+using Domain.DTO.Blast;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Utils;
 

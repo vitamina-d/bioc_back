@@ -1,6 +1,6 @@
-﻿using Application;
-using Application.DTO;
-using Application.DTO.Python;
+﻿using Domain;
+using Domain.DTO;
+using Domain.DTO.Python;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Utils;
 

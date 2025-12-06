@@ -1,6 +1,6 @@
-﻿using Application;
-using Application.DTO;
-using Application.DTO.Folding;
+﻿using Domain;
+using Domain.DTO;
+using Domain.DTO.Folding;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Utils;
 
