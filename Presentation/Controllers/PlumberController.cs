@@ -21,6 +21,7 @@ namespace Presentation.Controllers
             var autocomplete = await _servicePlumberApi.GetAutoComplete(input.ToUpper());
             return ResponseSwitch.StatusCodes(autocomplete);
         }
+        
         [HttpPost("align")]
         [ProducesResponseType(typeof(ResponseDto<DataAlignDto?>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -30,6 +31,7 @@ namespace Presentation.Controllers
             var response = await _servicePlumberApi.GetAlignment(body.Pattern, body.Subject, body.Type, body.GapOpening, body.GapExtension);
             return ResponseSwitch.StatusCodes(response);
         }
+        
         [HttpGet("detail")]
         [ProducesResponseType(typeof(ResponseDto<Object?>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -45,6 +47,7 @@ namespace Presentation.Controllers
             var detail = await _servicePlumberApi.GetDetail(entrez);
             return ResponseSwitch.StatusCodes(detail);
         }
+        
         [HttpPost("percent")]
         [ProducesResponseType(typeof(ResponseDto<DataStatsDto?>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -74,6 +77,7 @@ namespace Presentation.Controllers
             var response = await _servicePlumberApi.GetSequence(entrez, complete);
             return ResponseSwitch.StatusCodes(response);
         }
+        
         [HttpGet("stats")]
         [ProducesResponseType(typeof(ResponseDto<DataSequenceDto[]?>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

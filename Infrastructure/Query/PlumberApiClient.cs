@@ -26,7 +26,6 @@ namespace Infrastructure.Query
             }, url);
             return response;
         }
-
         public async Task<string> GetDetail(string entrez, bool full)
         {
             string type = "detail";
@@ -59,7 +58,6 @@ namespace Infrastructure.Query
             }, url);
             return response;
         }
-
         public async Task<string> GetSequence(string chrom, int start, int end)
         {
             var url = $"sequence_range/?chrom=chr{chrom}&start={start}&end={end}";

@@ -48,10 +48,6 @@ builder.Services.AddHttpClient<INeurosnapClient, NeurosnapClient>(client =>
 {
     client.BaseAddress = new Uri(builder.Configuration["API_URL:NEUROSNAP"]);
 });
-builder.Services.AddHttpClient<INcbiClient, NcbiClient>(client =>
-{
-    client.BaseAddress = new Uri(builder.Configuration["API_URL:NCBI_BLAST"]);
-});
 
 
 builder.WebHost.UseUrls("http://0.0.0.0:8081");

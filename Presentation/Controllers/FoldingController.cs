@@ -82,25 +82,5 @@ namespace Presentation.Controllers
             }
             return ResponseSwitch.StatusCodes(model);
         }
-        [HttpGet("model/pLDDT/{accession}")]
-        [ProducesResponseType(typeof(ResponseDto<PLDDTRcsbDto?>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetModelPLDDT([FromRoute] string accession)
-        {
-            var model = await _serviceFolding.GetModelPLDDT(accession);
-            return ResponseSwitch.StatusCodes(model);
-        }
-
-        [HttpGet("job/{jobId}")]
-        [ProducesResponseType(typeof(ResponseDto<string?>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetJob([FromRoute] string jobId)
-        {
-            var apiKey = Request.Headers["X-API-KEY"].ToString();
-            var response = await _serviceFolding.GetJob(jobId, apiKey);
-            return ResponseSwitch.StatusCodes(response);
-        }
     }
 }

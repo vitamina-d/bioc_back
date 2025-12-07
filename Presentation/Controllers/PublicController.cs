@@ -24,6 +24,7 @@ namespace Presentation.Controllers
             return ResponseSwitch.StatusCodes(summary);
 
         }
+        
         [HttpGet("model/{uniprotId}")] 
         [ProducesResponseType(typeof(File), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

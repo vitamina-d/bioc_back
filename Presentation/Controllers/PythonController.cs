@@ -11,19 +11,9 @@ namespace Presentation.Controllers
     public class PythonController(IServicePython pythonService) : ControllerBase
     {
         private readonly IServicePython _pythonService = pythonService;
-
-        [HttpPost("align")]
-        [ProducesResponseType(typeof(ResponseDto<BodyAlignPdbDto>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> AlignProtein([FromBody] BodyAlignPdbDto body)
-        {
-            var response = await _pythonService.AlignPdb(body.PredictionPdb, body.ReferencePdb);
-            return ResponseSwitch.StatusCodes(response);
-        }
+        
         [HttpPost("compare/{reference_id}")]
         [Consumes("multipart/form-data")]
-        //[Consumes("chemical/x-pdb")]
         [ProducesResponseType(typeof(File), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -54,6 +44,7 @@ namespace Presentation.Controllers
                 return ResponseSwitch.StatusCodes(response);
 
         }
+        
         [HttpPost("translate")]
         [ProducesResponseType(typeof(ResponseDto<SequenceDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)] 

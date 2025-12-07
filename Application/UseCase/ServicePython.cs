@@ -9,33 +9,6 @@ namespace Application.UseCase
     {
         private readonly IPythonClient _pythonClient = pythonClient;
         private readonly IPublicApiClient _publicClient = publicClient;
-        public async Task<ResponseDto<BodyAlignPdbDto?>> AlignPdb(byte[] prediction_pdb, byte[] reference_pdb)
-        {
-            if (prediction_pdb == null || prediction_pdb.Length == 0 )
-            {
-                return new ResponseDto<BodyAlignPdbDto?>
-                {
-                    Code = 400,
-                    Message = "Ingrese prediction PDB."
-                };
-            }
-            if (reference_pdb == null || reference_pdb.Length == 0 )
-            {
-                return new ResponseDto<BodyAlignPdbDto?>
-                {
-                    Code = 400,
-                    Message = "Ingrese reference PDB."
-                };
-            }
-            var response = await _pythonClient.GetAlignProtein(prediction_pdb, reference_pdb);
-            var data = JsonSerializer.Deserialize<BodyAlignPdbDto?>(response);
-            return new ResponseDto<BodyAlignPdbDto?>
-            {
-                Code = 200,
-                Message = "Ok.",
-                Data = data,
-            }; 
-        }
         public async Task<ResponseDto<byte[]?>> ComparePdb(byte[] pdb_file, string reference_id)
         {
             if (pdb_file == null || pdb_file.Length == 0)

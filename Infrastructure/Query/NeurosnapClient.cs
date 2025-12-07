@@ -62,19 +62,6 @@ namespace Infrastructure.Query
             }, url);
             return response;
         }
-        public async Task<string> GetJobs(string apiKey)
-        {
-            var url = "api/jobs";
-
-            var request = new HttpRequestMessage(HttpMethod.Get, url);
-            request.Headers.Add("X-API-KEY", apiKey);
-
-            var response = await HandlerTryCatch<string>(async () =>
-            {
-                return await _httpClient.SendAsync(request);
-            }, url);
-            return response;
-        }
         public async Task<string> GetRanks(string jobId, string apiKey)
         {
             var url = $"api/job/file/{jobId}/out/uncertainty.json";
@@ -106,19 +93,6 @@ namespace Infrastructure.Query
         public async Task<string> DownloadpLDDT(string jobId, string rank, string apiKey)
         {
             var url = $"api/job/file/{jobId}/out/prot1_rank_{rank}.json";
-
-            var request = new HttpRequestMessage(HttpMethod.Get, url);
-            request.Headers.Add("X-API-KEY", apiKey);
-
-            var response = await HandlerTryCatch<string>(async () =>
-            {
-                return await _httpClient.SendAsync(request);
-            }, url);
-            return response;
-        }
-        public async Task<string> GetJob(string jobId, string apiKey)
-        {
-            var url = $"job/{jobId}";
 
             var request = new HttpRequestMessage(HttpMethod.Get, url);
             request.Headers.Add("X-API-KEY", apiKey);

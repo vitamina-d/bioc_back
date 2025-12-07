@@ -30,17 +30,6 @@ namespace Application.UseCase
                 Data = model,
             };
         }
-        public async Task<ResponseDto<PLDDTRcsbDto?>> GetModelPLDDT(string accession)
-        {
-            var metadata = await _publicClient.DownloadpLDDT(accession);
-            var dto = JsonSerializer.Deserialize<PLDDTRcsbDto?>(metadata);
-            return new ResponseDto<PLDDTRcsbDto?>
-            {
-                Code = 200,
-                Message = $"Ok.",
-                Data = dto,
-            };
-        }
         public async Task<ResponseDto<byte[]?>> GetPrediction(string accession, string jobId, string rank, string apiKey)
         {
             var urlEstructure = await _publicClient.GetUrlEstructure(accession);
@@ -105,16 +94,6 @@ namespace Application.UseCase
                 Code = 200,
                 Message = $"Ok.",
                 Data = ranks?.Prot1,
-            };
-        }
-        public async Task<ResponseDto<string?>> GetJob(string jobId, string apiKey)
-        {
-            var job = await _neurosnapClient.GetJob(jobId, apiKey);
-            return new ResponseDto<string?>
-            {
-                Code = 200,
-                Message = $"Ok.",
-                Data = job,
             };
         }
     }
