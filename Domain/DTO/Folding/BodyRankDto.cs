@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+﻿/*using System.Text.Json.Serialization;
 
 namespace Domain.DTO.Folding
 {
@@ -13,3 +13,4 @@ namespace Domain.DTO.Folding
         public string Rank { get; set; }
     }
 }
+*/

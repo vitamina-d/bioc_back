@@ -1,5 +1,5 @@
 using Application.UseCase;
-using Domain;
+using Domain.Interfaces;
 using Infrastructure.Query;
 using Presentation.Middleware;
 

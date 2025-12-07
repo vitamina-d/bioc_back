@@ -12,4 +12,3 @@ namespace Domain.DTO.Python
         public bool Complement { get; set; }
     }
 }
-//python

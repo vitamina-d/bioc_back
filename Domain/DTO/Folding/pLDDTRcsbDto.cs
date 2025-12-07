@@ -2,7 +2,7 @@
 
 namespace Domain.DTO.Folding
 {
-    public class pLDDTRcsbDto
+    public class PLDDTRcsbDto
     {
         [JsonPropertyName("residueNumber")]
         public int[] ResidueNumber { get; set; }

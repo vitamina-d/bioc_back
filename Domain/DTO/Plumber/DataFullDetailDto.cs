@@ -5,7 +5,7 @@ namespace Domain.DTO.Plumber
     public class DataFullDetailDto : DataDetailDto
     {
         [JsonPropertyName("citogenetic")]
-        public string Cytogenetic { get; set; } //     "location_chr": "11q13.4",
+        public string Cytogenetic { get; set; }
         [JsonPropertyName("location")]
         public LocationDto[] Location { get; set; }
         [JsonPropertyName("ensembl_id_gene")]
@@ -19,9 +19,9 @@ namespace Domain.DTO.Plumber
     public class LocationDto
     {
         [JsonPropertyName("strand")]
-        public string Strand { get; set; } //+ o -
+        public string Strand { get; set; }
         [JsonPropertyName("seqnames")]
-        public string Seqnames { get; set; }         //     "chr": "chr11",
+        public string Seqnames { get; set; }
         [JsonPropertyName("start")]
         public int Start { get; set; }
         [JsonPropertyName("end")]
@@ -30,30 +30,3 @@ namespace Domain.DTO.Plumber
         public int Length { get; set; }
     }
 }
-
-/*
-data = list(
-            message = "Ok",
-            entrezID = entrez,
-            symbol = unique(details$SYMBOL),
-            type = unique(details$GENETYPE),
-            location = list(
-                citogenetic = unique(details$MAP),
-                strand = as.character(range_df$strand),
-                chr = as.character(range_df$seqnames),
-                start = range_df$start,
-                end = range_df$end,
-                length = range_df$width
-            ),
-            ensembl_id_gene = unique(details$ENSEMBL),
-            ensembl_id_protein = unique(details$ENSEMBLPROT),
-            uniprot_ids = unique(details$UNIPROT)
-          )
-data = list(
-             message = "Ok",
-            entrez = entrez,
-            symbol = unique(details$SYMBOL),
-            genetype = unique(details$GENETYPE),
-            alias = unique(details$ALIAS)
- 
- */

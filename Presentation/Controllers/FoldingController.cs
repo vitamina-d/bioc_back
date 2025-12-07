@@ -1,6 +1,6 @@
-﻿using Domain;
-using Domain.DTO;
+﻿using Domain.DTO;
 using Domain.DTO.Folding;
+using Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Utils;
 
@@ -8,15 +8,10 @@ namespace Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FoldingController : ControllerBase
+    public class FoldingController(IServiceFolding serviceFolding) : ControllerBase
     {
-        private readonly IServiceFolding _serviceFolding;
+        private readonly IServiceFolding _serviceFolding = serviceFolding;
 
-        public FoldingController(IServiceFolding serviceFolding)
-        {
-            _serviceFolding = serviceFolding;
-        }
-        
         [HttpPost("init")]
         [ProducesResponseType(typeof(ResponseDto<string?>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -64,7 +59,7 @@ namespace Presentation.Controllers
             return ResponseSwitch.StatusCodes(alignedBytes);
         }
         [HttpGet("job/{jobId}/rank_{rank}/pLDDT")] 
-        [ProducesResponseType(typeof(ResponseDto<pLDDTNeurosnapDto?>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseDto<PLDDTNeurosnapDto?>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetPredictionPLDDT([FromRoute] string jobId, [FromRoute] string rank)
@@ -88,7 +83,7 @@ namespace Presentation.Controllers
             return ResponseSwitch.StatusCodes(model);
         }
         [HttpGet("model/pLDDT/{accession}")]
-        [ProducesResponseType(typeof(ResponseDto<pLDDTRcsbDto?>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseDto<PLDDTRcsbDto?>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetModelPLDDT([FromRoute] string accession)

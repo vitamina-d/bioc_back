@@ -1,13 +1,7 @@
 ﻿namespace Domain.Exceptions
 {
-    public class ClientException : Exception
+    public class ClientException(int code, string message, Exception? inner = null) : Exception(message, inner)
     {
-        public int Code { get; }
-
-        public ClientException(int code, string message, Exception? inner = null)
-            : base(message, inner)
-        {
-            Code = code;
-        }
+        public int Code { get; } = code;
     }
 }

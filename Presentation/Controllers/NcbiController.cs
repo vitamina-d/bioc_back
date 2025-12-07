@@ -1,6 +1,6 @@
-﻿using Domain;
-using Domain.DTO;
+﻿using Domain.DTO;
 using Domain.DTO.Blast;
+using Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Utils;
 
@@ -8,13 +8,9 @@ namespace Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class NcbiController : ControllerBase
+    public class NcbiController(IServiceNcbi serviceNcbi) : ControllerBase
     {
-        private readonly IServiceNcbi _serviceNcbi;
-        public NcbiController(IServiceNcbi serviceNcbi)
-        {
-            _serviceNcbi = serviceNcbi;
-        }
+        private readonly IServiceNcbi _serviceNcbi = serviceNcbi;
 
         [HttpPost("init")]
         [ProducesResponseType(typeof(ResponseDto<string?>), StatusCodes.Status200OK)]

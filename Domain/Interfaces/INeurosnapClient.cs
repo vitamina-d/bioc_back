@@ -1,6 +1,4 @@
-﻿using Domain.DTO.Folding;
-
-namespace Domain
+﻿namespace Domain.Interfaces
 {
     public interface INeurosnapClient
     {

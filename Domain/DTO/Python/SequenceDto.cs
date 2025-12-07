@@ -2,7 +2,6 @@
 
 namespace Domain.DTO.Python
 {
-
     public class SequenceDto
     {
         [JsonPropertyName("sequence")]

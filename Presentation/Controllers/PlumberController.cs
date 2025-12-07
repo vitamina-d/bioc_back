@@ -1,6 +1,6 @@
-﻿using Domain;
-using Domain.DTO;
+﻿using Domain.DTO;
 using Domain.DTO.Plumber;
+using Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Utils;
 
@@ -8,15 +8,10 @@ namespace Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PlumberController : ControllerBase
+    public class PlumberController(IServicePlumberApi servicePlumberApi) : ControllerBase
     {
-        private readonly IServicePlumberApi _servicePlumberApi;
+        private readonly IServicePlumberApi _servicePlumberApi = servicePlumberApi;
 
-
-        public PlumberController(IServicePlumberApi servicePlumberApi)
-        {
-            _servicePlumberApi = servicePlumberApi;
-        }
         [HttpGet("autocomplete")]//ok
         [ProducesResponseType(typeof(ResponseDto<List<string>?>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

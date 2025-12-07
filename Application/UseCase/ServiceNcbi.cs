@@ -1,7 +1,7 @@
-﻿using Domain;
-using Domain.DTO;
+﻿using Domain.DTO;
 using Domain.DTO.Blast;
 using Domain.DTO.Public;
+using Domain.Interfaces;
 using System.Text.Json;
 using System.Xml.Serialization;
 

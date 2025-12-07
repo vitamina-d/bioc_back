@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+﻿/*using System.Text.Json.Serialization;
 
 namespace Domain.DTO.Python
 {
@@ -10,3 +10,4 @@ namespace Domain.DTO.Python
         public string ReferenceId { get; set; }
     }
 }
+*/

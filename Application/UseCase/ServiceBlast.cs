@@ -1,7 +1,7 @@
 ﻿using Domain.DTO;
-using Domain;
 using Domain.DTO.Blast;
 using System.Text.Json;
+using Domain.Interfaces;
 
 namespace Application.UseCase
 {

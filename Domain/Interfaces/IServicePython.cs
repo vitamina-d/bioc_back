@@ -1,7 +1,7 @@
 ﻿using Domain.DTO;
 using Domain.DTO.Python;
 
-namespace Domain
+namespace Domain.Interfaces
 {
     public interface IServicePython
     {

@@ -1,8 +1,7 @@
-﻿namespace Domain.DTO.Public
+﻿/*namespace Domain.DTO.Public
 {
     public class ResponseUncertaintyDto
     {
-
         public string Protein { get; set; }
         public List<RankDto> Ranks { get; set; }
     }
@@ -15,3 +14,4 @@
     }
 }
 
+*/

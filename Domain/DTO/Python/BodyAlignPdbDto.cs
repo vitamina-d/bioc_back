@@ -10,4 +10,3 @@ namespace Domain.DTO.Python
         public byte[] ReferencePdb { get; set; }
     }
 }
-//python

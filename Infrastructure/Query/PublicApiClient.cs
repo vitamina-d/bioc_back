@@ -1,5 +1,5 @@
-﻿using Domain;
-using Domain.DTO.Folding;
+﻿using Domain.DTO.Folding;
+using Domain.Interfaces;
 using Microsoft.Extensions.Configuration;
 using System.Text.Json;
 
@@ -8,7 +8,6 @@ namespace Infrastructure.Query
     public class PublicApiClient(HttpClient httpClient, IConfiguration configuration) : BaseClient(httpClient), IPublicApiClient
     {
         private readonly IConfiguration _configuration = configuration;
-
         //GET
         public async Task<string> GetNcbiResponse(string entrez, string type)
         {
@@ -21,7 +20,6 @@ namespace Infrastructure.Query
             }, url);
             return response;
         }
-
         //BYTE
         public async Task<byte[]> DownloadPdb(string pdbId)
         {
@@ -53,7 +51,7 @@ namespace Infrastructure.Query
 
             if (response.Contains("\"messages\""))
             {
-                return null; // {"url":"http://rest.uniprot.org/uniprotkb/123","messages":["The 'accession' value has invalid format. It should be a valid UniProtKB accession"]}
+                return null; 
             }
 
             var json = JsonSerializer.Deserialize<UniprotDto>(response);
@@ -65,7 +63,7 @@ namespace Infrastructure.Query
             {
                 foreach (var feature in json.Features)
                 {
-                    if (feature.Evidences == null) //null refrence ex
+                    if (feature.Evidences == null) 
                     {
                         continue;
                     }

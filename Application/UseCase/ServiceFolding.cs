@@ -1,6 +1,6 @@
-﻿using Domain;
-using Domain.DTO;
+﻿using Domain.DTO;
 using Domain.DTO.Folding;
+using Domain.Interfaces;
 using System.Text.Json;
 
 namespace Application.UseCase
@@ -30,11 +30,11 @@ namespace Application.UseCase
                 Data = model,
             };
         }
-        public async Task<ResponseDto<pLDDTRcsbDto?>> GetModelPLDDT(string accession)
+        public async Task<ResponseDto<PLDDTRcsbDto?>> GetModelPLDDT(string accession)
         {
             var metadata = await _publicClient.DownloadpLDDT(accession);
-            var dto = JsonSerializer.Deserialize<pLDDTRcsbDto?>(metadata);
-            return new ResponseDto<pLDDTRcsbDto?>
+            var dto = JsonSerializer.Deserialize<PLDDTRcsbDto?>(metadata);
+            return new ResponseDto<PLDDTRcsbDto?>
             {
                 Code = 200,
                 Message = $"Ok.",
@@ -64,11 +64,11 @@ namespace Application.UseCase
                 Data = alignPdbs,
             };
         }
-        public async Task<ResponseDto<pLDDTNeurosnapDto?>> GetPredictionPLDDT(string jobId, string rank, string apiKey)
+        public async Task<ResponseDto<PLDDTNeurosnapDto?>> GetPredictionPLDDT(string jobId, string rank, string apiKey)
         {
             var metadata = await _neurosnapClient.DownloadpLDDT(jobId, rank, apiKey);
-            var dto = JsonSerializer.Deserialize<pLDDTNeurosnapDto?>(metadata);
-            return new ResponseDto<pLDDTNeurosnapDto?>
+            var dto = JsonSerializer.Deserialize<PLDDTNeurosnapDto?>(metadata);
+            return new ResponseDto<PLDDTNeurosnapDto?>
             {
                 Code = 200,
                 Message = $"Ok.",

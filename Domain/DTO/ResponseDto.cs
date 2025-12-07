@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Domain.DTO
 {
-    public class ResponseDto<T> : IResponsePlumberDto
+    public class ResponseDto<T> : IResponseDto
     {
         [JsonPropertyName("code")]
         public int Code { get; set; }

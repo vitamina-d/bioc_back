@@ -1,12 +1,12 @@
-﻿using Domain;
-using Domain.DTO;
+﻿using Domain.DTO;
+using Domain.Interfaces;
 
 namespace Application.UseCase
 {
-    public class ServiceUniprot : IServiceUniprot
+    public class ServiceUniprot(IPublicApiClient publicApiClient) : IServiceUniprot
     {
-        private readonly IPublicApiClient _publicClient;
-        public ServiceUniprot(IPublicApiClient publicApiClient) => _publicClient = publicApiClient;
+        private readonly IPublicApiClient _publicClient = publicApiClient;
+
         public async Task<ResponseDto<byte[]?>> GetEstructure(string uniprotId)
         {
             var urlEstructure = await _publicClient.GetUrlEstructure(uniprotId);

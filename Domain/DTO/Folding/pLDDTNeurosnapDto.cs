@@ -2,7 +2,7 @@
 
 namespace Domain.DTO.Folding
 {
-    public class pLDDTNeurosnapDto
+    public class PLDDTNeurosnapDto
     {
         [JsonPropertyName("plddt")]
         public double[] pLDDT { get; set; }

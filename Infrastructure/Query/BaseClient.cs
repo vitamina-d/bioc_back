@@ -2,14 +2,9 @@
 
 namespace Infrastructure.Query
 {
-    public abstract class BaseClient
+    public abstract class BaseClient(HttpClient httpClient)
     {
-        protected readonly HttpClient _httpClient;
-
-        protected BaseClient(HttpClient httpClient)
-        {
-            _httpClient = httpClient;
-        }
+        protected readonly HttpClient _httpClient = httpClient;
 
         protected async Task<T> HandlerTryCatch<T>(Func<Task<HttpResponseMessage>> action, string url)
         {

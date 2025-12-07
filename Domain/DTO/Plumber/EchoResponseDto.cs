@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿/*
+using System.Text.Json.Serialization;
 
 namespace Domain.DTO.Plumber
 {
@@ -9,7 +10,6 @@ namespace Domain.DTO.Plumber
     }
 }
 
-/*
     {
       "msg": "The message is: 'msg'"
     }

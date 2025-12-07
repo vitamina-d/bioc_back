@@ -1,4 +1,4 @@
-﻿using Domain;
+﻿using Domain.Interfaces;
 using System.Text.RegularExpressions;
 
 namespace Infrastructure.Query

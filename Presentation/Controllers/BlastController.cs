@@ -1,6 +1,6 @@
-﻿using Domain;
-using Domain.DTO;
+﻿using Domain.DTO;
 using Domain.DTO.Blast;
+using Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Utils;
 
@@ -8,14 +8,10 @@ namespace Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BlastController : ControllerBase
+    public class BlastController(IServiceBlast blastService) : ControllerBase
     {
-        private readonly IServiceBlast _blastService;
+        private readonly IServiceBlast _blastService = blastService;
 
-        public BlastController(IServiceBlast blastService)
-        {
-            _blastService = blastService;
-        }
         [HttpPost("blastx")]
         [ProducesResponseType(typeof(ResponseDto<Report?>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

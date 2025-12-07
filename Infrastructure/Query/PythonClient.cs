@@ -1,5 +1,5 @@
-﻿using Domain;
-using Domain.DTO.Python;
+﻿using Domain.DTO.Python;
+using Domain.Interfaces;
 using System.Text;
 using System.Text.Json;
 
@@ -19,7 +19,6 @@ namespace Infrastructure.Query
             }, url);
             return response;
         }
-
         public async Task<string> GetReverseComplement(string sequence, bool reverse, bool complement)
         {
             var url = "dna/reverse_complement/";
@@ -32,7 +31,6 @@ namespace Infrastructure.Query
             }, url);
             return response;
         }
-
         public async Task<byte[]> GetAlignProtein(byte[] prediction_pdb, byte[] reference_pdb)
         {
             var url = "pdb/multipart/";
@@ -45,7 +43,6 @@ namespace Infrastructure.Query
                 return await _httpClient.PostAsync(url, content);
             }, url);
             return response;
-
         }
     }
 }

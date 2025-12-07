@@ -2,7 +2,7 @@
 
 namespace Domain.Interfaces.DTO
 {
-    public interface IResponsePlumberDto
+    public interface IResponseDto
     {
         [JsonPropertyName("code")]
         public int Code { get; set; }

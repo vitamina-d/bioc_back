@@ -1,6 +1,4 @@
-﻿using Domain.DTO;
-
-namespace Domain
+﻿namespace Domain.Interfaces
 {
     public interface IPlumberApiClient
     {

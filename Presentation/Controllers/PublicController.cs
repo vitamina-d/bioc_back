@@ -1,6 +1,6 @@
-﻿using Domain;
-using Domain.DTO;
+﻿using Domain.DTO;
 using Domain.DTO.Public;
+using Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Utils;
 
@@ -8,16 +8,10 @@ namespace Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PublicController : ControllerBase
+    public class PublicController(IServiceNcbi servicePublicApi, IServiceUniprot serviceUniprot) : ControllerBase
     {
-        private readonly IServiceNcbi _servicePublicApi;
-        private readonly IServiceUniprot _serviceUniprot;
-
-        public PublicController(IServiceNcbi servicePublicApi, IServiceUniprot serviceUniprot)
-        {
-            _servicePublicApi = servicePublicApi;
-            _serviceUniprot = serviceUniprot;
-        }
+        private readonly IServiceNcbi _servicePublicApi = servicePublicApi;
+        private readonly IServiceUniprot _serviceUniprot = serviceUniprot;
 
         [HttpGet("summary")]
         [ProducesResponseType(typeof(ResponseDto<ResponseNcbiDto>), StatusCodes.Status200OK)]
