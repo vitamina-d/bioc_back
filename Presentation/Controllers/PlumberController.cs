@@ -12,7 +12,7 @@ namespace Presentation.Controllers
     {
         private readonly IServicePlumberApi _servicePlumberApi = servicePlumberApi;
 
-        [HttpGet("autocomplete")]//ok
+        [HttpGet("autocomplete")]
         [ProducesResponseType(typeof(ResponseDto<List<string>?>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)] 
@@ -65,26 +65,6 @@ namespace Presentation.Controllers
         public async Task<IActionResult> GetSequenceByRange([FromQuery] string chrom, [FromQuery] int start, [FromQuery] int end)
         {
             var response = await _servicePlumberApi.GetSequence(chrom, start, end);
-            return ResponseSwitch.StatusCodes(response);
-        }
-
-        [HttpGet("sequence")]
-        [ProducesResponseType(typeof(ResponseDto<DataSequenceDto[]?>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)] 
-        public async Task<IActionResult> GetSequenceByEntrez([FromQuery] string entrez, [FromQuery] bool complete)
-        {
-            var response = await _servicePlumberApi.GetSequence(entrez, complete);
-            return ResponseSwitch.StatusCodes(response);
-        }
-        
-        [HttpGet("stats")]
-        [ProducesResponseType(typeof(ResponseDto<DataSequenceDto[]?>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetStats([FromQuery] string entrez, [FromQuery] bool complete)
-        {
-            var response = await _servicePlumberApi.GetStats(entrez, complete);
             return ResponseSwitch.StatusCodes(response);
         }
 

@@ -11,8 +11,8 @@ namespace Domain.Interfaces
         public Task<ResponseDto<DataAlignDto?>> GetAlignment(string pattern, string subject, string type, int gapOpening, int gapExtension);
         public Task<ResponseDto<DataStatsDto?>> GetPercent(string sequence);
         public Task<ResponseDto<DataSequenceDto[]?>> GetSequence(string chrom, int start, int end);
-        public Task<ResponseDto<DataSequenceDto[]?>> GetSequence(string entrez, bool complete);
-        public Task<ResponseDto<DataStatsDto?>> GetStats(string entrez, bool complete);
+        //public Task<ResponseDto<DataSequenceDto[]?>> GetSequence(string entrez, bool complete);
+        //public Task<ResponseDto<DataStatsDto?>> GetStats(string entrez, bool complete);
         public Task<ResponseDto<DataEntrezDto?>> GetEntrezByValue(string value);
     }
 }

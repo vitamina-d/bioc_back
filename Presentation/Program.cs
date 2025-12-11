@@ -5,7 +5,6 @@ using Presentation.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//CORS
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddCors(options => {
     options.AddPolicy(name: MyAllowSpecificOrigins,
@@ -50,7 +49,6 @@ builder.Services.AddHttpClient<INeurosnapClient, NeurosnapClient>(client =>
 });
 
 
-builder.WebHost.UseUrls("http://0.0.0.0:8081");
 var app = builder.Build();
 
 app.UseSwagger();

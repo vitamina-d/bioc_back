@@ -47,7 +47,7 @@ namespace Application.UseCase
             var json = JsonSerializer.Deserialize<ResponseDto<DataSequenceDto[]?>>(res);
             return json;
         }
-        public async Task<ResponseDto<DataSequenceDto[]?>> GetSequence(string entrez, bool complete)
+        /*public async Task<ResponseDto<DataSequenceDto[]?>> GetSequence(string entrez, bool complete)
         {
             var res = await _plumberApiClient.GetSequence(entrez, complete);
             var json = JsonSerializer.Deserialize<ResponseDto<DataSequenceDto[]?>>(res);
@@ -58,7 +58,7 @@ namespace Application.UseCase
             var res = await _plumberApiClient.GetStats(entrez, complete);
             var json = JsonSerializer.Deserialize<ResponseDto<DataStatsDto?>>(res);
             return json;
-        }
+        }*/
         public async Task<ResponseDto<DataEntrezDto?>> GetEntrezByValue(string value) 
         {
             var isEntrezResponse = await _plumberApiClient.IsEntrez(value.ToUpper());

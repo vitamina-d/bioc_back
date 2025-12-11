@@ -49,7 +49,7 @@ namespace Infrastructure.Query
             }, url);
             return response;
         }
-        public async Task<string> GetSequence(string entrez, bool complete)
+        /*public async Task<string> GetSequence(string entrez, bool complete)
         {
             var url = $"sequence/?entrez={entrez}&complete={complete}";
             var response = await HandlerTryCatch<string>(async () =>
@@ -57,7 +57,7 @@ namespace Infrastructure.Query
                 return await _httpClient.GetAsync(url);
             }, url);
             return response;
-        }
+        }*/
         public async Task<string> GetSequence(string chrom, int start, int end)
         {
             var url = $"sequence_range/?chrom=chr{chrom}&start={start}&end={end}";
@@ -67,7 +67,7 @@ namespace Infrastructure.Query
             }, url);
             return response;
         }
-        public async Task<string> GetStats(string entrez, bool complete)
+        /*public async Task<string> GetStats(string entrez, bool complete)
         {
             var url = $"stats/?entrez={entrez}&complete={complete}";
             var response = await HandlerTryCatch<string>(async () =>
@@ -75,7 +75,7 @@ namespace Infrastructure.Query
                 return await _httpClient.GetAsync(url);
             }, url);
             return response;
-        }
+        }*/
         //POST
         public async Task<string> GetAlign(string pattern, string subject, string type, int gapOpening, int gapExtension)
         {

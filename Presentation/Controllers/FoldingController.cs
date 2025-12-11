@@ -34,7 +34,7 @@ namespace Presentation.Controllers
         }
 
         [HttpGet("job/{jobId}/ranks")] 
-        [ProducesResponseType(typeof(ResponseDto<DataRanksDto?>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseDto<Dictionary<string, double>?>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetRanks([FromRoute] string jobId)
