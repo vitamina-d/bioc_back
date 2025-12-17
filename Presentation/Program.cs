@@ -60,9 +60,9 @@ app.UseHttpsRedirection();
 
 app.UseMiddleware<ExceptionMiddleware>();
 
-app.UseAuthorization();
-
 app.UseCors(MyAllowSpecificOrigins);
+
+app.UseAuthorization();
 
 app.MapControllers();
 
