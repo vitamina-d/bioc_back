@@ -10,7 +10,7 @@ builder.Services.AddCors(options => {
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy => {
                           policy
-                          .WithOrigins("https://vitamina-d.github.io/")
+                          .WithOrigins("https://vitamina-d.github.io")
                           .AllowAnyHeader()
                           .AllowAnyMethod();
                       });
