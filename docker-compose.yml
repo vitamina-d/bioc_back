@@ -1,64 +1,27 @@
-#http://localhost:8181/swagger/index.html
-#https://learn.microsoft.com/es-es/visualstudio/debugger/attach-to-process-running-in-docker-container?view=vs-2022
-#https://learn.microsoft.com/es-es/visualstudio/containers/tutorial-multicontainer?view=vs-2022
 
 services:
   presentation:
-    image: ${DOCKER_REGISTRY-}presentation
-    build:
-      context: .
-      dockerfile: Presentation/Dockerfile
+    image: veroyols/presentation:deploy
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - NeuroSnap__API_KEY=${NEUROSNAP_API_KEY}
+      - ASPNETCORE_ENVIRONMENT=Production
     ports:
-      - "8081:8081"
+      - "80:80"
     depends_on:
       - bioc
       - blast
       - biopython 
-
-  web:
-    build:
-      context: ../bioc_front
-      dockerfile: Dockerfile
-    ports:
-      - "5173:5173"
-    volumes:
-      - ../bioc_front:/frontend
-      - /frontend/node_modules
-    environment:
-      - CHOKIDAR_USEPOLLING=true
-    depends_on:
-      - presentation
-
+  
   bioc:
-    build:
-      context: ../bioc_R
-      dockerfile: Dockerfile
+    image: veroyols/bioc:deploy
     ports:
       - "8000:8000"
-      - "8787:8787"
-    volumes:
-      - ../bioc_R:/rservice
-    environment:
-      PASSWORD: bioc
-      USER: rstudio
 
   blast:
-    build:
-      context: ../bioc_blast
-      dockerfile: Dockerfile
-    volumes:
-      - ../bioc_blast:/bservice
+    image: veroyols/blast:deploy
     ports:
       - "8001:8001"
 
   biopython:
-    build:
-      context: ../biopython
-      dockerfile: Dockerfile
-    volumes:
-    - ../biopython:/biopython
+    image: veroyols/biopython:deploy
     ports:
-    - "8002:8002"  
+      - "8002:8002"  

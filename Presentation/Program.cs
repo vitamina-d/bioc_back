@@ -10,8 +10,7 @@ builder.Services.AddCors(options => {
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy => {
                           policy
-                          .WithOrigins("http://host.docker.internal:5173")
-                          .WithOrigins("http://localhost:5173")
+                          .WithOrigins("https://vitamina-d.github.io/")
                           .AllowAnyHeader()
                           .AllowAnyMethod();
                       });
