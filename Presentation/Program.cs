@@ -1,6 +1,7 @@
 using Application.UseCase;
 using Domain.Interfaces;
 using Infrastructure.Query;
+using Microsoft.AspNetCore.HttpOverrides;
 using Presentation.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -59,6 +60,11 @@ app.UseSwaggerUI(c =>
 app.UseHttpsRedirection();
 
 app.UseMiddleware<ExceptionMiddleware>();
+
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedProto
+});
 
 app.UseCors(MyAllowSpecificOrigins);
 
